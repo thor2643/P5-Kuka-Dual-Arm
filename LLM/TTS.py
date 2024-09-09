@@ -14,9 +14,9 @@ from gtts import gTTS
 from playsound import playsound
 import os
 
-def text_to_speech(text, lang='en', filename='output.mp3'):
+def text_to_speech(text, lang='en', tld='ie', filename='output.mp3'):
     # Create a gTTS object
-    tts = gTTS(text=text, lang=lang, slow=False)
+    tts = gTTS(text=text, lang=lang, tld=tld, slow=False)
     
     # Save the audio file
     tts.save(filename)
