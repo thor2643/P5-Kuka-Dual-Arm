@@ -6,7 +6,7 @@ import json
 url = "http://localhost:11434/api/generate"
 
 # Define the LLM models
-llm_model = ['llava']
+llm_model = ['llama3.1']
 
 while True:
 
