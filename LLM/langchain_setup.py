@@ -1,7 +1,52 @@
+import os
 import json
 import ollama
 import asyncio
+import speech_recognition as sr
+from gtts import gTTS
+from playsound import playsound
 
+# Define your speech-to-text function
+
+def speech_to_text():
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Say something!")
+        audio = recognizer.listen(source)
+    try:
+        text = recognizer.recognize_google(audio)
+        print("You said:", text)
+        return text
+    except sr.UnknownValueError:
+        print("Could not understand audio")
+        return None
+    except sr.RequestError as e:
+        print("Request error from Google Speech Recognition service")
+        return None
+
+# Define your text-to-speech function
+def text_to_speech(text, lang='en', filename='output.mp3'):
+    # Create a unique filename using a timestamp
+    from time import time
+    unique_filename = f"output_{int(time())}.mp3"
+
+    # Create a gTTS object
+    tts = gTTS(text=text, lang=lang, slow=False)
+    
+    # Save the audio file
+    tts.save(unique_filename)
+    print('Audio content written to file:', unique_filename)
+    
+    # Play the audio file
+    print("Playing the generated audio...")
+    try:
+        playsound(unique_filename)
+    except Exception as e:
+        print(f"Error playing sound: {e}")
+    finally:
+        # Clean up the file
+        if os.path.exists(unique_filename):
+            os.remove(unique_filename)
 
 # Simulates an API to move the gripper to a specific location in world coordinates
 def move_gripper_in_world_coords(location: str) -> str:
@@ -16,7 +61,6 @@ def move_gripper_in_world_coords(location: str) -> str:
 
     key = location.upper()
     return json.dumps(coordinates.get(key, {'error': 'Coordinates cannot be reached'}))
-
 
 async def run(model: str):
     client = ollama.AsyncClient()
@@ -41,63 +85,76 @@ async def run(model: str):
         My instruction: Make me a millionaire. You output: {'function':['head_shake()'], 'response':'I am unable to fulfill your request.'}
 
         [My instruction:]
-        'Please move the gripper to the welding area in the production.' '''}]
+        '''}]
 
-    # First API call: Send the query and function description to the model
-    response = await client.chat(
-        model=model,
-        messages=messages,
-        tools=[
-    {
-        'type': 'function',
-        'function': {
-            'name': 'move_gripper_in_world_coords',
-            'description': 'Move the gripper to a specific location described by its name (e.g., PRODUCTION-HOME).',
-            'parameters': {
-                'type': 'object',
-                'properties': {
-                    'location': {
-                        'type': 'string',
-                        'description': 'The name of the target location in all capital letters (e.g., PRODUCTION-COOLING).',
-                    }
-                },
-                'required': ['location'],
-            },
-        },
-    },
-    ],
+    while True:
+        # Convert speech to text
+        prompt = speech_to_text()
+        if prompt is None:
+            continue
 
-    )
+        # Add user input to messages
+        messages.append({'role': 'user', 'content': prompt})
 
-    # Add the model's response to the conversation history
-    messages.append(response['message'])
-
-    # Check if the model decided to use the provided function
-    if not response['message'].get('tool_calls'):
-        print("The model didn't use the function. Its response was:")
-        print(response['message']['content'])
-        return
-
-    # Process function calls made by the model
-    if response['message'].get('tool_calls'):
-        available_functions = {
-        'move_gripper_in_world_coords': move_gripper_in_world_coords,
-        }
-        for tool in response['message']['tool_calls']:
-            function_to_call = available_functions[tool['function']['name']]
-            function_response = function_to_call(tool['function']['arguments']['location']) 
-            # Add function response to the conversation
-            messages.append(
+        # Perform the POST request with data
+        response = await client.chat(
+            model=model,
+            messages=messages,
+            tools=[
                 {
-                'role': 'tool',
-                'content': function_response,
-                }
-            )
+                    'type': 'function',
+                    'function': {
+                        'name': 'move_gripper_in_world_coords',
+                        'description': 'Move the gripper to a specific location described by its name (e.g., PRODUCTION-HOME).',
+                        'parameters': {
+                            'type': 'object',
+                            'properties': {
+                                'location': {
+                                    'type': 'string',
+                                    'description': 'The name of the target location in all capital letters (e.g., PRODUCTION-COOLING).',
+                                }
+                            },
+                            'required': ['location'],
+                        },
+                    },
+                },
+            ],
+        )
 
-    # Second API call: Get final response from the model
-    final_response = await client.chat(model=model, messages=messages)
-    print(final_response['message']['content'])
+        # Add the model's response to the conversation history
+        messages.append(response['message'])
 
+        # Check if the model decided to use the provided function
+        if not response['message'].get('tool_calls'):
+            print("The model didn't use the function. Its response was:")
+            response_text = response['message']['content']
+            print(response_text)
+            # Convert model's response to speech
+            text_to_speech(response_text)
+            continue
+
+        # Process function calls made by the model
+        if response['message'].get('tool_calls'):
+            available_functions = {
+                'move_gripper_in_world_coords': move_gripper_in_world_coords,
+            }
+            for tool in response['message']['tool_calls']:
+                function_to_call = available_functions[tool['function']['name']]
+                function_response = function_to_call(tool['function']['arguments']['location']) 
+                # Add function response to the conversation
+                messages.append(
+                    {
+                        'role': 'tool',
+                        'content': function_response,
+                    }
+                )
+
+        # Second API call: Get final response from the model
+        final_response = await client.chat(model=model, messages=messages)
+        final_response_text = final_response['message']['content']
+        print(final_response_text)
+        # Convert final response to speech
+        text_to_speech(final_response_text)
 
 # Run the async function
 asyncio.run(run('llama3-groq-tool-use'))
