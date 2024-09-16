@@ -5,16 +5,14 @@ from copy import deepcopy
 #RosPy imports
 import rclpy
 from rclpy.node import Node
-from rcl_interfaces.srv import GetParameters # <- Don't know if we need this currently, it's used to get the parameters of services
 
 #ROS2 KUKA FRI imports
 from lbr_fri_idl.msg import LBRJointPositionCommand, LBRState # Joint control message, Data from KUKA
 
 
 class MoveRobotInWorld(Node):
-    def __init__(self, node_name: str, location_args: list[float]) -> None: # NOTE: -> None to ensure compile error if the node tries to return anything.
-        super().__init__(node_name)
-        
+    def __init__(self, node_name: str, namespace: str, location_args: list[float]) -> None: # NOTE: -> None to ensure compile error if the node tries to return anything.
+        super().__init__(node_name, namespace=namespace)
         self.location_args = location_args
         self._lbr_joint_position_command = LBRJointPositionCommand()
 
@@ -37,6 +35,7 @@ class MoveRobotInWorld(Node):
         
         # Initilize the published message with current joint positions.
         self._lbr_joint_position_command.joint_position = deepcopy(self._lbr_state.measured_joint_position)
+        
         print(str(self._lbr_state.measured_joint_position))
 
         if lbr_state.session_state == 4:  # KUKA::FRI::COMMANDING_ACTIVE == 4
@@ -58,10 +57,7 @@ class MoveRobotInWorld(Node):
                     self._lbr_joint_position_command.joint_position[6] += angle_diff * (1 / 400)  # Slow movement, 100 Hz, 4 seconds
                     self._lbr_joint_position_command_pub.publish(self._lbr_joint_position_command)
 
-            """
-            self._lbr_joint_position_command.joint_position[6]
-            """
-
+        self._lbr_state = lbr_state
 
 def main():
     # TODO: Make a seperate program for the LLM to update the target location by publishing to a message. So this program just reads that message,
@@ -91,7 +87,7 @@ def main():
 
     # Intilize ROS2 and Class
     rclpy.init(args=None)
-    rclpy.spin(MoveRobotInWorld("robot_control_world_axis", location_args))
+    rclpy.spin(MoveRobotInWorld("robot_control_world_axis", '/lbr', location_args))
     rclpy.shutdown()
     return 0
 
