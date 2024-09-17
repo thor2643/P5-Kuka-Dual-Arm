@@ -1,6 +1,0 @@
-[submodule "ROS_WS/ROS_WS/p5_ws/src/fri"]
-	path = ROS_WS/ROS_WS/p5_ws/src/fri
-	url = https://github.com/lbr-stack/fri
-[submodule "ROS_WS/ROS_WS/p5_ws/src/lbr_fri_idl"]
-	path = ROS_WS/ROS_WS/p5_ws/src/lbr_fri_idl
-	url = https://github.com/lbr-stack/lbr_fri_idl
