@@ -1,6 +1,8 @@
 #Basics
 import sys
 from copy import deepcopy
+import math
+import numpy as np
 
 #RosPy imports
 import rclpy
@@ -15,6 +17,12 @@ class MoveRobotInWorld(Node):
         super().__init__(node_name, namespace=namespace)
         self.location_args = location_args
         self._lbr_joint_position_command = LBRJointPositionCommand()
+        
+        self.goal1 = [0,0,0,0,0,0,0]
+        self.goal2 = [0,0,0,0,0,0,math.pi/2]
+        
+        self.goal1init = True
+        self.goal2init = False
 
         print(str(self.location_args))
 
@@ -39,22 +47,25 @@ class MoveRobotInWorld(Node):
         print(str(self._lbr_state.measured_joint_position))
 
         if lbr_state.session_state == 4:  # KUKA::FRI::COMMANDING_ACTIVE == 4
-            # NOTE: It seems the joints are pushed by 1, so [6] referes to the 7th joint. [0] to 1 and so on
-            
-            # NOTE: Test code to move robots 7th joint to 45 degrees
-            if self._lbr_joint_position_command.joint_position[6] != 3.14/2:
+            # We want to do a basic robot movement via hardcoding, which moves the robot from goal 1 to goal 2 and back
+            if self.goal1init == True:
+                if self.goal1 == self._lbr_state.measured_joint_position:
+                    self.goal1init = False
+                    self.goal2init = True
+                else:
+                    difference = np.subtract(self.goal1, self._lbr_state.measured_joint_position)
+                    for i in len(self._lbr_joint_position_command.joint_position):
+                        self._lbr_joint_position_command.joint_position[i] += difference[i] * (1 / 100)
+                    self._lbr_joint_position_command_pub.publish(self._lbr_joint_position_command)
 
-                # Calculate the difference between the current and target angle
-                angle_diff = (3.14/2) - self._lbr_joint_position_command.joint_position[6]
-
-                # Adjust for wraparound to ensure shortest rotation
-                if angle_diff > pi:  # If the difference is more than 180 degrees
-                    angle_diff -= 2 * pi  # Take the shorter route counter-clockwise
-                elif angle_diff < -pi:
-                    angle_diff += 2 * pi  # Take the shorter route clockwise
-                
-                if abs(angle_diff) > 0.01:  # If there's still a significant difference (e.g., greater than 0.01 radians)
-                    self._lbr_joint_position_command.joint_position[6] += angle_diff * (1 / 400)  # Slow movement, 100 Hz, 4 seconds
+            if self.goal2init == True:
+                if self.goal2 == self._lbr_state.measured_joint_position:
+                    self.goal1init = True
+                    self.goal2init = False
+                else:
+                    difference = np.subtract(self.goal2, self._lbr_state.measured_joint_position)
+                    for i in len(self._lbr_joint_position_command.joint_position):
+                        self._lbr_joint_position_command.joint_position[i] += difference[i] * (1 / 100)
                     self._lbr_joint_position_command_pub.publish(self._lbr_joint_position_command)
 
         self._lbr_state = lbr_state
