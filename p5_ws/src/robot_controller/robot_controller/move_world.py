@@ -24,6 +24,8 @@ class MoveRobotInWorld(Node):
         self.goal1init = True
         self.goal2init = False
 
+        np.subtract(self.goal1, self.goal2)
+
         print(str(self.location_args))
 
         # Create publisher to command/joint_position
@@ -43,29 +45,33 @@ class MoveRobotInWorld(Node):
         
         # Initilize the published message with current joint positions.
         self._lbr_joint_position_command.joint_position = deepcopy(self._lbr_state.measured_joint_position)
-        
-        print(str(self._lbr_state.measured_joint_position))
 
         if lbr_state.session_state == 4:  # KUKA::FRI::COMMANDING_ACTIVE == 4
             # We want to do a basic robot movement via hardcoding, which moves the robot from goal 1 to goal 2 and back
             if self.goal1init == True:
-                if self.goal1 == self._lbr_state.measured_joint_position:
+                difference = np.subtract(self.goal1, self._lbr_state.measured_joint_position)
+                
+                # Check if all differences are <= 0.1 to stop infinite interpolation
+                if np.all(np.abs(difference) <= 0.1):
                     self.goal1init = False
                     self.goal2init = True
                 else:
-                    difference = np.subtract(self.goal1, self._lbr_state.measured_joint_position)
-                    for i in len(self._lbr_joint_position_command.joint_position):
+                    for i in range(len(self._lbr_joint_position_command.joint_position)):
                         self._lbr_joint_position_command.joint_position[i] += difference[i] * (1 / 100)
+                    
                     self._lbr_joint_position_command_pub.publish(self._lbr_joint_position_command)
 
+            # Pratically idential functionallity as code above, but the goal is moved.
             if self.goal2init == True:
-                if self.goal2 == self._lbr_state.measured_joint_position:
+                difference = np.subtract(self.goal2, self._lbr_state.measured_joint_position)
+
+                if np.all(np.abs(difference) <= 0.1):
                     self.goal1init = True
                     self.goal2init = False
                 else:
-                    difference = np.subtract(self.goal2, self._lbr_state.measured_joint_position)
-                    for i in len(self._lbr_joint_position_command.joint_position):
+                    for i in range(len(self._lbr_joint_position_command.joint_position)):
                         self._lbr_joint_position_command.joint_position[i] += difference[i] * (1 / 100)
+                    
                     self._lbr_joint_position_command_pub.publish(self._lbr_joint_position_command)
 
         self._lbr_state = lbr_state
@@ -98,7 +104,7 @@ def main():
 
     # Intilize ROS2 and Class
     rclpy.init(args=None)
-    rclpy.spin(MoveRobotInWorld("robot_control_world_axis", '/lbr', location_args))
+    rclpy.spin(MoveRobotInWorld("robot_control_world_axis", '/lbr', location_args)) #Change namespace of node to /lbr
     rclpy.shutdown()
     return 0
 
