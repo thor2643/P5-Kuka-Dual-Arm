@@ -19,7 +19,7 @@ class MoveRobotInWorld(Node):
         self._lbr_joint_position_command = LBRJointPositionCommand()
         
         self.goal1 = [0,0,0,0,0,0,0]
-        self.goal2 = [0,0,0,0,0,0,math.pi/2]
+        self.goal2 = [0,math.pi/2,0,-math.pi/2,0,math.pi/2,0]
         
         self.goal1init = True
         self.goal2init = False
