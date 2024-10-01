@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# weights
+*.pt
+
+# test image used in vision
+test.jpg
