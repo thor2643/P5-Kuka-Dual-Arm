@@ -10,21 +10,6 @@ class RealSense:
         self.pipeline = rs.pipeline()
         self.config = rs.config()
 
-        # Get device product line for setting a supporting resolution
-        pipeline_wrapper = rs.pipeline_wrapper(self.pipeline)
-        pipeline_profile = self.config.resolve(pipeline_wrapper)
-        device = pipeline_profile.get_device()
-        device_product_line = str(device.get_info(rs.camera_info.product_line))
-
-        found_rgb = False
-        for s in device.sensors:
-            if s.get_info(rs.camera_info.name) == 'RGB Camera':
-                found_rgb = True
-                break
-        if not found_rgb:
-            print("The demo requires Depth camera with Color sensor")
-            exit(0)
-
         self.config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
         self.config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 
@@ -73,20 +58,18 @@ class RealSense:
 
         finally:
             # Stop streaming
-            pipeline.stop()
+            self.pipeline.stop()
+
 
 class ObjectDetector:
     def __init__(self):
-        model = YOLOWorld("yolov8x-world.pt")
-        results = model.predict("test.jpg")
+        self.model = YOLOWorld("yolov8x-world.pt")
+        # results = self.model.predict("test.jpg")
 
-        results[0].show()
+        # results[0].show()
 
 
 if __name__ == "__main__":
-    #cam = RealSense()
-    #cam.get_image("test.jpg")
-    obj = ObjectDetector()
-
-
-
+    cam = RealSense()
+    # cam.get_image("test.jpg")
+    # obj = ObjectDetector()
