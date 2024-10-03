@@ -1,17 +1,14 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>robot_controller</name>
+  <name>llm_pkg</name>
   <version>0.0.0</version>
-  <description>Package used for controlling two KUKA LBR IIWA 7 R800s</description>
-  <maintainer email="kkla22@student.aau.dk">kasper</maintainer>
-  <license>Apache-2.0</license>
-  
-  <exec_depend>rclpy</exec_depend>
-  <exec_depend>sys</exec_depend>
-  <exec_depend>copy</exec_depend>
-  <exec_depend>lbr_fri_idl</exec_depend>
-  <exec_depend>ros2_numpy</exec_depend>
+  <description>TODO: Package description</description>
+  <maintainer email="silasjensen2001@gmail.com">silas</maintainer>
+  <license>TODO: License declaration</license>
+
+  <depend>rclpy</depend>
+  <depend>llm_interfaces</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
