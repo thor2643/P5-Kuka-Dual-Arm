@@ -39,7 +39,7 @@ class ObjectDetector:
         self.realsense_camera = RealSenseCamera
         self.detection_groups = dict()
 
-    def detect_frame(self) -> None:
+    def detect_frame(self):
         with self.realsense_camera() as cam:
             frames = cam.wait_for_frames()
             color_frame = frames.get_color_frame()
@@ -56,7 +56,7 @@ class ObjectDetector:
 
             return self.detection_groups
 
-    def _insert_into_detection_groups(self, key: str, info: tuple[int, int]) -> None:
+    def _insert_into_detection_groups(self, key: str, info: tuple[int, int]):
             if key in self.detection_groups.keys():
                 self.detection_groups[key].append(info)
             else:
