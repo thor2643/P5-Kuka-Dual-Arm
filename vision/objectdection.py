@@ -63,7 +63,6 @@ class ObjectDetector:
                 self.detection_groups[key] = [info]
 
 
-
 if __name__ == "__main__":
     obj = ObjectDetector()
     print(obj.detect_frame())
