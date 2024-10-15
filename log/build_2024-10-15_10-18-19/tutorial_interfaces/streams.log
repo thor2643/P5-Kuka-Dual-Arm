@@ -1,0 +1,209 @@
+[0.062s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/tutorial_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/tutorial_interfaces -- -j8 -l8
+[0.270s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_generator_c[0m
+[0.325s] [  2%] Built target tutorial_interfaces__cpp
+[0.389s] [ 12%] Built target tutorial_interfaces__rosidl_generator_c
+[0.397s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_typesupport_introspection_cpp[0m
+[0.434s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_typesupport_fastrtps_cpp[0m
+[0.440s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_typesupport_cpp[0m
+[0.450s] [ 12%] Built target ament_cmake_python_copy_tutorial_interfaces
+[0.455s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_typesupport_introspection_c[0m
+[0.458s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_typesupport_fastrtps_c[0m
+[0.469s] [ 23%] Built target tutorial_interfaces__rosidl_typesupport_introspection_cpp
+[0.471s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_typesupport_c[0m
+[0.510s] [ 34%] Built target tutorial_interfaces__rosidl_typesupport_cpp
+[0.512s] [ 44%] Built target tutorial_interfaces__rosidl_typesupport_introspection_c
+[0.540s] [ 55%] Built target tutorial_interfaces__rosidl_typesupport_fastrtps_cpp
+[0.546s] [ 65%] Built target tutorial_interfaces__rosidl_typesupport_fastrtps_c
+[0.571s] [ 76%] Built target tutorial_interfaces__rosidl_typesupport_c
+[0.727s] [ 76%] Built target tutorial_interfaces
+[0.840s] [ 78%] Built target tutorial_interfaces__py
+[0.904s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_generator_py[0m
+[0.995s] [ 87%] Built target tutorial_interfaces__rosidl_generator_py
+[1.046s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_typesupport_fastrtps_c__pyext[0m
+[1.050s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_typesupport_c__pyext[0m
+[1.057s] [35m[1mConsolidate compiler generated dependencies of target tutorial_interfaces__rosidl_typesupport_introspection_c__pyext[0m
+[1.111s] [ 91%] Built target tutorial_interfaces__rosidl_typesupport_fastrtps_c__pyext
+[1.115s] [ 95%] Built target tutorial_interfaces__rosidl_typesupport_c__pyext
+[1.139s] [100%] Built target tutorial_interfaces__rosidl_typesupport_introspection_c__pyext
+[1.827s] running egg_info
+[1.835s] writing tutorial_interfaces.egg-info/PKG-INFO
+[1.835s] writing dependency_links to tutorial_interfaces.egg-info/dependency_links.txt
+[1.840s] writing top-level names to tutorial_interfaces.egg-info/top_level.txt
+[1.848s] reading manifest file 'tutorial_interfaces.egg-info/SOURCES.txt'
+[1.851s] writing manifest file 'tutorial_interfaces.egg-info/SOURCES.txt'
+[1.993s] [100%] Built target ament_cmake_python_build_tutorial_interfaces_egg
+[3.224s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/tutorial_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/tutorial_interfaces -- -j8 -l8
+[3.872s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/tutorial_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/tutorial_interfaces
+[3.917s] -- Install configuration: "Release"
+[3.917s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/ament_index/resource_index/rosidl_interfaces/tutorial_interfaces
+[3.917s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces
+[3.917s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg
+[3.918s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/rosidl_generator_c__visibility_control.h
+[3.918s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/num.h
+[3.918s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/sphere.h
+[3.919s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail
+[3.920s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__functions.c
+[3.920s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__functions.h
+[3.920s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__functions.c
+[3.920s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__functions.h
+[3.921s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__type_support.h
+[3.921s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__struct.h
+[3.923s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__type_support.h
+[3.923s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__struct.h
+[3.923s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv
+[3.923s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/get_six_ints.h
+[3.923s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail
+[3.924s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__functions.h
+[3.924s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__struct.h
+[3.926s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__functions.c
+[3.926s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__type_support.h
+[3.929s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/environment/library_path.sh
+[3.929s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/environment/library_path.dsv
+[3.929s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/lib/libtutorial_interfaces__rosidl_generator_c.so
+[3.929s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces
+[3.929s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg
+[3.929s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[3.929s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail
+[3.929s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__rosidl_typesupport_fastrtps_c.h
+[3.932s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__rosidl_typesupport_fastrtps_c.h
+[3.933s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv
+[3.934s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail
+[3.934s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__rosidl_typesupport_fastrtps_c.h
+[3.934s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/lib/libtutorial_interfaces__rosidl_typesupport_fastrtps_c.so
+[3.934s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces
+[3.934s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/num.hpp
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__builder.hpp
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__traits.hpp
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__struct.hpp
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__builder.hpp
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__struct.hpp
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__traits.hpp
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/sphere.hpp
+[3.935s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv
+[3.936s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/get_six_ints.hpp
+[3.936s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail
+[3.936s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__traits.hpp
+[3.936s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__struct.hpp
+[3.936s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__builder.hpp
+[3.936s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces
+[3.936s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg
+[3.936s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail
+[3.936s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__rosidl_typesupport_fastrtps_cpp.hpp
+[3.937s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__rosidl_typesupport_fastrtps_cpp.hpp
+[3.937s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/dds_fastrtps
+[3.937s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[3.937s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv
+[3.937s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail
+[3.938s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__rosidl_typesupport_fastrtps_cpp.hpp
+[3.938s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/dds_fastrtps
+[3.938s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/lib/libtutorial_interfaces__rosidl_typesupport_fastrtps_cpp.so
+[3.938s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces
+[3.938s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg
+[3.938s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[3.938s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail
+[3.938s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__rosidl_typesupport_introspection_c.h
+[3.940s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__type_support.c
+[3.940s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__type_support.c
+[3.940s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__rosidl_typesupport_introspection_c.h
+[3.940s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv
+[3.942s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail
+[3.942s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__type_support.c
+[3.942s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__rosidl_typesupport_introspection_c.h
+[3.942s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/lib/libtutorial_interfaces__rosidl_typesupport_introspection_c.so
+[3.942s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/lib/libtutorial_interfaces__rosidl_typesupport_c.so
+[3.943s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces
+[3.943s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg
+[3.943s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail
+[3.943s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__type_support.cpp
+[3.943s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__rosidl_typesupport_introspection_cpp.hpp
+[3.943s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/sphere__rosidl_typesupport_introspection_cpp.hpp
+[3.943s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/msg/detail/num__type_support.cpp
+[3.943s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv
+[3.943s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail
+[3.946s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__rosidl_typesupport_introspection_cpp.hpp
+[3.946s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/include/tutorial_interfaces/tutorial_interfaces/srv/detail/get_six_ints__type_support.cpp
+[3.946s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/lib/libtutorial_interfaces__rosidl_typesupport_introspection_cpp.so
+[3.949s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/lib/libtutorial_interfaces__rosidl_typesupport_cpp.so
+[3.950s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/environment/pythonpath.sh
+[3.950s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/environment/pythonpath.dsv
+[3.950s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces-0.0.0-py3.10.egg-info
+[3.950s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces-0.0.0-py3.10.egg-info/dependency_links.txt
+[3.950s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces-0.0.0-py3.10.egg-info/PKG-INFO
+[3.950s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces-0.0.0-py3.10.egg-info/SOURCES.txt
+[3.950s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces-0.0.0-py3.10.egg-info/top_level.txt
+[3.950s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces
+[3.950s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/libtutorial_interfaces__rosidl_generator_py.so
+[3.956s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/_tutorial_interfaces_s.ep.rosidl_typesupport_c.c
+[3.956s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/tutorial_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[3.956s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/tutorial_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[3.956s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/msg
+[3.956s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/msg/_sphere.py
+[3.956s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/msg/_sphere_s.c
+[3.957s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/msg/__init__.py
+[3.957s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/msg/_num.py
+[3.957s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/msg/_num_s.c
+[3.957s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/_tutorial_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+[3.959s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/__init__.py
+[3.959s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/srv
+[3.960s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/srv/_get_six_ints_s.c
+[3.960s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/srv/__init__.py
+[3.960s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/srv/_get_six_ints.py
+[3.960s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/_tutorial_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+[3.960s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/tutorial_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[4.096s] Listing '/home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces'...
+[4.096s] Listing '/home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/msg'...
+[4.096s] Listing '/home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/srv'...
+[4.120s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/tutorial_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[4.121s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/tutorial_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[4.121s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/local/lib/python3.10/dist-packages/tutorial_interfaces/tutorial_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[4.121s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/lib/libtutorial_interfaces__rosidl_generator_py.so
+[4.121s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/msg/Num.idl
+[4.121s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/msg/Sphere.idl
+[4.121s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/srv/GetSixInts.idl
+[4.121s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/msg/Num.msg
+[4.121s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/msg/Sphere.msg
+[4.122s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/srv/GetSixInts.srv
+[4.122s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/srv/GetSixInts_Request.msg
+[4.122s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/srv/GetSixInts_Response.msg
+[4.122s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/ament_index/resource_index/package_run_dependencies/tutorial_interfaces
+[4.122s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/ament_index/resource_index/parent_prefix_path/tutorial_interfaces
+[4.124s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/environment/ament_prefix_path.sh
+[4.124s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/environment/ament_prefix_path.dsv
+[4.125s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/environment/path.sh
+[4.127s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/environment/path.dsv
+[4.129s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/local_setup.bash
+[4.129s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/local_setup.sh
+[4.129s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/local_setup.zsh
+[4.129s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/local_setup.dsv
+[4.130s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/package.dsv
+[4.130s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/ament_index/resource_index/packages/tutorial_interfaces
+[4.132s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/export_tutorial_interfaces__rosidl_generator_cExport.cmake
+[4.132s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/export_tutorial_interfaces__rosidl_generator_cExport-release.cmake
+[4.132s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/export_tutorial_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+[4.134s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/export_tutorial_interfaces__rosidl_typesupport_fastrtps_cExport-release.cmake
+[4.135s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/export_tutorial_interfaces__rosidl_generator_cppExport.cmake
+[4.136s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/export_tutorial_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+[4.136s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/export_tutorial_interfaces__rosidl_typesupport_fastrtps_cppExport-release.cmake
+[4.136s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfaces__rosidl_typesupport_introspection_cExport.cmake
+[4.137s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfaces__rosidl_typesupport_introspection_cExport-release.cmake
+[4.137s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfaces__rosidl_typesupport_cExport.cmake
+[4.138s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfaces__rosidl_typesupport_cExport-release.cmake
+[4.138s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfaces__rosidl_typesupport_introspection_cppExport.cmake
+[4.138s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfaces__rosidl_typesupport_introspection_cppExport-release.cmake
+[4.139s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfaces__rosidl_typesupport_cppExport.cmake
+[4.139s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfaces__rosidl_typesupport_cppExport-release.cmake
+[4.139s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/export_tutorial_interfaces__rosidl_generator_pyExport.cmake
+[4.139s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/export_tutorial_interfaces__rosidl_generator_pyExport-release.cmake
+[4.140s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/rosidl_cmake-extras.cmake
+[4.140s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+[4.140s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+[4.140s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+[4.140s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/ament_cmake_export_targets-extras.cmake
+[4.140s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[4.141s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[4.141s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfacesConfig.cmake
+[4.142s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/cmake/tutorial_interfacesConfig-version.cmake
+[4.142s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/tutorial_interfaces/share/tutorial_interfaces/package.xml
+[5.004s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/tutorial_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/tutorial_interfaces

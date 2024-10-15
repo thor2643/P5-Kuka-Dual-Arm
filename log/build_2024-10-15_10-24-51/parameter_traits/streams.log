@@ -1,0 +1,28 @@
+[0.370s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits -- -j8 -l8
+[0.816s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits -- -j8 -l8
+[0.958s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits
+[1.093s] -- Install configuration: "Release"
+[1.115s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/include/parameter_traits
+[1.115s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/include/parameter_traits/parameter_traits
+[1.116s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/include/parameter_traits/parameter_traits/parameter_traits.hpp
+[1.116s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/library_path.sh
+[1.116s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/library_path.dsv
+[1.116s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/ament_index/resource_index/package_run_dependencies/parameter_traits
+[1.116s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/ament_index/resource_index/parent_prefix_path/parameter_traits
+[1.116s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/ament_prefix_path.sh
+[1.116s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/ament_prefix_path.dsv
+[1.116s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/path.sh
+[1.116s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/path.dsv
+[1.117s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/local_setup.bash
+[1.117s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/local_setup.sh
+[1.117s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/local_setup.zsh
+[1.117s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/local_setup.dsv
+[1.121s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/package.dsv
+[1.124s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/ament_index/resource_index/packages/parameter_traits
+[1.125s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/export_parameter_traitsExport.cmake
+[1.125s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/ament_cmake_export_targets-extras.cmake
+[1.125s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/ament_cmake_export_dependencies-extras.cmake
+[1.125s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/parameter_traitsConfig.cmake
+[1.125s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/parameter_traitsConfig-version.cmake
+[1.125s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/package.xml
+[1.143s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits

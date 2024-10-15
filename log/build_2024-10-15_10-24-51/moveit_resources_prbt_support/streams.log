@@ -1,0 +1,44 @@
+[0.226s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support -- -j8 -l8
+[0.404s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support -- -j8 -l8
+[0.585s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support
+[0.618s] -- Install configuration: "Release"
+[0.623s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/ament_index/resource_index/package_run_dependencies/moveit_resources_prbt_support
+[0.624s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/ament_index/resource_index/parent_prefix_path/moveit_resources_prbt_support
+[0.624s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/environment/ament_prefix_path.sh
+[0.624s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/environment/ament_prefix_path.dsv
+[0.624s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/environment/path.sh
+[0.624s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/environment/path.dsv
+[0.624s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/local_setup.bash
+[0.624s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/local_setup.sh
+[0.625s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/local_setup.zsh
+[0.625s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/local_setup.dsv
+[0.628s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/package.dsv
+[0.644s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/ament_index/resource_index/packages/moveit_resources_prbt_support
+[0.645s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/cmake/moveit_resources_prbt_supportConfig.cmake
+[0.645s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/cmake/moveit_resources_prbt_supportConfig-version.cmake
+[0.646s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/package.xml
+[0.646s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/urdf
+[0.646s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/urdf/simple_gripper_brackets.urdf.xacro
+[0.647s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/urdf/prbt.xacro
+[0.647s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/urdf/prbt.ros2_control.xacro
+[0.648s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/urdf/prbt_macro.xacro
+[0.648s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes
+[0.648s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/flange.dae
+[0.649s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_3.stl
+[0.649s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/foot.dae
+[0.649s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_3.dae
+[0.649s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_1.stl
+[0.650s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_5.dae
+[0.650s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/foot.stl
+[0.656s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_1.dae
+[0.656s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_5.stl
+[0.656s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_2.dae
+[0.657s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_2.stl
+[0.657s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/flange.stl
+[0.657s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_4.dae
+[0.657s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/meshes/link_4.stl
+[0.657s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/config
+[0.657s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/config/prbt_0_1.dcf
+[0.657s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/config/manipulator_driver.yaml
+[0.657s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_prbt_support/share/moveit_resources_prbt_support/config/manipulator_controller.yaml
+[0.710s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support

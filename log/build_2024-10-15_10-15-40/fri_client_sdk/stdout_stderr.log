@@ -1,0 +1,24 @@
+[0mFound nanopb of version: 0.2.8[0m
+[0mFound FRIClient of version: 1.15[0m
+-- Configuring FRIClient version 1.15
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk
+[35m[1mConsolidate compiler generated dependencies of target FRIClient[0m
+[100%] Built target FRIClient
+-- Install configuration: "Release"
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/libFRIClient.so
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friConnectionIf.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friClientIf.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friLBRClient.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friUdpConnection.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friException.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friLBRState.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friClientVersion.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friClientApplication.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friLBRCommand.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friTransformationClient.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/cmake/FRIClient/FRIClientConfig.cmake
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/cmake/FRIClient/FRIClientConfig-release.cmake
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/cmake/FRIClient/FRIClientConfigVersion.cmake

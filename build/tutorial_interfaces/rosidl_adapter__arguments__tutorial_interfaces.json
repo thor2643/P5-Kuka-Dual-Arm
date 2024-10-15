@@ -1,0 +1,8 @@
+{
+  "package_name": "tutorial_interfaces",
+  "non_idl_tuples": [
+    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/tutorial_interfaces:msg/Num.msg",
+    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/tutorial_interfaces:msg/Sphere.msg",
+    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/tutorial_interfaces:srv/GetSixInts.srv"
+  ]
+}

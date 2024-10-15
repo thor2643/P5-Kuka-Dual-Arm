@@ -1,0 +1,8 @@
+srv/SpeechToText.idl
+srv/SpeechToText.srv
+srv/SpeechToText_Request.msg
+srv/SpeechToText_Response.msg
+srv/TextToSpeech.idl
+srv/TextToSpeech.srv
+srv/TextToSpeech_Request.msg
+srv/TextToSpeech_Response.msg

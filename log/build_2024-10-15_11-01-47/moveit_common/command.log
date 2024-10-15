@@ -1,0 +1,6 @@
+Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_common -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common
+Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_common -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common
+Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_common -- -j8 -l8
+Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_common -- -j8 -l8
+Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_common
+Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_common

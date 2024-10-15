@@ -1,0 +1,28 @@
+[0.250s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits -- -j8 -l8
+[0.336s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits -- -j8 -l8
+[0.360s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits
+[0.368s] -- Install configuration: "Release"
+[0.369s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/include/parameter_traits
+[0.369s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/include/parameter_traits/parameter_traits
+[0.369s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/include/parameter_traits/parameter_traits/parameter_traits.hpp
+[0.370s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/library_path.sh
+[0.370s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/library_path.dsv
+[0.370s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/ament_index/resource_index/package_run_dependencies/parameter_traits
+[0.370s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/ament_index/resource_index/parent_prefix_path/parameter_traits
+[0.370s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/ament_prefix_path.sh
+[0.370s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/ament_prefix_path.dsv
+[0.370s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/path.sh
+[0.370s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/environment/path.dsv
+[0.371s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/local_setup.bash
+[0.371s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/local_setup.sh
+[0.371s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/local_setup.zsh
+[0.371s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/local_setup.dsv
+[0.371s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/package.dsv
+[0.371s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/ament_index/resource_index/packages/parameter_traits
+[0.372s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/export_parameter_traitsExport.cmake
+[0.372s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/ament_cmake_export_targets-extras.cmake
+[0.372s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.372s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/parameter_traitsConfig.cmake
+[0.372s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake/parameter_traitsConfig-version.cmake
+[0.372s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/package.xml
+[0.374s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/parameter_traits

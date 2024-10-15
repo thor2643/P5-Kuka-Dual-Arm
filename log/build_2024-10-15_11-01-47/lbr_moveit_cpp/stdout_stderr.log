@@ -1,0 +1,47 @@
+-- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found geometry_msgs: 4.2.4 (/opt/ros/humble/share/geometry_msgs/cmake)
+-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found moveit_ros_planning_interface: 2.5.5 (/home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_planning_interface/share/moveit_ros_planning_interface/cmake)
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: date_time filesystem program_options system thread 
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: chrono date_time filesystem iostreams program_options regex serialization system thread 
+-- Found parameter_traits: 0.3.7 (/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake)
+-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_lifecycle: 16.0.10 (/opt/ros/humble/share/rclcpp_lifecycle/cmake)
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: filesystem 
+-- library: /usr/lib/x86_64-linux-gnu/libcurl.so
+-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: system filesystem date_time program_options thread chrono 
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: thread system filesystem regex date_time program_options 
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: system filesystem date_time program_options thread 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/gustav/P5-Kuka-Dual-Arm/build/lbr_moveit_cpp
+[35m[1mConsolidate compiler generated dependencies of target hello_moveit[0m
+[ 50%] [32m[1mLinking CXX executable hello_moveit[0m
+[100%] Built target hello_moveit
+-- Install configuration: "Release"
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/launch
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/launch/hello_moveit.launch.py
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/lib/lbr_moveit_cpp/hello_moveit
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/lib/lbr_moveit_cpp/hello_moveit" to ""
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/ament_index/resource_index/package_run_dependencies/lbr_moveit_cpp
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/ament_index/resource_index/parent_prefix_path/lbr_moveit_cpp
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/environment/ament_prefix_path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/environment/path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/environment/path.dsv
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/local_setup.bash
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/local_setup.sh
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/local_setup.zsh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/local_setup.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/package.dsv
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/ament_index/resource_index/packages/lbr_moveit_cpp
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/cmake/lbr_moveit_cppConfig.cmake
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/cmake/lbr_moveit_cppConfig-version.cmake
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_moveit_cpp/share/lbr_moveit_cpp/package.xml

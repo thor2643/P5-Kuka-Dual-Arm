@@ -1,0 +1,45 @@
+[0.304s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit_resources/fanuc_description -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description
+[0.321s] -- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.641s] -- Configuring done
+[0.646s] -- Generating done
+[0.646s] -- Build files have been written to: /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description
+[0.744s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit_resources/fanuc_description -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description
+[0.746s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description -- -j8 -l8
+[0.808s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description -- -j8 -l8
+[0.854s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description
+[0.881s] -- Install configuration: "Release"
+[0.887s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/ament_index/resource_index/package_run_dependencies/moveit_resources_fanuc_description
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/ament_index/resource_index/parent_prefix_path/moveit_resources_fanuc_description
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/environment/ament_prefix_path.sh
+[0.888s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/environment/ament_prefix_path.dsv
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/environment/path.sh
+[0.888s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/environment/path.dsv
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/local_setup.bash
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/local_setup.sh
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/local_setup.zsh
+[0.888s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/local_setup.dsv
+[0.888s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/package.dsv
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/ament_index/resource_index/packages/moveit_resources_fanuc_description
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/cmake/moveit_resources_fanuc_descriptionConfig.cmake
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/cmake/moveit_resources_fanuc_descriptionConfig-version.cmake
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/package.xml
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/visual
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/visual/link_3.stl
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/visual/base_link.stl
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/visual/link_1.stl
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/visual/link_6.stl
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/visual/link_5.stl
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/visual/link_2.stl
+[0.889s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/visual/link_4.stl
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/collision
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/collision/link_3.stl
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/collision/base_link.stl
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/collision/link_1.stl
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/collision/link_6.stl
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/collision/link_5.stl
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/collision/link_2.stl
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/meshes/collision/link_4.stl
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/urdf
+[0.890s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_fanuc_description/share/moveit_resources_fanuc_description/urdf/fanuc.urdf
+[0.909s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_fanuc_description

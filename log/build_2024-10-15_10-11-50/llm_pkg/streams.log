@@ -1,0 +1,38 @@
+[1.795s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/llm_pkg': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages:/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../build/llm_pkg build --build-base /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build install --record /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/install.log --single-version-externally-managed install_data
+[2.439s] running egg_info
+[2.440s] creating ../../../build/llm_pkg/llm_pkg.egg-info
+[2.441s] writing ../../../build/llm_pkg/llm_pkg.egg-info/PKG-INFO
+[2.442s] writing dependency_links to ../../../build/llm_pkg/llm_pkg.egg-info/dependency_links.txt
+[2.442s] writing entry points to ../../../build/llm_pkg/llm_pkg.egg-info/entry_points.txt
+[2.442s] writing requirements to ../../../build/llm_pkg/llm_pkg.egg-info/requires.txt
+[2.442s] writing top-level names to ../../../build/llm_pkg/llm_pkg.egg-info/top_level.txt
+[2.443s] writing manifest file '../../../build/llm_pkg/llm_pkg.egg-info/SOURCES.txt'
+[2.447s] reading manifest file '../../../build/llm_pkg/llm_pkg.egg-info/SOURCES.txt'
+[2.449s] writing manifest file '../../../build/llm_pkg/llm_pkg.egg-info/SOURCES.txt'
+[2.449s] running build
+[2.449s] running build_py
+[2.449s] creating /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build
+[2.450s] creating /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib
+[2.450s] creating /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg
+[2.450s] copying llm_pkg/llm_node.py -> /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg
+[2.450s] copying llm_pkg/__init__.py -> /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg
+[2.450s] running install
+[2.455s] running install_lib
+[2.457s] creating /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg
+[2.457s] copying /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg/llm_node.py -> /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg
+[2.457s] copying /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg/__init__.py -> /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg
+[2.457s] byte-compiling /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg/llm_node.py to llm_node.cpython-310.pyc
+[2.457s] byte-compiling /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg/__init__.py to __init__.cpython-310.pyc
+[2.457s] running install_data
+[2.458s] creating /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/ament_index
+[2.459s] creating /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/ament_index/resource_index
+[2.459s] creating /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/ament_index/resource_index/packages
+[2.459s] copying resource/llm_pkg -> /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/ament_index/resource_index/packages
+[2.459s] copying package.xml -> /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/llm_pkg
+[2.460s] running install_egg_info
+[2.460s] Copying ../../../build/llm_pkg/llm_pkg.egg-info to /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg-0.0.0-py3.10.egg-info
+[2.460s] running install_scripts
+[2.498s] Installing llm_node script to /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/llm_pkg
+[2.499s] Installing speech_services script to /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/llm_pkg
+[2.499s] writing list of installed files to '/home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/install.log'
+[2.583s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/llm_pkg' returned '0': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages:/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../build/llm_pkg build --build-base /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build install --record /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/install.log --single-version-externally-managed install_data

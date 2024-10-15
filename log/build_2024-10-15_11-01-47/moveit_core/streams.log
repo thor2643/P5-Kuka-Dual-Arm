@@ -1,0 +1,524 @@
+[0.272s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_core': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/opt/ros/humble LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/lib:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/lib:${LD_LIBRARY_PATH} PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/bin:${PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/local/lib/python3.10/dist-packages:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core
+[0.283s] -- Found moveit_common: 2.5.5 (/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/cmake)
+[0.283s] -- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.489s] -- Found angles: 1.15.0 (/opt/ros/humble/share/angles/cmake)
+[0.510s] -- Found common_interfaces: 4.2.4 (/opt/ros/humble/share/common_interfaces/cmake)
+[0.510s] -- Found eigen_stl_containers: 1.0.0 (/opt/ros/humble/share/eigen_stl_containers/cmake)
+[0.512s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[0.515s] -- Found generate_parameter_library: 0.3.7 (/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library/share/generate_parameter_library/cmake)
+[0.515s] -- Found parameter_traits: 0.3.7 (/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake)
+[0.539s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.542s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.548s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.559s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.572s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.606s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.608s] -- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.705s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.773s] -- Found rclcpp_lifecycle: 16.0.10 (/opt/ros/humble/share/rclcpp_lifecycle/cmake)
+[0.790s] -- Found geometric_shapes: 2.1.3 (/opt/ros/humble/share/geometric_shapes/cmake)
+[0.795s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: filesystem 
+[0.842s] -- library: /usr/lib/x86_64-linux-gnu/libcurl.so
+[0.898s] -- Found kdl_parser: 2.6.4 (/opt/ros/humble/share/kdl_parser/cmake)
+[0.902s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[0.903s] -- Found moveit_msgs: 2.2.1 (/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/share/moveit_msgs/cmake)
+[1.014s] -- Found pluginlib: 5.1.0 (/opt/ros/humble/share/pluginlib/cmake)
+[1.027s] -- Found srdfdom: 2.0.4 (/home/gustav/ws_moveit2/install/srdfdom/share/srdfdom/cmake)
+[1.034s] -- Found tf2_eigen: 0.25.8 (/opt/ros/humble/share/tf2_eigen/cmake)
+[1.087s] -- Found tf2_geometry_msgs: 0.25.8 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+[1.090s] -- Found tf2_kdl: 0.25.8 (/opt/ros/humble/share/tf2_kdl/cmake)
+[1.108s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: chrono date_time filesystem iostreams program_options regex serialization system thread 
+[1.109s] --  *** Building MoveIt 2.5.5-Alpha ***
+[1.118s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[1.119s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.130s] -- Found ament_cmake_gmock: 1.3.10 (/opt/ros/humble/share/ament_cmake_gmock/cmake)
+[1.132s] -- Found gmock sources under '/opt/ros/humble/src/gmock_vendor': C++ tests using 'Google Mock' will be built
+[1.136s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[1.136s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.146s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[1.147s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.169s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[1.170s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.186s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.186s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[1.187s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.204s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[1.205s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.217s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[1.218s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.227s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[1.228s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.242s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.252s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.264s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[1.265s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.286s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.301s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.314s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.322s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.358s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.360s] -- Configured cppcheck include dirs: /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/exceptions/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/collision_detection/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/collision_detection_fcl/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/collision_detection_bullet/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/constraint_samplers/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/controller_manager/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/distance_field/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/collision_distance_field/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/dynamics_solver/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/kinematics_base/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/kinematics_metrics/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/robot_model/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/transforms/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/robot_state/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/robot_trajectory/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/kinematic_constraints/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/macros/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/online_signal_smoothing/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/planning_interface/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/planning_request_adapter/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/planning_scene/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/sensor_manager/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/trajectory_processing/include;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core/utils/include
+[1.360s] -- Configured cppcheck exclude dirs and/or files: 
+[1.362s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.364s] -- Added test 'xmllint' to check XML markup files
+[1.367s] -- Configuring done
+[2.059s] -- Generating done
+[2.070s] -- Build files have been written to: /home/gustav/P5-Kuka-Dual-Arm/build/moveit_core
+[2.110s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_core' returned '0': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/opt/ros/humble LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/lib:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/lib:${LD_LIBRARY_PATH} PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/bin:${PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/local/lib/python3.10/dist-packages:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_core -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core
+[2.113s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_core': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/opt/ros/humble LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/lib:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/lib:${LD_LIBRARY_PATH} PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/bin:${PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/local/lib/python3.10/dist-packages:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_core -- -j8 -l8
+[2.169s] [35m[1mConsolidate compiler generated dependencies of target moveit_exceptions[0m
+[2.171s] [35m[1mConsolidate compiler generated dependencies of target gtest[0m
+[2.171s] [35m[1mConsolidate compiler generated dependencies of target moveit_transforms[0m
+[2.171s] [35m[1mConsolidate compiler generated dependencies of target moveit_kinematics_base[0m
+[2.171s] [35m[1mConsolidate compiler generated dependencies of target moveit_utils[0m
+[2.172s] [35m[1mConsolidate compiler generated dependencies of target gtest_main[0m
+[2.174s] [35m[1mConsolidate compiler generated dependencies of target gmock[0m
+[2.181s] [35m[1mConsolidate compiler generated dependencies of target moveit_distance_field[0m
+[2.187s] [  1%] Built target moveit_exceptions
+[2.189s] [  2%] Built target gtest
+[2.190s] [  3%] Built target gtest_main
+[2.190s] [  5%] Built target moveit_utils
+[2.196s] [  7%] Built target gmock
+[2.198s] [  7%] [32mBuilding CXX object kinematics_base/CMakeFiles/moveit_kinematics_base.dir/src/kinematics_base.cpp.o[0m
+[2.199s] [  8%] Built target moveit_transforms
+[2.200s] [35m[1mConsolidate compiler generated dependencies of target gmock_main[0m
+[2.204s] [35m[1mConsolidate compiler generated dependencies of target moveit_smoothing_base[0m
+[2.206s] [35m[1mConsolidate compiler generated dependencies of target moveit_version[0m
+[2.212s] [35m[1mConsolidate compiler generated dependencies of target test_transforms[0m
+[2.214s] [  9%] Built target moveit_butterworth_parameters
+[2.217s] [ 10%] Built target gmock_main
+[2.217s] [ 12%] Built target moveit_version
+[2.223s] [ 14%] Built target moveit_smoothing_base
+[2.223s] [ 15%] Built target moveit_distance_field
+[2.227s] [ 16%] Built target test_transforms
+[2.233s] [35m[1mConsolidate compiler generated dependencies of target test_voxel_grid[0m
+[2.233s] [35m[1mConsolidate compiler generated dependencies of target test_distance_field[0m
+[2.247s] [ 17%] Built target test_voxel_grid
+[2.252s] [ 18%] Built target test_distance_field
+[6.918s] [ 19%] [32m[1mLinking CXX shared library libmoveit_kinematics_base.so[0m
+[7.045s] [ 19%] Built target moveit_kinematics_base
+[7.064s] [35m[1mConsolidate compiler generated dependencies of target moveit_robot_model[0m
+[7.096s] [ 21%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/fixed_joint_model.cpp.o[0m
+[7.096s] [ 21%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/aabb.cpp.o[0m
+[7.097s] [ 21%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/floating_joint_model.cpp.o[0m
+[7.099s] [ 22%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/joint_model.cpp.o[0m
+[7.100s] [ 22%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/joint_model_group.cpp.o[0m
+[7.104s] [ 23%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/link_model.cpp.o[0m
+[7.104s] [ 23%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/planar_joint_model.cpp.o[0m
+[7.104s] [ 24%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/prismatic_joint_model.cpp.o[0m
+[9.514s] [ 25%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/revolute_joint_model.cpp.o[0m
+[10.003s] [ 25%] [32mBuilding CXX object robot_model/CMakeFiles/moveit_robot_model.dir/src/robot_model.cpp.o[0m
+[20.176s] [ 26%] [32m[1mLinking CXX shared library libmoveit_robot_model.so[0m
+[20.344s] [ 26%] Built target moveit_robot_model
+[20.355s] [35m[1mConsolidate compiler generated dependencies of target moveit_butterworth_filter[0m
+[20.355s] [35m[1mConsolidate compiler generated dependencies of target moveit_test_utils[0m
+[20.359s] [35m[1mConsolidate compiler generated dependencies of target moveit_robot_state[0m
+[20.374s] [ 26%] [32m[1mLinking CXX shared library libmoveit_butterworth_filter.so[0m
+[20.378s] [ 27%] [32mBuilding CXX object utils/CMakeFiles/moveit_test_utils.dir/src/robot_model_test_utils.cpp.o[0m
+[20.386s] [ 28%] [32m[1mLinking CXX shared library libmoveit_robot_state.so[0m
+[20.535s] [ 29%] Built target moveit_butterworth_filter
+[20.547s] [35m[1mConsolidate compiler generated dependencies of target test_butterworth_filter[0m
+[20.566s] [ 30%] [32m[1mLinking CXX executable test_butterworth_filter[0m
+[20.573s] [ 32%] Built target moveit_robot_state
+[20.585s] [35m[1mConsolidate compiler generated dependencies of target moveit_robot_trajectory[0m
+[20.587s] [35m[1mConsolidate compiler generated dependencies of target moveit_kinematics_metrics[0m
+[20.588s] [35m[1mConsolidate compiler generated dependencies of target moveit_dynamics_solver[0m
+[20.595s] [35m[1mConsolidate compiler generated dependencies of target moveit_collision_detection[0m
+[20.603s] [ 33%] [32m[1mLinking CXX shared library libmoveit_robot_trajectory.so[0m
+[20.607s] [ 34%] [32m[1mLinking CXX shared library libmoveit_kinematics_metrics.so[0m
+[20.614s] [ 35%] [32m[1mLinking CXX shared library libmoveit_dynamics_solver.so[0m
+[20.653s] [ 36%] [32m[1mLinking CXX shared library libmoveit_collision_detection.so[0m
+[20.823s] [ 36%] Built target test_butterworth_filter
+[20.832s] [ 37%] Built target moveit_dynamics_solver
+[20.868s] [ 37%] Built target moveit_kinematics_metrics
+[20.877s] [ 37%] Built target moveit_robot_trajectory
+[20.890s] [35m[1mConsolidate compiler generated dependencies of target moveit_planning_interface[0m
+[20.893s] [35m[1mConsolidate compiler generated dependencies of target moveit_trajectory_processing[0m
+[20.912s] [ 38%] [32m[1mLinking CXX shared library libmoveit_planning_interface.so[0m
+[20.920s] [ 39%] [32m[1mLinking CXX shared library libmoveit_trajectory_processing.so[0m
+[20.945s] [ 44%] Built target moveit_collision_detection
+[20.959s] [35m[1mConsolidate compiler generated dependencies of target test_world_diff[0m
+[20.959s] [35m[1mConsolidate compiler generated dependencies of target test_world[0m
+[20.960s] [35m[1mConsolidate compiler generated dependencies of target test_all_valid[0m
+[20.965s] [35m[1mConsolidate compiler generated dependencies of target moveit_collision_detection_fcl[0m
+[20.974s] [35m[1mConsolidate compiler generated dependencies of target moveit_collision_detection_bullet[0m
+[20.982s] [ 45%] [32m[1mLinking CXX executable test_world_diff[0m
+[20.990s] [ 45%] [32m[1mLinking CXX executable test_world[0m
+[21.007s] [ 46%] [32m[1mLinking CXX executable test_all_valid[0m
+[21.012s] [ 47%] [32m[1mLinking CXX shared library libmoveit_collision_detection_fcl.so[0m
+[21.037s] [ 48%] [32m[1mLinking CXX shared library libmoveit_collision_detection_bullet.so[0m
+[21.178s] [ 49%] Built target moveit_planning_interface
+[21.238s] [ 52%] Built target moveit_trajectory_processing
+[21.364s] [ 53%] Built target test_world_diff
+[21.400s] [ 53%] Built target test_all_valid
+[21.434s] [ 54%] Built target test_world
+[21.453s] [ 58%] Built target moveit_collision_detection_bullet
+[21.483s] [ 59%] Built target moveit_collision_detection_fcl
+[21.495s] [35m[1mConsolidate compiler generated dependencies of target moveit_kinematic_constraints[0m
+[21.521s] [ 60%] [32m[1mLinking CXX shared library libmoveit_kinematic_constraints.so[0m
+[21.728s] [ 61%] Built target moveit_kinematic_constraints
+[21.739s] [35m[1mConsolidate compiler generated dependencies of target moveit_planning_scene[0m
+[21.764s] [ 61%] [32m[1mLinking CXX shared library libmoveit_planning_scene.so[0m
+[21.976s] [ 62%] Built target moveit_planning_scene
+[21.987s] [35m[1mConsolidate compiler generated dependencies of target moveit_planning_request_adapter[0m
+[21.988s] [35m[1mConsolidate compiler generated dependencies of target collision_detector_fcl_plugin[0m
+[21.991s] [35m[1mConsolidate compiler generated dependencies of target collision_detector_bullet_plugin[0m
+[21.998s] [35m[1mConsolidate compiler generated dependencies of target moveit_collision_distance_field[0m
+[21.999s] [35m[1mConsolidate compiler generated dependencies of target moveit_constraint_samplers[0m
+[22.009s] [ 63%] [32m[1mLinking CXX shared library libcollision_detector_fcl_plugin.so[0m
+[22.010s] [ 64%] [32m[1mLinking CXX shared library libmoveit_planning_request_adapter.so[0m
+[22.020s] [ 65%] [32m[1mLinking CXX shared library libcollision_detector_bullet_plugin.so[0m
+[22.041s] [ 66%] [32m[1mLinking CXX shared library libmoveit_collision_distance_field.so[0m
+[22.048s] [ 67%] [32m[1mLinking CXX shared library libmoveit_constraint_samplers.so[0m
+[22.229s] [ 67%] Built target moveit_planning_request_adapter
+[22.279s] [ 67%] Built target collision_detector_fcl_plugin
+[22.297s] [ 69%] Built target moveit_constraint_samplers
+[22.313s] [ 69%] Built target collision_detector_bullet_plugin
+[22.363s] [ 71%] Built target moveit_collision_distance_field
+[29.629s] [ 71%] [32m[1mLinking CXX shared library libmoveit_test_utils.so[0m
+[29.794s] [ 71%] Built target moveit_test_utils
+[29.812s] [35m[1mConsolidate compiler generated dependencies of target test_orientation_constraints[0m
+[29.812s] [35m[1mConsolidate compiler generated dependencies of target test_multi_threaded[0m
+[29.812s] [35m[1mConsolidate compiler generated dependencies of target test_collision_objects[0m
+[29.812s] [35m[1mConsolidate compiler generated dependencies of target test_constraints[0m
+[29.812s] [35m[1mConsolidate compiler generated dependencies of target test_collision_distance_field[0m
+[29.812s] [35m[1mConsolidate compiler generated dependencies of target test_planning_scene[0m
+[29.812s] [35m[1mConsolidate compiler generated dependencies of target test_robot_model[0m
+[29.819s] [35m[1mConsolidate compiler generated dependencies of target test_constraint_samplers[0m
+[29.839s] [ 72%] [32m[1mLinking CXX executable test_robot_model[0m
+[29.839s] [ 72%] [32m[1mLinking CXX executable test_orientation_constraints[0m
+[29.839s] [ 73%] [32m[1mLinking CXX executable test_constraints[0m
+[29.841s] [ 74%] [32m[1mLinking CXX executable test_multi_threaded[0m
+[29.842s] [ 74%] [32m[1mLinking CXX executable test_collision_objects[0m
+[29.844s] [ 75%] [32mBuilding CXX object collision_distance_field/CMakeFiles/test_collision_distance_field.dir/test/test_collision_distance_field.cpp.o[0m
+[29.844s] [ 76%] [32mBuilding CXX object planning_scene/CMakeFiles/test_planning_scene.dir/test/test_planning_scene.cpp.o[0m
+[29.858s] [ 77%] [32m[1mLinking CXX executable test_constraint_samplers[0m
+[30.302s] [ 78%] Built target test_robot_model
+[30.323s] [35m[1mConsolidate compiler generated dependencies of target test_robot_state[0m
+[30.356s] [ 78%] Built target test_orientation_constraints
+[30.356s] [ 79%] [32m[1mLinking CXX executable test_robot_state[0m
+[30.369s] [ 79%] Built target test_multi_threaded
+[30.373s] [35m[1mConsolidate compiler generated dependencies of target test_robot_state_benchmark[0m
+[30.381s] [ 80%] Built target test_collision_objects
+[30.382s] [ 80%] Built target test_constraints
+[30.388s] [35m[1mConsolidate compiler generated dependencies of target test_robot_state_complex[0m
+[30.398s] [35m[1mConsolidate compiler generated dependencies of target test_aabb[0m
+[30.401s] [35m[1mConsolidate compiler generated dependencies of target test_cartesian_interpolator[0m
+[30.403s] [ 81%] [32m[1mLinking CXX executable test_robot_state_benchmark[0m
+[30.417s] [ 82%] [32m[1mLinking CXX executable test_robot_state_complex[0m
+[30.429s] [ 83%] [32m[1mLinking CXX executable test_cartesian_interpolator[0m
+[30.436s] [ 84%] [32m[1mLinking CXX executable test_aabb[0m
+[30.482s] [ 86%] Built target test_constraint_samplers
+[30.506s] [35m[1mConsolidate compiler generated dependencies of target test_robot_trajectory[0m
+[30.537s] [ 86%] [32m[1mLinking CXX executable test_robot_trajectory[0m
+[30.908s] [ 87%] Built target test_robot_state
+[30.923s] [ 87%] Built target test_robot_state_benchmark
+[30.932s] [35m[1mConsolidate compiler generated dependencies of target test_time_parameterization[0m
+[30.932s] [ 87%] Built target test_cartesian_interpolator
+[30.944s] [35m[1mConsolidate compiler generated dependencies of target test_time_optimal_trajectory_generation[0m
+[30.945s] [ 87%] Built target test_aabb
+[30.951s] [35m[1mConsolidate compiler generated dependencies of target test_ruckig_traj_smoothing[0m
+[30.963s] [35m[1mConsolidate compiler generated dependencies of target test_bullet_collision_detection[0m
+[30.965s] [ 88%] [32m[1mLinking CXX executable test_time_parameterization[0m
+[30.973s] [ 88%] Built target test_robot_state_complex
+[30.976s] [ 89%] [32m[1mLinking CXX executable test_time_optimal_trajectory_generation[0m
+[30.983s] [ 89%] [32m[1mLinking CXX executable test_ruckig_traj_smoothing[0m
+[30.991s] [35m[1mConsolidate compiler generated dependencies of target test_bullet_collision_detection_panda[0m
+[30.998s] [ 89%] [32m[1mLinking CXX executable test_bullet_collision_detection[0m
+[31.027s] [ 89%] [32m[1mLinking CXX executable test_bullet_collision_detection_panda[0m
+[31.101s] [ 90%] Built target test_robot_trajectory
+[31.132s] [35m[1mConsolidate compiler generated dependencies of target test_bullet_continuous_collision_checking[0m
+[31.175s] [ 91%] [32m[1mLinking CXX executable test_bullet_continuous_collision_checking[0m
+[31.520s] [ 91%] Built target test_time_parameterization
+[31.544s] [35m[1mConsolidate compiler generated dependencies of target test_fcl_collision_env[0m
+[31.554s] [ 92%] Built target test_time_optimal_trajectory_generation
+[31.557s] [ 93%] Built target test_ruckig_traj_smoothing
+[31.576s] [35m[1mConsolidate compiler generated dependencies of target test_fcl_collision_detection[0m
+[31.579s] [35m[1mConsolidate compiler generated dependencies of target test_fcl_collision_detection_panda[0m
+[31.588s] [ 94%] [32m[1mLinking CXX executable test_fcl_collision_env[0m
+[31.605s] [ 95%] Built target test_bullet_collision_detection_panda
+[31.617s] [ 95%] [32m[1mLinking CXX executable test_fcl_collision_detection_panda[0m
+[31.617s] [ 95%] [32m[1mLinking CXX executable test_fcl_collision_detection[0m
+[31.639s] [ 96%] Built target test_bullet_collision_detection
+[31.715s] [ 97%] Built target test_bullet_continuous_collision_checking
+[31.981s] [ 98%] Built target test_fcl_collision_env
+[32.003s] [ 99%] Built target test_fcl_collision_detection_panda
+[32.097s] [100%] Built target test_fcl_collision_detection
+[42.550s] [100%] [32m[1mLinking CXX executable test_collision_distance_field[0m
+[42.845s] [100%] Built target test_collision_distance_field
+[45.907s] [100%] [32m[1mLinking CXX executable test_planning_scene[0m
+[46.208s] [100%] Built target test_planning_scene
+[46.222s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_core' returned '0': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/opt/ros/humble LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/lib:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/lib:${LD_LIBRARY_PATH} PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/bin:${PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/local/lib/python3.10/dist-packages:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_core -- -j8 -l8
+[46.278s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_core': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/opt/ros/humble LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/lib:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/lib:${LD_LIBRARY_PATH} PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/bin:${PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/local/lib/python3.10/dist-packages:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_core
+[46.285s] -- Install configuration: "Release"
+[46.285s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/version.h
+[46.285s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_distance_field
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_distance_field/collision_detector_allocator_distance_field.h
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_distance_field/collision_env_distance_field.h
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_distance_field/collision_common_distance_field.h
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_distance_field/collision_distance_field_types.h
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_distance_field/collision_env_hybrid.h
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_distance_field/collision_detector_allocator_hybrid.h
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_collision_distance_field_export.h
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/constraint_samplers
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/constraint_samplers/constraint_sampler_manager.h
+[46.286s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/constraint_samplers/constraint_sampler_allocator.h
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/constraint_samplers/default_constraint_samplers.h
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/constraint_samplers/constraint_sampler_tools.h
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/constraint_samplers/union_constraint_sampler.h
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/constraint_samplers/constraint_sampler.h
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/controller_manager
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/controller_manager/controller_manager.h
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/distance_field
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/distance_field/distance_field.h
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/distance_field/find_internal_points.h
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/distance_field/propagation_distance_field.h
+[46.287s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/distance_field/voxel_grid.h
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/dynamics_solver
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/dynamics_solver/dynamics_solver.h
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/exceptions
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/exceptions/exceptions.h
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/kinematics_base
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/kinematics_base/kinematics_base.h
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_kinematics_base_export.h
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.288s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/kinematic_constraints
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/kinematic_constraints/utils.h
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/kinematic_constraints/kinematic_constraint.h
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/kinematics_metrics
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/kinematics_metrics/kinematics_metrics.h
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/macros
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/macros/class_forward.h
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/macros/declare_ptr.h
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/macros/console_colors.h
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/macros/deprecation.h
+[46.289s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_butterworth_parameters
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_butterworth_parameters/moveit_butterworth_parameters.hpp
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/online_signal_smoothing
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/online_signal_smoothing/smoothing_base_class.h
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/online_signal_smoothing/butterworth_filter.h
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_smoothing_base_export.h
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_butterworth_filter_export.h
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/planning_interface
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/planning_interface/planning_request.h
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/planning_interface/planning_interface.h
+[46.290s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/planning_interface/planning_response.h
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/planning_request_adapter
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/planning_request_adapter/planning_request_adapter.h
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/planning_scene
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/planning_scene/planning_scene.h
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_planning_scene_export.h
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/planar_joint_model.h
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/robot_model.h
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/joint_model.h
+[46.291s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/revolute_joint_model.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/fixed_joint_model.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/prismatic_joint_model.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/aabb.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/link_model.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/joint_model_group.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_model/floating_joint_model.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_state
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_state/attached_body.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_state/cartesian_interpolator.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_state/conversions.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_state/robot_state.h
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.292s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_trajectory
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/robot_trajectory/robot_trajectory.h
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/sensor_manager
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/sensor_manager/sensor_manager.h
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/trajectory_processing
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/trajectory_processing/iterative_spline_parameterization.h
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/trajectory_processing/time_optimal_trajectory_generation.h
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/trajectory_processing/trajectory_tools.h
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/trajectory_processing/iterative_time_parameterization.h
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/trajectory_processing/time_parameterization.h
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/trajectory_processing/ruckig_traj_smoothing.h
+[46.293s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/transforms
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/transforms/transforms.h
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/utils
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/utils/lexical_casts.h
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/utils/robot_model_test_utils.h
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/utils/moveit_error_code.h
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/utils/rclcpp_utils.h
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/utils/message_checks.h
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/bin/moveit_version
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/collision_plugin_cache.h
+[46.294s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/collision_env.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/collision_matrix.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/collision_tools.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/collision_octomap_filter.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/collision_plugin.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/test_collision_common_pr2.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/world_diff.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/allvalid
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/allvalid/collision_detector_allocator_allvalid.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/allvalid/collision_env_allvalid.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/test_collision_common_panda.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/collision_detector_allocator.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/world.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/collision_common.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection/occupancy_map.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_collision_detection_export.h
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.295s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/collision_env_bullet.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/collision_detector_allocator_bullet.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/collision_detector_bullet_plugin_loader.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/bullet_integration
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/bullet_integration/contact_checker_common.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/bullet_integration/bullet_bvh_manager.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/bullet_integration/bullet_utils.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/bullet_integration/ros_bullet_utils.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/bullet_integration/bullet_cast_bvh_manager.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/bullet_integration/bullet_discrete_bvh_manager.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_bullet/bullet_integration/basic_types.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_collision_detection_bullet_export.h
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_fcl
+[46.296s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_fcl/collision_env_fcl.h
+[46.297s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_fcl/collision_detector_allocator_fcl.h
+[46.297s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_fcl/collision_detector_fcl_plugin_loader.h
+[46.297s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_fcl/fcl_compat.h
+[46.297s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit/collision_detection_fcl/collision_common.h
+[46.297s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/include/moveit_collision_detection_fcl_export.h
+[46.297s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libcollision_detector_bullet_plugin.so.2.5.5
+[46.297s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libcollision_detector_bullet_plugin.so.2.5.5" to ""
+[46.297s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libcollision_detector_bullet_plugin.so
+[46.297s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_butterworth_filter.so.2.5.5
+[46.297s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_butterworth_filter.so.2.5.5" to ""
+[46.297s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_butterworth_filter.so
+[46.297s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_distance_field.so.2.5.5
+[46.297s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_distance_field.so.2.5.5" to ""
+[46.297s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_distance_field.so
+[46.297s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_detection.so.2.5.5
+[46.298s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_detection.so.2.5.5" to ""
+[46.298s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_detection.so
+[46.298s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_detection_fcl.so.2.5.5
+[46.298s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_detection_fcl.so.2.5.5" to ""
+[46.298s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_detection_fcl.so
+[46.299s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_detection_bullet.so.2.5.5
+[46.299s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_detection_bullet.so.2.5.5" to ""
+[46.299s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_collision_detection_bullet.so
+[46.300s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_dynamics_solver.so.2.5.5
+[46.300s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_dynamics_solver.so.2.5.5" to ""
+[46.300s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_dynamics_solver.so
+[46.300s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_constraint_samplers.so.2.5.5
+[46.301s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_constraint_samplers.so.2.5.5" to ""
+[46.301s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_constraint_samplers.so
+[46.301s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_distance_field.so.2.5.5
+[46.301s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_distance_field.so
+[46.301s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_exceptions.so.2.5.5
+[46.301s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_exceptions.so
+[46.301s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_kinematics_base.so
+[46.302s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_kinematics_base.so" to ""
+[46.302s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_kinematic_constraints.so.2.5.5
+[46.302s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_kinematic_constraints.so.2.5.5" to ""
+[46.303s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_kinematic_constraints.so
+[46.303s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_kinematics_metrics.so.2.5.5
+[46.303s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_kinematics_metrics.so.2.5.5" to ""
+[46.303s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_kinematics_metrics.so
+[46.304s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_planning_interface.so.2.5.5
+[46.304s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_planning_interface.so.2.5.5" to ""
+[46.304s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_planning_interface.so
+[46.304s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_planning_scene.so.2.5.5
+[46.305s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_planning_scene.so.2.5.5" to ""
+[46.305s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_planning_scene.so
+[46.305s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_planning_request_adapter.so.2.5.5
+[46.306s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_planning_request_adapter.so.2.5.5" to ""
+[46.306s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_planning_request_adapter.so
+[46.306s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_robot_model.so.2.5.5
+[46.306s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_robot_model.so.2.5.5" to ""
+[46.307s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_robot_model.so
+[46.307s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_robot_state.so.2.5.5
+[46.308s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_robot_state.so.2.5.5" to ""
+[46.308s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_robot_state.so
+[46.308s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_robot_trajectory.so.2.5.5
+[46.308s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_robot_trajectory.so.2.5.5" to ""
+[46.308s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_robot_trajectory.so
+[46.308s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_smoothing_base.so.2.5.5
+[46.308s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_smoothing_base.so
+[46.309s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_test_utils.so.2.5.5
+[46.309s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_test_utils.so.2.5.5" to ""
+[46.309s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_test_utils.so
+[46.309s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_trajectory_processing.so.2.5.5
+[46.310s] -- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_trajectory_processing.so.2.5.5" to ""
+[46.310s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_trajectory_processing.so
+[46.310s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_transforms.so.2.5.5
+[46.310s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_transforms.so
+[46.310s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_utils.so.2.5.5
+[46.311s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/lib/libmoveit_utils.so
+[46.311s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/environment/library_path.sh
+[46.311s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/environment/library_path.dsv
+[46.311s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/collision_detector_fcl_description.xml
+[46.311s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/collision_detector_bullet_description.xml
+[46.311s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/filter_plugin_butterworth.xml
+[46.311s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/ament_index/resource_index/package_run_dependencies/moveit_core
+[46.311s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/ament_index/resource_index/parent_prefix_path/moveit_core
+[46.312s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/environment/ament_prefix_path.sh
+[46.312s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/environment/ament_prefix_path.dsv
+[46.312s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/environment/path.sh
+[46.312s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/environment/path.dsv
+[46.312s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/local_setup.bash
+[46.312s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/local_setup.sh
+[46.312s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/local_setup.zsh
+[46.312s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/local_setup.dsv
+[46.312s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/package.dsv
+[46.312s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/ament_index/resource_index/packages/moveit_core
+[46.312s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/ament_index/resource_index/moveit_core__pluginlib__plugin/moveit_core
+[46.313s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/cmake/export_moveit_coreExport.cmake
+[46.313s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/cmake/export_moveit_coreExport-release.cmake
+[46.313s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/cmake/ConfigExtras.cmake
+[46.313s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/cmake/ament_cmake_export_targets-extras.cmake
+[46.313s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/cmake/ament_cmake_export_dependencies-extras.cmake
+[46.313s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/cmake/moveit_coreConfig.cmake
+[46.313s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/cmake/moveit_coreConfig-version.cmake
+[46.313s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_core/share/moveit_core/package.xml
+[46.315s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_core' returned '0': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_moveit_config:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_pr2_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_common:/opt/ros/humble LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/lib:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/lib:${LD_LIBRARY_PATH} PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/bin:${PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_msgs/local/lib/python3.10/dist-packages:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_core

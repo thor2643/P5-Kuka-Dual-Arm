@@ -1,0 +1,23 @@
+[0.007s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_common -- -j8 -l8
+[0.045s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_common -- -j8 -l8
+[0.063s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_common
+[0.070s] -- Install configuration: "Release"
+[0.070s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/ament_index/resource_index/package_run_dependencies/moveit_common
+[0.070s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/ament_index/resource_index/parent_prefix_path/moveit_common
+[0.071s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/environment/ament_prefix_path.sh
+[0.071s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/environment/ament_prefix_path.dsv
+[0.071s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/environment/path.sh
+[0.071s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/environment/path.dsv
+[0.071s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/local_setup.bash
+[0.071s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/local_setup.sh
+[0.071s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/local_setup.zsh
+[0.071s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/local_setup.dsv
+[0.071s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/package.dsv
+[0.071s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/ament_index/resource_index/packages/moveit_common
+[0.072s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/cmake/moveit_common-extras.cmake
+[0.072s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/cmake/moveit_commonConfig.cmake
+[0.072s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/cmake/moveit_commonConfig-version.cmake
+[0.072s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/package.xml
+[0.072s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/cmake
+[0.072s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_common/share/moveit_common/cmake/moveit_package.cmake
+[0.074s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_common' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_common

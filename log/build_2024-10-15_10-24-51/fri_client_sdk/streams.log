@@ -1,0 +1,21 @@
+[0.086s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk -- -j8 -l8
+[0.403s] [100%] Built target FRIClient
+[0.446s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk -- -j8 -l8
+[0.848s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk
+[0.887s] -- Install configuration: "Release"
+[0.887s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/libFRIClient.so
+[0.887s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include
+[0.887s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friConnectionIf.h
+[0.887s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friClientIf.h
+[0.887s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friLBRClient.h
+[0.887s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friUdpConnection.h
+[0.887s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friException.h
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friLBRState.h
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friClientVersion.h
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friClientApplication.h
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friLBRCommand.h
+[0.888s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friTransformationClient.h
+[0.893s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/cmake/FRIClient/FRIClientConfig.cmake
+[0.893s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/cmake/FRIClient/FRIClientConfig-release.cmake
+[0.893s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/cmake/FRIClient/FRIClientConfigVersion.cmake
+[0.896s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk

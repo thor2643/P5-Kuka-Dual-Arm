@@ -1,0 +1,106 @@
+[35m[1mConsolidate compiler generated dependencies of target moveit_point_containment_filter[0m
+[35m[1mConsolidate compiler generated dependencies of target moveit_mesh_filter[0m
+[35m[1mConsolidate compiler generated dependencies of target moveit_lazy_free_space_updater[0m
+[ 10%] Built target moveit_point_containment_filter
+[ 20%] Built target moveit_lazy_free_space_updater
+[ 25%] [32mBuilding CXX object mesh_filter/CMakeFiles/moveit_mesh_filter.dir/src/gl_mesh.cpp.o[0m
+[ 30%] [32mBuilding CXX object semantic_world/CMakeFiles/moveit_semantic_world.dir/src/semantic_world.cpp.o[0m
+[ 35%] [32mBuilding CXX object pointcloud_octomap_updater/CMakeFiles/moveit_pointcloud_octomap_updater_core.dir/src/pointcloud_octomap_updater.cpp.o[0m
+[ 40%] [32m[1mLinking CXX shared library libmoveit_mesh_filter.so[0m
+[ 60%] Built target moveit_mesh_filter
+[ 65%] [32mBuilding CXX object depth_image_octomap_updater/CMakeFiles/moveit_depth_image_octomap_updater_core.dir/src/depth_image_octomap_updater.cpp.o[0m
+[ 70%] [32m[1mLinking CXX shared library libmoveit_depth_image_octomap_updater_core.so[0m
+[ 70%] Built target moveit_depth_image_octomap_updater_core
+[ 75%] [32mBuilding CXX object depth_image_octomap_updater/CMakeFiles/moveit_depth_image_octomap_updater.dir/src/updater_plugin.cpp.o[0m
+[ 80%] [32m[1mLinking CXX shared library libmoveit_depth_image_octomap_updater.so[0m
+[ 80%] Built target moveit_depth_image_octomap_updater
+[ 85%] [32m[1mLinking CXX shared library libmoveit_pointcloud_octomap_updater_core.so[0m
+[ 85%] Built target moveit_pointcloud_octomap_updater_core
+[ 90%] [32mBuilding CXX object pointcloud_octomap_updater/CMakeFiles/moveit_pointcloud_octomap_updater.dir/src/plugin_init.cpp.o[0m
+[ 95%] [32m[1mLinking CXX shared library libmoveit_semantic_world.so[0m
+[ 95%] Built target moveit_semantic_world
+[100%] [32m[1mLinking CXX shared library libmoveit_pointcloud_octomap_updater.so[0m
+[100%] Built target moveit_pointcloud_octomap_updater
+-- Install configuration: "Release"
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/lazy_free_space_updater
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/lazy_free_space_updater/lazy_free_space_updater.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/point_containment_filter
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/point_containment_filter/shape_mask.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/pointcloud_octomap_updater
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/pointcloud_octomap_updater/pointcloud_octomap_updater.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter/filter_job.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter/gl_mesh.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter/gl_renderer.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter/depth_self_filter_nodelet.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter/stereo_camera_model.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter/mesh_filter_base.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter/transform_provider.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter/mesh_filter.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/mesh_filter/sensor_model.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit_mesh_filter_export.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/depth_image_octomap_updater
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/depth_image_octomap_updater/depth_image_octomap_updater.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/semantic_world
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/include/moveit/semantic_world/semantic_world.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_depth_image_octomap_updater.so.2.5.5
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_depth_image_octomap_updater.so.2.5.5" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_depth_image_octomap_updater.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_depth_image_octomap_updater_core.so.2.5.5
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_depth_image_octomap_updater_core.so.2.5.5" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_depth_image_octomap_updater_core.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_lazy_free_space_updater.so.2.5.5
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_lazy_free_space_updater.so.2.5.5" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_lazy_free_space_updater.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_mesh_filter.so.2.5.5
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_mesh_filter.so.2.5.5" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_mesh_filter.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_point_containment_filter.so.2.5.5
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_point_containment_filter.so.2.5.5" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_point_containment_filter.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_pointcloud_octomap_updater.so.2.5.5
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_pointcloud_octomap_updater.so.2.5.5" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_pointcloud_octomap_updater.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_pointcloud_octomap_updater_core.so.2.5.5
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_pointcloud_octomap_updater_core.so.2.5.5" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_pointcloud_octomap_updater_core.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_semantic_world.so.2.5.5
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_semantic_world.so.2.5.5" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/lib/libmoveit_semantic_world.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/environment/library_path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/environment/library_path.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/pointcloud_octomap_updater_plugin_description.xml
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/depth_image_octomap_updater_plugin_description.xml
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/ament_index/resource_index/package_run_dependencies/moveit_ros_perception
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/ament_index/resource_index/parent_prefix_path/moveit_ros_perception
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/environment/ament_prefix_path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/environment/ament_prefix_path.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/environment/path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/environment/path.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/local_setup.bash
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/local_setup.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/local_setup.zsh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/local_setup.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/package.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/ament_index/resource_index/packages/moveit_ros_perception
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/ament_index/resource_index/moveit_ros_occupancy_map_monitor__pluginlib__plugin/moveit_ros_perception
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/cmake/export_moveit_ros_perceptionExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/cmake/export_moveit_ros_perceptionExport-release.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/cmake/ConfigExtras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/cmake/ament_cmake_export_targets-extras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/cmake/moveit_ros_perceptionConfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/cmake/moveit_ros_perceptionConfig-version.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_ros_perception/share/moveit_ros_perception/package.xml

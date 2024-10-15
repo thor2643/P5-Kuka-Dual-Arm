@@ -1,0 +1,20 @@
+[2.399s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_configs_utils': PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/build/moveit_configs_utils/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_configs_utils/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/moveit_configs_utils build --build-base /home/gustav/P5-Kuka-Dual-Arm/build/moveit_configs_utils/build install --record /home/gustav/P5-Kuka-Dual-Arm/build/moveit_configs_utils/install.log --single-version-externally-managed install_data
+[3.199s] running egg_info
+[3.204s] writing ../../../../build/moveit_configs_utils/moveit_configs_utils.egg-info/PKG-INFO
+[3.204s] writing dependency_links to ../../../../build/moveit_configs_utils/moveit_configs_utils.egg-info/dependency_links.txt
+[3.204s] writing entry points to ../../../../build/moveit_configs_utils/moveit_configs_utils.egg-info/entry_points.txt
+[3.204s] writing requirements to ../../../../build/moveit_configs_utils/moveit_configs_utils.egg-info/requires.txt
+[3.204s] writing top-level names to ../../../../build/moveit_configs_utils/moveit_configs_utils.egg-info/top_level.txt
+[3.207s] reading manifest file '../../../../build/moveit_configs_utils/moveit_configs_utils.egg-info/SOURCES.txt'
+[3.217s] writing manifest file '../../../../build/moveit_configs_utils/moveit_configs_utils.egg-info/SOURCES.txt'
+[3.217s] running build
+[3.217s] running build_py
+[3.218s] running install
+[3.221s] running install_lib
+[3.224s] running install_data
+[3.224s] running install_egg_info
+[3.235s] removing '/home/gustav/P5-Kuka-Dual-Arm/install/moveit_configs_utils/lib/python3.10/site-packages/moveit_configs_utils-2.5.5-py3.10.egg-info' (and everything under it)
+[3.235s] Copying ../../../../build/moveit_configs_utils/moveit_configs_utils.egg-info to /home/gustav/P5-Kuka-Dual-Arm/install/moveit_configs_utils/lib/python3.10/site-packages/moveit_configs_utils-2.5.5-py3.10.egg-info
+[3.236s] running install_scripts
+[3.322s] writing list of installed files to '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_configs_utils/install.log'
+[3.489s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_configs_utils' returned '0': PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/build/moveit_configs_utils/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/gustav/P5-Kuka-Dual-Arm/install/moveit_configs_utils/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/moveit_configs_utils build --build-base /home/gustav/P5-Kuka-Dual-Arm/build/moveit_configs_utils/build install --record /home/gustav/P5-Kuka-Dual-Arm/build/moveit_configs_utils/install.log --single-version-externally-managed install_data

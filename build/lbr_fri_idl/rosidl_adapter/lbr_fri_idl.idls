@@ -1,0 +1,5 @@
+/home/gustav/P5-Kuka-Dual-Arm/build/lbr_fri_idl/rosidl_adapter/lbr_fri_idl:msg/LBRCommand.idl
+/home/gustav/P5-Kuka-Dual-Arm/build/lbr_fri_idl/rosidl_adapter/lbr_fri_idl:msg/LBRJointPositionCommand.idl
+/home/gustav/P5-Kuka-Dual-Arm/build/lbr_fri_idl/rosidl_adapter/lbr_fri_idl:msg/LBRState.idl
+/home/gustav/P5-Kuka-Dual-Arm/build/lbr_fri_idl/rosidl_adapter/lbr_fri_idl:msg/LBRTorqueCommand.idl
+/home/gustav/P5-Kuka-Dual-Arm/build/lbr_fri_idl/rosidl_adapter/lbr_fri_idl:msg/LBRWrenchCommand.idl

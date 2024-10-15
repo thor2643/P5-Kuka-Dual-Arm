@@ -1,0 +1,30 @@
+[0.009s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/fri -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk
+[0.064s] [0mFound nanopb of version: 0.2.8[0m
+[0.064s] [0mFound FRIClient of version: 1.15[0m
+[0.065s] -- Configuring FRIClient version 1.15
+[0.067s] -- Configuring done
+[0.078s] -- Generating done
+[0.080s] -- Build files have been written to: /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk
+[0.086s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/fri -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk
+[0.086s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk -- -j8 -l8
+[0.141s] [35m[1mConsolidate compiler generated dependencies of target FRIClient[0m
+[0.156s] [100%] Built target FRIClient
+[0.180s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk -- -j8 -l8
+[0.248s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk
+[0.257s] -- Install configuration: "Release"
+[0.258s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/libFRIClient.so
+[0.258s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include
+[0.258s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friConnectionIf.h
+[0.258s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friClientIf.h
+[0.258s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friLBRClient.h
+[0.258s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friUdpConnection.h
+[0.258s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friException.h
+[0.258s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friLBRState.h
+[0.258s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friClientVersion.h
+[0.259s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friClientApplication.h
+[0.259s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friLBRCommand.h
+[0.259s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/include/friTransformationClient.h
+[0.264s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/cmake/FRIClient/FRIClientConfig.cmake
+[0.264s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/cmake/FRIClient/FRIClientConfig-release.cmake
+[0.264s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/fri_client_sdk/lib/cmake/FRIClient/FRIClientConfigVersion.cmake
+[0.267s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk

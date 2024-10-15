@@ -1,0 +1,70 @@
+[0.037s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/generate_parameter_library_example': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/moveit2_kuka_table/install/send_cudes:/home/gustav/P5-Kuka-Dual-Arm/moveit2_kuka_table/install/moveit2_launch:/home/gustav/P5-Kuka-Dual-Arm/moveit2_kuka_table/install/kuka_bord_description:/home/gustav/lbr_stack/install/med7_moveit_config:/home/gustav/lbr_stack/install/med14_moveit_config:/home/gustav/lbr_stack/install/lbr_fri_ros2_stack:/home/gustav/lbr_stack/install/lbr_demos_cpp:/home/gustav/lbr_stack/install/lbr_bringup:/home/gustav/lbr_stack/install/lbr_ros2_control:/home/gustav/lbr_stack/install/lbr_moveit_cpp:/home/gustav/lbr_stack/install/lbr_demos_advanced_cpp:/home/gustav/lbr_stack/install/lbr_fri_ros2:/home/gustav/lbr_stack/install/lbr_fri_idl:/home/gustav/lbr_stack/install/iiwa7_moveit_config:/home/gustav/lbr_stack/install/iiwa14_moveit_config:/home/gustav/lbr_stack/install/lbr_description:/home/gustav/lbr_stack/install/fri_client_sdk:/home/gustav/ws_P5/install/send_cudes:/home/gustav/ws_P5/install/moveit2_launch:/home/gustav/ws_P5/install/kuka_bord_description:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/lib:${LD_LIBRARY_PATH} PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/bin:${PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/generate_parameter_library/example -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_example
+[0.064s] -- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.285s] -- Found generate_parameter_library: 0.3.7 (/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library/share/generate_parameter_library/cmake)
+[0.286s] -- Found parameter_traits: 0.3.7 (/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/share/parameter_traits/cmake)
+[0.342s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.347s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.357s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.378s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.400s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.456s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.460s] -- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.614s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.706s] -- Found rclcpp_lifecycle: 16.0.10 (/opt/ros/humble/share/rclcpp_lifecycle/cmake)
+[0.733s] -- Found rclcpp_components: 16.0.10 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.769s] -- Found rclpy: 3.3.14 (/opt/ros/humble/share/rclpy/cmake)
+[0.774s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.980s] -- Found ament_cmake_gtest: 1.3.10 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[0.981s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[0.993s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[0.994s] -- Found ament_cmake_gmock: 1.3.10 (/opt/ros/humble/share/ament_cmake_gmock/cmake)
+[1.002s] -- Found gmock sources under '/opt/ros/humble/src/gmock_vendor': C++ tests using 'Google Mock' will be built
+[1.016s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.037s] -- Added test 'copyright' to check source files copyright and LICENSE
+[1.037s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.045s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/generate_parameter_library/example/include>;/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/generate_parameter_library/example/include
+[1.045s] -- Configured cppcheck exclude dirs and/or files: 
+[1.048s] -- Added test 'lint_cmake' to check CMake code style
+[1.048s] -- Added test 'xmllint' to check XML markup files
+[1.057s] -- Configuring done
+[1.183s] -- Generating done
+[1.192s] -- Build files have been written to: /home/gustav/P5-Kuka-Dual-Arm/build/generate_parameter_library_example
+[1.266s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/generate_parameter_library_example' returned '0': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/moveit2_kuka_table/install/send_cudes:/home/gustav/P5-Kuka-Dual-Arm/moveit2_kuka_table/install/moveit2_launch:/home/gustav/P5-Kuka-Dual-Arm/moveit2_kuka_table/install/kuka_bord_description:/home/gustav/lbr_stack/install/med7_moveit_config:/home/gustav/lbr_stack/install/med14_moveit_config:/home/gustav/lbr_stack/install/lbr_fri_ros2_stack:/home/gustav/lbr_stack/install/lbr_demos_cpp:/home/gustav/lbr_stack/install/lbr_bringup:/home/gustav/lbr_stack/install/lbr_ros2_control:/home/gustav/lbr_stack/install/lbr_moveit_cpp:/home/gustav/lbr_stack/install/lbr_demos_advanced_cpp:/home/gustav/lbr_stack/install/lbr_fri_ros2:/home/gustav/lbr_stack/install/lbr_fri_idl:/home/gustav/lbr_stack/install/iiwa7_moveit_config:/home/gustav/lbr_stack/install/iiwa14_moveit_config:/home/gustav/lbr_stack/install/lbr_description:/home/gustav/lbr_stack/install/fri_client_sdk:/home/gustav/ws_P5/install/send_cudes:/home/gustav/ws_P5/install/moveit2_launch:/home/gustav/ws_P5/install/kuka_bord_description:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/lib:${LD_LIBRARY_PATH} PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/bin:${PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/generate_parameter_library/example -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_example
+[1.267s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/generate_parameter_library_example': AMENT_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library:/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits:/home/gustav/P5-Kuka-Dual-Arm/moveit2_kuka_table/install/send_cudes:/home/gustav/P5-Kuka-Dual-Arm/moveit2_kuka_table/install/moveit2_launch:/home/gustav/P5-Kuka-Dual-Arm/moveit2_kuka_table/install/kuka_bord_description:/home/gustav/lbr_stack/install/med7_moveit_config:/home/gustav/lbr_stack/install/med14_moveit_config:/home/gustav/lbr_stack/install/lbr_fri_ros2_stack:/home/gustav/lbr_stack/install/lbr_demos_cpp:/home/gustav/lbr_stack/install/lbr_bringup:/home/gustav/lbr_stack/install/lbr_ros2_control:/home/gustav/lbr_stack/install/lbr_moveit_cpp:/home/gustav/lbr_stack/install/lbr_demos_advanced_cpp:/home/gustav/lbr_stack/install/lbr_fri_ros2:/home/gustav/lbr_stack/install/lbr_fri_idl:/home/gustav/lbr_stack/install/iiwa7_moveit_config:/home/gustav/lbr_stack/install/iiwa14_moveit_config:/home/gustav/lbr_stack/install/lbr_description:/home/gustav/lbr_stack/install/fri_client_sdk:/home/gustav/ws_P5/install/send_cudes:/home/gustav/ws_P5/install/moveit2_launch:/home/gustav/ws_P5/install/kuka_bord_description:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble LD_LIBRARY_PATH=/home/gustav/P5-Kuka-Dual-Arm/install/parameter_traits/lib:${LD_LIBRARY_PATH} PATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/bin:${PATH} PYTHONPATH=/home/gustav/P5-Kuka-Dual-Arm/install/generate_parameter_library_py/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/generate_parameter_library_example -- -j8 -l8
+[1.467s] [35m[1mConsolidate compiler generated dependencies of target gtest[0m
+[1.469s] [35m[1mConsolidate compiler generated dependencies of target test_node[0m
+[1.510s] [35m[1mConsolidate compiler generated dependencies of target gmock[0m
+[1.526s] [  5%] [32mBuilding CXX object CMakeFiles/test_node.dir/rclcpp_components/node_main_test_node.cpp.o[0m
+[1.531s] [ 17%] Built target admittance_controller_parameters
+[1.540s] [ 23%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[1.582s] [35m[1mConsolidate compiler generated dependencies of target minimal_publisher[0m
+[1.582s] [ 29%] [32mBuilding CXX object gmock/CMakeFiles/gmock.dir/opt/ros/humble/src/gtest_vendor/src/gtest-all.cc.o[0m
+[1.610s] [ 35%] [32mBuilding CXX object gmock/CMakeFiles/gmock.dir/src/gmock-all.cc.o[0m
+[1.659s] [ 41%] [32mBuilding CXX object CMakeFiles/minimal_publisher.dir/src/minimal_publisher.cpp.o[0m
+[5.901s] In file included from [01m[K/opt/ros/humble/src/gmock_vendor/include/gmock/gmock.h:66[m[K,
+[5.901s]                  from [01m[K/opt/ros/humble/src/gmock_vendor/src/gmock-all.cc:39[m[K:
+[5.901s] [01m[K/opt/ros/humble/src/gmock_vendor/include/gmock/gmock-more-actions.h:[m[K In member function ‘[01m[Ktypename testing::internal::Function<F>::Result testing::SetArgRefereeActionP<k, value_type>::gmock_Impl<F>::gmock_PerformImpl(const args_type&, const arg0_type&, const arg1_type&, const arg2_type&, const arg3_type&, const arg4_type&, const arg5_type&, const arg6_type&, const arg7_type&, const arg8_type&, const arg9_type&) const[m[K’:
+[5.902s] [01m[K/opt/ros/humble/src/gmock_vendor/include/gmock/gmock-more-actions.h:104:53:[m[K [01;35m[Kwarning: [m[Kconversion to ‘[01m[Klong unsigned int[m[K’ from ‘[01m[Kint[m[K’ may change the sign of the result [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-conversion-Wsign-conversion]8;;[m[K]
+[5.902s]   104 |   typedef typename ::std::tuple_element<k, args_type[01;35m[K>[m[K::type argk_type;
+[5.902s]       |                                                     [01;35m[K^[m[K
+[22.437s] [ 47%] [32m[1mLinking CXX executable test_node[0m
+[22.754s] [ 47%] Built target test_node
+[33.390s] [ 52%] [32m[1mLinking CXX static library libgmock.a[0m
+[33.470s] [ 52%] Built target gmock
+[33.576s] [ 58%] [32m[1mLinking CXX static library libgtest.a[0m
+[33.649s] [ 58%] Built target gtest
+[41.220s] [ 64%] [32m[1mLinking CXX shared library libminimal_publisher.so[0m
+[41.379s] [ 64%] Built target minimal_publisher
+[41.392s] [35m[1mConsolidate compiler generated dependencies of target test_descriptor_gtest[0m
+[41.412s] [ 70%] [32mBuilding CXX object CMakeFiles/test_descriptor_gtest.dir/test/descriptor_test_gtest.cpp.o[0m
+[65.844s] [ 76%] [32m[1mLinking CXX executable test_descriptor_gtest[0m
+[66.177s] [ 76%] Built target test_descriptor_gtest
+[66.208s] [35m[1mConsolidate compiler generated dependencies of target test_example_gtest[0m
+[66.211s] [35m[1mConsolidate compiler generated dependencies of target test_example_gmock[0m
+[66.249s] [ 82%] [32mBuilding CXX object CMakeFiles/test_example_gtest.dir/test/example_test_gtest.cpp.o[0m
+[66.259s] [ 88%] [32mBuilding CXX object CMakeFiles/test_example_gmock.dir/test/example_test_gmock.cpp.o[0m
+[66.691s] gmake[2]: *** [CMakeFiles/test_example_gtest.dir/build.make:76: CMakeFiles/test_example_gtest.dir/test/example_test_gtest.cpp.o] Interrupt
+[66.694s] gmake[2]: *** [CMakeFiles/test_example_gmock.dir/build.make:76: CMakeFiles/test_example_gmock.dir/test/example_test_gmock.cpp.o] Interrupt
+[66.694s] gmake[1]: *** [CMakeFiles/Makefile2:317: CMakeFiles/test_example_gmock.dir/all] Interrupt
+[66.695s] gmake[1]: *** [CMakeFiles/Makefile2:263: CMakeFiles/test_example_gtest.dir/all] Interrupt
+[66.699s] gmake: *** [Makefile:146: all] Interrupt

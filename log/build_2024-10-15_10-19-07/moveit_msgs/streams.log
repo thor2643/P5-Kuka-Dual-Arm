@@ -1,0 +1,91 @@
+[0.339s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_msgs -- -j8 -l8
+[0.536s] [  0%] Built target moveit_msgs__cpp
+[0.551s] [  0%] Built target ament_cmake_python_copy_moveit_msgs
+[0.560s] [ 12%] Built target moveit_msgs__rosidl_generator_c
+[0.600s] [35m[1mConsolidate compiler generated dependencies of target moveit_msgs__rosidl_typesupport_introspection_cpp[0m
+[0.613s] [35m[1mConsolidate compiler generated dependencies of target moveit_msgs__rosidl_typesupport_fastrtps_cpp[0m
+[0.619s] [35m[1mConsolidate compiler generated dependencies of target moveit_msgs__rosidl_typesupport_introspection_c[0m
+[0.634s] [35m[1mConsolidate compiler generated dependencies of target moveit_msgs__rosidl_typesupport_fastrtps_c[0m
+[0.643s] [ 24%] Built target moveit_msgs__rosidl_typesupport_cpp
+[0.643s] [ 37%] Built target moveit_msgs__rosidl_typesupport_c
+[0.678s] [ 50%] Built target moveit_msgs__rosidl_typesupport_introspection_c
+[0.718s] [ 50%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/moveit_msgs/action/detail/move_group__type_support.cpp.o[0m
+[0.718s] [ 50%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/moveit_msgs/action/detail/execute_trajectory__type_support.cpp.o[0m
+[0.719s] [ 50%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/moveit_msgs/action/detail/place__type_support.cpp.o[0m
+[0.720s] [ 51%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/moveit_msgs/action/detail/move_group_sequence__type_support.cpp.o[0m
+[0.721s] [ 51%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/moveit_msgs/action/detail/pickup__type_support.cpp.o[0m
+[0.721s] [ 51%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/moveit_msgs/action/detail/dds_fastrtps/place__type_support.cpp.o[0m
+[0.762s] [ 51%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/move_it_error_codes__type_support_c.cpp.o[0m
+[1.300s] running egg_info
+[1.301s] writing moveit_msgs.egg-info/PKG-INFO
+[1.310s] writing dependency_links to moveit_msgs.egg-info/dependency_links.txt
+[1.310s] writing top-level names to moveit_msgs.egg-info/top_level.txt
+[1.322s] reading manifest file 'moveit_msgs.egg-info/SOURCES.txt'
+[1.339s] writing manifest file 'moveit_msgs.egg-info/SOURCES.txt'
+[1.508s] [ 51%] Built target ament_cmake_python_build_moveit_msgs_egg
+[1.547s] [ 51%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/trajectory_constraints__type_support_c.cpp.o[0m
+[1.690s] [ 51%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/object_color__type_support_c.cpp.o[0m
+[2.727s] [ 51%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/moveit_msgs/action/detail/dds_fastrtps/local_planner__type_support.cpp.o[0m
+[3.374s] [ 51%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/orientation_constraint__type_support_c.cpp.o[0m
+[3.505s] [ 51%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/moveit_msgs/action/detail/local_planner__type_support.cpp.o[0m
+[5.152s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/oriented_bounding_box__type_support_c.cpp.o[0m
+[5.155s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/moveit_msgs/action/detail/dds_fastrtps/global_planner__type_support.cpp.o[0m
+[5.318s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/moveit_msgs/action/detail/global_planner__type_support.cpp.o[0m
+[6.250s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/moveit_msgs/action/detail/dds_fastrtps/hybrid_planner__type_support.cpp.o[0m
+[6.359s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/moveit_msgs/action/detail/hybrid_planner__type_support.cpp.o[0m
+[6.366s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/place_location__type_support_c.cpp.o[0m
+[6.407s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/planner_interface_description__type_support_c.cpp.o[0m
+[7.936s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/planner_params__type_support_c.cpp.o[0m
+[8.315s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/planning_scene__type_support_c.cpp.o[0m
+[8.347s] [ 52%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/planning_scene_components__type_support_c.cpp.o[0m
+[8.371s] [ 52%] [32m[1mLinking CXX shared library libmoveit_msgs__rosidl_typesupport_fastrtps_cpp.so[0m
+[8.374s] [ 53%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/planning_scene_world__type_support_c.cpp.o[0m
+[8.883s] [ 53%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/planning_options__type_support_c.cpp.o[0m
+[9.048s] [ 53%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/position_constraint__type_support_c.cpp.o[0m
+[9.112s] [ 65%] Built target moveit_msgs__rosidl_typesupport_fastrtps_cpp
+[9.149s] [ 65%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/robot_state__type_support_c.cpp.o[0m
+[9.527s] [ 65%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/robot_trajectory__type_support_c.cpp.o[0m
+[10.373s] [ 65%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/visibility_constraint__type_support_c.cpp.o[0m
+[10.464s] [ 65%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/workspace_parameters__type_support_c.cpp.o[0m
+[10.555s] [ 66%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/kinematic_solver_info__type_support_c.cpp.o[0m
+[10.654s] [ 66%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/msg/detail/position_ik_request__type_support_c.cpp.o[0m
+[10.682s] [ 66%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/get_motion_plan__type_support_c.cpp.o[0m
+[11.083s] [ 66%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/get_state_validity__type_support_c.cpp.o[0m
+[11.308s] [ 66%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/get_cartesian_path__type_support_c.cpp.o[0m
+[11.407s] [ 67%] [32m[1mLinking CXX shared library libmoveit_msgs__rosidl_typesupport_introspection_cpp.so[0m
+[11.701s] [ 67%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/get_planning_scene__type_support_c.cpp.o[0m
+[11.784s] [ 78%] Built target moveit_msgs__rosidl_typesupport_introspection_cpp
+[11.843s] [ 79%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/grasp_planning__type_support_c.cpp.o[0m
+[12.525s] [ 79%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/apply_planning_scene__type_support_c.cpp.o[0m
+[12.712s] [ 79%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/query_planner_interfaces__type_support_c.cpp.o[0m
+[12.774s] [ 79%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/get_motion_sequence__type_support_c.cpp.o[0m
+[12.837s] [ 79%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/get_position_fk__type_support_c.cpp.o[0m
+[12.919s] [ 79%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/get_position_ik__type_support_c.cpp.o[0m
+[13.434s] [ 79%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/get_planner_params__type_support_c.cpp.o[0m
+[14.166s] [ 80%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/set_planner_params__type_support_c.cpp.o[0m
+[14.254s] [ 80%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/update_pointcloud_octomap__type_support_c.cpp.o[0m
+[14.305s] [ 80%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/save_map__type_support_c.cpp.o[0m
+[14.756s] [ 80%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/load_map__type_support_c.cpp.o[0m
+[15.345s] [ 80%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/save_robot_state_to_warehouse__type_support_c.cpp.o[0m
+[16.943s] [ 80%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/list_robot_states_in_warehouse__type_support_c.cpp.o[0m
+[17.104s] [ 81%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/get_robot_state_from_warehouse__type_support_c.cpp.o[0m
+[17.214s] [ 81%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/check_if_robot_state_exists_in_warehouse__type_support_c.cpp.o[0m
+[17.966s] [ 81%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/rename_robot_state_in_warehouse__type_support_c.cpp.o[0m
+[18.182s] [ 81%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/delete_robot_state_from_warehouse__type_support_c.cpp.o[0m
+[18.388s] [ 81%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/change_control_dimensions__type_support_c.cpp.o[0m
+[18.532s] [ 81%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/change_drift_dimensions__type_support_c.cpp.o[0m
+[18.806s] [ 82%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/execute_trajectory__type_support_c.cpp.o[0m
+[19.029s] [ 82%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/move_group__type_support_c.cpp.o[0m
+[19.837s] [ 82%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/move_group_sequence__type_support_c.cpp.o[0m
+[20.517s] [ 82%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/pickup__type_support_c.cpp.o[0m
+[20.749s] [ 82%] [32mBuilding CXX object CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/place__type_support_c.cpp.o[0m
+[21.207s] gmake[2]: *** [CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/build.make:1676: CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/change_control_dimensions__type_support_c.cpp.o] Interrupt
+[21.207s] gmake[2]: *** [CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/build.make:1718: CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/move_group__type_support_c.cpp.o] Interrupt
+[21.208s] gmake[2]: *** [CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/build.make:1746: CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/pickup__type_support_c.cpp.o] Interrupt
+[21.208s] gmake[2]: *** [CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/build.make:1648: CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/rename_robot_state_in_warehouse__type_support_c.cpp.o] Interrupt
+[21.208s] gmake[2]: *** [CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/build.make:1634: CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/srv/detail/check_if_robot_state_exists_in_warehouse__type_support_c.cpp.o] Interrupt
+[21.209s] gmake[2]: *** [CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/build.make:1704: CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/execute_trajectory__type_support_c.cpp.o] Interrupt
+[21.209s] gmake[2]: *** [CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/build.make:1732: CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/move_group_sequence__type_support_c.cpp.o] Interrupt
+[21.209s] gmake[2]: *** [CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/build.make:1760: CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/moveit_msgs/action/detail/place__type_support_c.cpp.o] Interrupt
+[21.209s] gmake[1]: *** [CMakeFiles/Makefile2:239: CMakeFiles/moveit_msgs__rosidl_typesupport_fastrtps_c.dir/all] Interrupt
+[21.210s] gmake: *** [Makefile:146: all] Interrupt

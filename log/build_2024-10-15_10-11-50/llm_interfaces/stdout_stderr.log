@@ -1,0 +1,252 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6") 
+-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+-- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+-- Found PythonExtra: .so  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/gustav/P5-Kuka-Dual-Arm/build/llm_interfaces
+[  2%] [34m[1mGenerating C code for ROS interfaces[0m
+[  2%] Built target ament_cmake_python_copy_llm_interfaces
+[  5%] [34m[1mGenerating C++ code for ROS interfaces[0m
+running egg_info
+creating llm_interfaces.egg-info
+writing llm_interfaces.egg-info/PKG-INFO
+writing dependency_links to llm_interfaces.egg-info/dependency_links.txt
+writing top-level names to llm_interfaces.egg-info/top_level.txt
+writing manifest file 'llm_interfaces.egg-info/SOURCES.txt'
+reading manifest file 'llm_interfaces.egg-info/SOURCES.txt'
+writing manifest file 'llm_interfaces.egg-info/SOURCES.txt'
+[  5%] Built target ament_cmake_python_build_llm_interfaces_egg
+[  7%] [32mBuilding C object CMakeFiles/llm_interfaces__rosidl_generator_c.dir/rosidl_generator_c/llm_interfaces/srv/detail/text_to_speech__functions.c.o[0m
+[ 10%] [32mBuilding C object CMakeFiles/llm_interfaces__rosidl_generator_c.dir/rosidl_generator_c/llm_interfaces/srv/detail/speech_to_text__functions.c.o[0m
+[ 10%] Built target llm_interfaces__cpp
+[ 12%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[ 15%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[ 17%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[ 20%] [32m[1mLinking C shared library libllm_interfaces__rosidl_generator_c.so[0m
+[ 20%] Built target llm_interfaces__rosidl_generator_c
+[ 23%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[ 28%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[ 28%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[ 30%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/llm_interfaces/srv/detail/speech_to_text__type_support.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/llm_interfaces/srv/detail/text_to_speech__type_support.cpp.o[0m
+[ 35%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/llm_interfaces/srv/speech_to_text__type_support.cpp.o[0m
+[ 38%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/llm_interfaces/srv/text_to_speech__type_support.cpp.o[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/llm_interfaces/srv/detail/dds_fastrtps/speech_to_text__type_support.cpp.o[0m
+[ 43%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/llm_interfaces/srv/speech_to_text__type_support.cpp.o[0m
+[ 46%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/llm_interfaces/srv/text_to_speech__type_support.cpp.o[0m
+[ 48%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/llm_interfaces/srv/detail/speech_to_text__type_support_c.cpp.o[0m
+[ 51%] [32m[1mLinking CXX shared library libllm_interfaces__rosidl_typesupport_c.so[0m
+[ 53%] [32mBuilding C object CMakeFiles/llm_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/llm_interfaces/srv/detail/speech_to_text__type_support.c.o[0m
+[ 53%] Built target llm_interfaces__rosidl_typesupport_c
+[ 56%] [32mBuilding C object CMakeFiles/llm_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/llm_interfaces/srv/detail/text_to_speech__type_support.c.o[0m
+[ 58%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/llm_interfaces/srv/detail/dds_fastrtps/text_to_speech__type_support.cpp.o[0m
+[ 61%] [32m[1mLinking C shared library libllm_interfaces__rosidl_typesupport_introspection_c.so[0m
+[ 61%] Built target llm_interfaces__rosidl_typesupport_introspection_c
+[ 64%] [32mBuilding CXX object CMakeFiles/llm_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/llm_interfaces/srv/detail/text_to_speech__type_support_c.cpp.o[0m
+[ 66%] [32m[1mLinking CXX shared library libllm_interfaces__rosidl_typesupport_cpp.so[0m
+[ 66%] Built target llm_interfaces__rosidl_typesupport_cpp
+[ 69%] [32m[1mLinking CXX shared library libllm_interfaces__rosidl_typesupport_fastrtps_cpp.so[0m
+[ 71%] [32m[1mLinking CXX shared library libllm_interfaces__rosidl_typesupport_introspection_cpp.so[0m
+[ 71%] Built target llm_interfaces__rosidl_typesupport_fastrtps_cpp
+[ 71%] Built target llm_interfaces__rosidl_typesupport_introspection_cpp
+[ 74%] [32m[1mLinking CXX shared library libllm_interfaces__rosidl_typesupport_fastrtps_c.so[0m
+[ 74%] Built target llm_interfaces__rosidl_typesupport_fastrtps_c
+[ 74%] Built target llm_interfaces
+[ 76%] [34m[1mGenerating Python code for ROS interfaces[0m
+[ 76%] Built target llm_interfaces__py
+[ 79%] [32mBuilding C object CMakeFiles/llm_interfaces__rosidl_generator_py.dir/rosidl_generator_py/llm_interfaces/srv/_text_to_speech_s.c.o[0m
+[ 82%] [32mBuilding C object CMakeFiles/llm_interfaces__rosidl_generator_py.dir/rosidl_generator_py/llm_interfaces/srv/_speech_to_text_s.c.o[0m
+[ 84%] [32m[1mLinking C shared library rosidl_generator_py/llm_interfaces/libllm_interfaces__rosidl_generator_py.so[0m
+[ 84%] Built target llm_interfaces__rosidl_generator_py
+[ 87%] [32mBuilding C object CMakeFiles/llm_interfaces__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/llm_interfaces/_llm_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[ 89%] [32mBuilding C object CMakeFiles/llm_interfaces__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/llm_interfaces/_llm_interfaces_s.ep.rosidl_typesupport_c.c.o[0m
+[ 92%] [32mBuilding C object CMakeFiles/llm_interfaces__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/llm_interfaces/_llm_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[ 94%] [32m[1mLinking C shared library rosidl_generator_py/llm_interfaces/llm_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so[0m
+[ 97%] [32m[1mLinking C shared library rosidl_generator_py/llm_interfaces/llm_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so[0m
+[ 97%] Built target llm_interfaces__rosidl_typesupport_introspection_c__pyext
+[ 97%] Built target llm_interfaces__rosidl_typesupport_fastrtps_c__pyext
+[100%] [32m[1mLinking C shared library rosidl_generator_py/llm_interfaces/llm_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so[0m
+[100%] Built target llm_interfaces__rosidl_typesupport_c__pyext
+-- Install configuration: ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/ament_index/resource_index/rosidl_interfaces/llm_interfaces
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg/rosidl_generator_c__visibility_control.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/speech_to_text.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/text_to_speech.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__struct.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__functions.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__type_support.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__struct.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__functions.c
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__functions.c
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__functions.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__type_support.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/library_path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/library_path.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_generator_c.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_generator_c.so" to ""
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__rosidl_typesupport_fastrtps_c.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_fastrtps_c.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_fastrtps_c.so" to ""
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__type_support.c
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__rosidl_typesupport_introspection_c.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__rosidl_typesupport_introspection_c.h
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__type_support.c
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_introspection_c.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_introspection_c.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_c.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_c.so" to ""
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/speech_to_text.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/text_to_speech.hpp
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__struct.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__builder.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__struct.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__traits.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__builder.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__traits.hpp
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__rosidl_typesupport_fastrtps_cpp.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/dds_fastrtps
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_fastrtps_cpp.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+-- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__type_support.cpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__type_support.cpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__rosidl_typesupport_introspection_cpp.hpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_introspection_cpp.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_introspection_cpp.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_cpp.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_cpp.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/pythonpath.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/pythonpath.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info/dependency_links.txt
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info/PKG-INFO
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info/SOURCES.txt
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info/top_level.txt
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/_llm_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/libllm_interfaces__rosidl_generator_py.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/_llm_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/_llm_interfaces_s.ep.rosidl_typesupport_c.c
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/__init__.py
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_speech_to_text.py
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_text_to_speech_s.c
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_speech_to_text_s.c
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/__init__.py
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_text_to_speech.py
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+Listing '/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces'...
+Compiling '/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/__init__.py'...
+Listing '/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv'...
+Compiling '/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/__init__.py'...
+Compiling '/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_speech_to_text.py'...
+Compiling '/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_text_to_speech.py'...
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_generator_py.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_generator_py.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/SpeechToText.idl
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/TextToSpeech.idl
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/SpeechToText.srv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/SpeechToText_Request.msg
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/SpeechToText_Response.msg
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/TextToSpeech.srv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/TextToSpeech_Request.msg
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/TextToSpeech_Response.msg
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/ament_index/resource_index/package_run_dependencies/llm_interfaces
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/ament_index/resource_index/parent_prefix_path/llm_interfaces
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/ament_prefix_path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/ament_prefix_path.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/path.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/local_setup.bash
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/local_setup.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/local_setup.zsh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/local_setup.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/package.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/ament_index/resource_index/packages/llm_interfaces
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_cExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_cExport-noconfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_introspection_cExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_cExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_cExport-noconfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_cppExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_introspection_cppExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_cppExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_cppExport-noconfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_pyExport.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_pyExport-noconfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/rosidl_cmake-extras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/ament_cmake_export_targets-extras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfacesConfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfacesConfig-version.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/package.xml

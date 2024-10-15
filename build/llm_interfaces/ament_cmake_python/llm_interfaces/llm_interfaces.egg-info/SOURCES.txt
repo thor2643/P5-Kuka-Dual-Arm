@@ -1,0 +1,9 @@
+setup.py
+llm_interfaces/__init__.py
+llm_interfaces.egg-info/PKG-INFO
+llm_interfaces.egg-info/SOURCES.txt
+llm_interfaces.egg-info/dependency_links.txt
+llm_interfaces.egg-info/top_level.txt
+llm_interfaces/srv/__init__.py
+llm_interfaces/srv/_speech_to_text.py
+llm_interfaces/srv/_text_to_speech.py

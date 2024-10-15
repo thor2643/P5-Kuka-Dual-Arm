@@ -1,0 +1,10 @@
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/uninstall.dir
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/send_cudes_uninstall.dir
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/send_cudes.dir
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/test.dir
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/edit_cache.dir
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/rebuild_cache.dir
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/list_install_components.dir
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/install.dir
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/install/local.dir
+/home/gustav/P5-Kuka-Dual-Arm/build/send_cudes/CMakeFiles/install/strip.dir

@@ -1,0 +1,49 @@
+[  8%] [32mBuilding CXX object CMakeFiles/admittance_control.dir/rclcpp_components/node_main_admittance_control.cpp.o[0m
+[ 16%] [32mBuilding CXX object CMakeFiles/pose_planning_component.dir/src/pose_planning_node.cpp.o[0m
+[ 25%] [32mBuilding CXX object CMakeFiles/pose_planning.dir/rclcpp_components/node_main_pose_planning.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/pose_control_component.dir/src/pose_control_node.cpp.o[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/admittance_control_component.dir/src/admittance_control_node.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/pose_control.dir/rclcpp_components/node_main_pose_control.cpp.o[0m
+[ 58%] [32m[1mLinking CXX executable pose_planning[0m
+[ 66%] [32m[1mLinking CXX executable admittance_control[0m
+[ 66%] Built target pose_planning
+[ 66%] Built target admittance_control
+[ 75%] [32m[1mLinking CXX executable pose_control[0m
+[ 75%] Built target pose_control
+[ 83%] [32m[1mLinking CXX shared library libpose_planning_component.so[0m
+[ 83%] Built target pose_planning_component
+[ 91%] [32m[1mLinking CXX shared library libpose_control_component.so[0m
+[ 91%] Built target pose_control_component
+[100%] [32m[1mLinking CXX shared library libadmittance_control_component.so[0m
+[100%] Built target admittance_control_component
+-- Install configuration: "Release"
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/lbr_demos_advanced_cpp/admittance_control
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/lbr_demos_advanced_cpp/admittance_control" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/lbr_demos_advanced_cpp/pose_planning
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/lbr_demos_advanced_cpp/pose_planning" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/lbr_demos_advanced_cpp/pose_control
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/lbr_demos_advanced_cpp/pose_control" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/libadmittance_control_component.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/libadmittance_control_component.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/libpose_planning_component.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/libpose_planning_component.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/libpose_control_component.so
+-- Set runtime path of "/home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/lib/libpose_control_component.so" to ""
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/config
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/config/admittance_control.yaml
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/ament_index/resource_index/package_run_dependencies/lbr_demos_advanced_cpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/ament_index/resource_index/parent_prefix_path/lbr_demos_advanced_cpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/environment/ament_prefix_path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/environment/ament_prefix_path.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/environment/path.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/environment/path.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/local_setup.bash
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/local_setup.sh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/local_setup.zsh
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/local_setup.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/package.dsv
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/ament_index/resource_index/packages/lbr_demos_advanced_cpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/ament_index/resource_index/rclcpp_components/lbr_demos_advanced_cpp
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/cmake/lbr_demos_advanced_cppConfig.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/cmake/lbr_demos_advanced_cppConfig-version.cmake
+-- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/lbr_demos_advanced_cpp/share/lbr_demos_advanced_cpp/package.xml

@@ -1,0 +1,4 @@
+source;share/llm_interfaces/local_setup.bash
+source;share/llm_interfaces/local_setup.dsv
+source;share/llm_interfaces/local_setup.sh
+source;share/llm_interfaces/local_setup.zsh

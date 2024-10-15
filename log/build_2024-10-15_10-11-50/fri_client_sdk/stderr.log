@@ -1,0 +1,117 @@
+[0mFound nanopb of version: 0.2.8[0m
+[0mFound FRIClient of version: 1.15[0m
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:69[m[K,
+                 from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/client_trafo/friTransformationClient.cpp:65[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:92:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+   92 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:111:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  111 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:69[m[K,
+                 from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientApplication.cpp:64[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:92:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+   92 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:131:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  131 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:111:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  111 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:131:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  131 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientApplication.cpp:64[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic const FriIOValue& KUKA::FRI::ClientData::getIOValue(const FRIMonitoringMessage*, const char*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:169:47:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  169 |             const bool digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                        [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/client_trafo/friTransformationClient.cpp:65[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic const FriIOValue& KUKA::FRI::ClientData::getIOValue(const FRIMonitoringMessage*, const char*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:169:47:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  169 |             const bool digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                        [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic FriIOValue& KUKA::FRI::ClientData::setIOValue(FRICommandMessage*, const char*, const FRIMonitoringMessage*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:220:48:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  220 |             ioValue.has_digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                         [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic FriIOValue& KUKA::FRI::ClientData::setIOValue(FRICommandMessage*, const char*, const FRIMonitoringMessage*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:220:48:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  220 |             ioValue.has_digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                         [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:69[m[K,
+                 from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/client_lbr/friLBRCommand.cpp:62[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:92:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+   92 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:111:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  111 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:131:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  131 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/client_lbr/friLBRCommand.cpp:62[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic const FriIOValue& KUKA::FRI::ClientData::getIOValue(const FRIMonitoringMessage*, const char*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:169:47:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  169 |             const bool digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                        [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic FriIOValue& KUKA::FRI::ClientData::setIOValue(FRICommandMessage*, const char*, const FRIMonitoringMessage*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:220:48:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  220 |             ioValue.has_digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                         [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:69[m[K,
+                 from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/client_lbr/friLBRClient.cpp:62[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:92:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+   92 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:111:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  111 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:131:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  131 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:69[m[K,
+                 from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/client_lbr/friLBRState.cpp:61[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:92:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+   92 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:111:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  111 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:[m[K In constructor ‘[01m[KKUKA::FRI::FRIException::FRIException(const char*, const char*, const char*)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/include/friException.h:131:17:[m[K [01;35m[Kwarning: [m[Kformat not a string literal and no format arguments [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat-security-Wformat-security]8;;[m[K]
+  131 |          printf([01;35m[K_buffer[m[K);
+      |                 [01;35m[K^~~~~~~[m[K
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/client_lbr/friLBRClient.cpp:62[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic const FriIOValue& KUKA::FRI::ClientData::getIOValue(const FRIMonitoringMessage*, const char*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:169:47:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  169 |             const bool digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                        [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic FriIOValue& KUKA::FRI::ClientData::setIOValue(FRICommandMessage*, const char*, const FRIMonitoringMessage*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:220:48:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  220 |             ioValue.has_digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                         [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/client_lbr/friLBRState.cpp:61[m[K:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic const FriIOValue& KUKA::FRI::ClientData::getIOValue(const FRIMonitoringMessage*, const char*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:169:47:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  169 |             const bool digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                        [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:[m[K In static member function ‘[01m[Kstatic FriIOValue& KUKA::FRI::ClientData::setIOValue(FRICommandMessage*, const char*, const FRIMonitoringMessage*, FriIOType)[m[K’:
+[01m[K/home/gustav/P5-Kuka-Dual-Arm/build/fri_client_sdk/FRI-Client-SDK_Cpp/src/base/friClientData.h:220:48:[m[K [01;35m[Kwarning: [m[Ksuggest parentheses around comparison in operand of ‘[01m[K|[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wparentheses-Wparentheses]8;;[m[K]
+  220 |             ioValue.has_digitalValue = ([01;35m[KioType == FriIOType_DIGITAL[m[K | ioType == FriIOType_BOOLEAN);
+      |                                         [01;35m[K~~~~~~~^~~~~~~~~~~~~~~~~~~~[m[K

@@ -1,0 +1,3 @@
+[console_scripts]
+move_world = robot_controller.move_world:main
+

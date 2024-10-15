@@ -1,0 +1,15 @@
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/ament_index/resource_index/package_run_dependencies/moveit_resources
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/ament_index/resource_index/parent_prefix_path/moveit_resources
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/environment/ament_prefix_path.sh
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/environment/ament_prefix_path.dsv
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/environment/path.sh
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/environment/path.dsv
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/local_setup.bash
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/local_setup.sh
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/local_setup.zsh
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/local_setup.dsv
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/package.dsv
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/ament_index/resource_index/packages/moveit_resources
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/cmake/moveit_resourcesConfig.cmake
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/cmake/moveit_resourcesConfig-version.cmake
+/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources/share/moveit_resources/package.xml

@@ -1,0 +1,10 @@
+{
+  "package_name": "lbr_fri_idl",
+  "non_idl_tuples": [
+    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/lbr_fri_idl:msg/LBRCommand.msg",
+    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/lbr_fri_idl:msg/LBRJointPositionCommand.msg",
+    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/lbr_fri_idl:msg/LBRState.msg",
+    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/lbr_fri_idl:msg/LBRTorqueCommand.msg",
+    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/lbr_fri_idl:msg/LBRWrenchCommand.msg"
+  ]
+}

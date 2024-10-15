@@ -1,0 +1,180 @@
+[0.071s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/llm_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/llm_interfaces -- -j8 -l8
+[0.223s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_generator_c[0m
+[0.287s] [  0%] Built target ament_cmake_python_copy_llm_interfaces
+[0.295s] [ 10%] Built target llm_interfaces__rosidl_generator_c
+[0.332s] [ 12%] Built target llm_interfaces__cpp
+[0.392s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_typesupport_c[0m
+[0.392s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_typesupport_fastrtps_c[0m
+[0.400s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_typesupport_introspection_c[0m
+[0.411s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_typesupport_fastrtps_cpp[0m
+[0.420s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_typesupport_cpp[0m
+[0.444s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_typesupport_introspection_cpp[0m
+[0.506s] [ 23%] Built target llm_interfaces__rosidl_typesupport_c
+[0.507s] [ 33%] Built target llm_interfaces__rosidl_typesupport_fastrtps_cpp
+[0.510s] [ 43%] Built target llm_interfaces__rosidl_typesupport_fastrtps_c
+[0.514s] [ 53%] Built target llm_interfaces__rosidl_typesupport_cpp
+[0.534s] [ 64%] Built target llm_interfaces__rosidl_typesupport_introspection_c
+[0.555s] [ 74%] Built target llm_interfaces__rosidl_typesupport_introspection_cpp
+[0.667s] [ 74%] Built target llm_interfaces
+[0.804s] [ 76%] Built target llm_interfaces__py
+[0.857s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_generator_py[0m
+[0.916s] [ 84%] Built target llm_interfaces__rosidl_generator_py
+[0.999s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_typesupport_c__pyext[0m
+[1.023s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_typesupport_fastrtps_c__pyext[0m
+[1.027s] [35m[1mConsolidate compiler generated dependencies of target llm_interfaces__rosidl_typesupport_introspection_c__pyext[0m
+[1.085s] [ 89%] Built target llm_interfaces__rosidl_typesupport_c__pyext
+[1.085s] [ 94%] Built target llm_interfaces__rosidl_typesupport_introspection_c__pyext
+[1.126s] [100%] Built target llm_interfaces__rosidl_typesupport_fastrtps_c__pyext
+[1.399s] running egg_info
+[1.400s] writing llm_interfaces.egg-info/PKG-INFO
+[1.401s] writing dependency_links to llm_interfaces.egg-info/dependency_links.txt
+[1.401s] writing top-level names to llm_interfaces.egg-info/top_level.txt
+[1.410s] reading manifest file 'llm_interfaces.egg-info/SOURCES.txt'
+[1.414s] writing manifest file 'llm_interfaces.egg-info/SOURCES.txt'
+[1.524s] [100%] Built target ament_cmake_python_build_llm_interfaces_egg
+[1.592s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/llm_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/llm_interfaces -- -j8 -l8
+[3.360s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/llm_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/llm_interfaces
+[3.407s] -- Install configuration: "Release"
+[3.408s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/ament_index/resource_index/rosidl_interfaces/llm_interfaces
+[3.408s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+[3.408s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg
+[3.408s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg/rosidl_generator_c__visibility_control.h
+[3.408s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+[3.409s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/speech_to_text.h
+[3.409s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/text_to_speech.h
+[3.409s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+[3.409s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__struct.h
+[3.410s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__functions.h
+[3.411s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__type_support.h
+[3.411s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__struct.h
+[3.412s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__functions.c
+[3.412s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__functions.c
+[3.412s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__functions.h
+[3.414s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__type_support.h
+[3.414s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/library_path.sh
+[3.414s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/library_path.dsv
+[3.415s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_generator_c.so
+[3.415s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+[3.415s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg
+[3.415s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[3.415s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+[3.415s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__rosidl_typesupport_fastrtps_c.h
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__rosidl_typesupport_fastrtps_c.h
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_fastrtps_c.so
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__type_support.c
+[3.416s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__rosidl_typesupport_introspection_c.h
+[3.417s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__rosidl_typesupport_introspection_c.h
+[3.417s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__type_support.c
+[3.417s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_introspection_c.so
+[3.417s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_c.so
+[3.417s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+[3.417s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+[3.417s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/speech_to_text.hpp
+[3.417s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/text_to_speech.hpp
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__struct.hpp
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__builder.hpp
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__struct.hpp
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__traits.hpp
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__builder.hpp
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__traits.hpp
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[3.418s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+[3.419s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+[3.419s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__rosidl_typesupport_fastrtps_cpp.hpp
+[3.419s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__rosidl_typesupport_fastrtps_cpp.hpp
+[3.419s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/dds_fastrtps
+[3.419s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_fastrtps_cpp.so
+[3.419s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces
+[3.419s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv
+[3.419s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail
+[3.419s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__type_support.cpp
+[3.420s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/speech_to_text__rosidl_typesupport_introspection_cpp.hpp
+[3.420s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__type_support.cpp
+[3.420s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/include/llm_interfaces/llm_interfaces/srv/detail/text_to_speech__rosidl_typesupport_introspection_cpp.hpp
+[3.420s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_introspection_cpp.so
+[3.420s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_typesupport_cpp.so
+[3.420s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/pythonpath.sh
+[3.420s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/pythonpath.dsv
+[3.420s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info
+[3.420s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info/dependency_links.txt
+[3.421s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info/PKG-INFO
+[3.421s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info/SOURCES.txt
+[3.421s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces-0.0.0-py3.10.egg-info/top_level.txt
+[3.421s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces
+[3.421s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/_llm_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+[3.421s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/libllm_interfaces__rosidl_generator_py.so
+[3.421s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/_llm_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+[3.421s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[3.421s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/_llm_interfaces_s.ep.rosidl_typesupport_c.c
+[3.421s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/__init__.py
+[3.422s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv
+[3.422s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_speech_to_text.py
+[3.422s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_text_to_speech_s.c
+[3.422s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_speech_to_text_s.c
+[3.423s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/__init__.py
+[3.423s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv/_text_to_speech.py
+[3.423s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[3.424s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[3.520s] Listing '/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces'...
+[3.520s] Listing '/home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/srv'...
+[3.535s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[3.536s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[3.536s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/local/lib/python3.10/dist-packages/llm_interfaces/llm_interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[3.536s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/lib/libllm_interfaces__rosidl_generator_py.so
+[3.536s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/SpeechToText.idl
+[3.537s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/TextToSpeech.idl
+[3.537s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/SpeechToText.srv
+[3.537s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/SpeechToText_Request.msg
+[3.537s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/SpeechToText_Response.msg
+[3.537s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/TextToSpeech.srv
+[3.538s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/TextToSpeech_Request.msg
+[3.538s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/srv/TextToSpeech_Response.msg
+[3.539s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/ament_index/resource_index/package_run_dependencies/llm_interfaces
+[3.539s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/ament_index/resource_index/parent_prefix_path/llm_interfaces
+[3.539s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/ament_prefix_path.sh
+[3.540s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/ament_prefix_path.dsv
+[3.543s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/path.sh
+[3.544s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/environment/path.dsv
+[3.544s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/local_setup.bash
+[3.544s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/local_setup.sh
+[3.544s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/local_setup.zsh
+[3.544s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/local_setup.dsv
+[3.544s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/package.dsv
+[3.544s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/ament_index/resource_index/packages/llm_interfaces
+[3.544s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_cExport.cmake
+[3.544s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_cExport-release.cmake
+[3.545s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+[3.545s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_typesupport_fastrtps_cExport-release.cmake
+[3.545s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_introspection_cExport.cmake
+[3.545s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_introspection_cExport-release.cmake
+[3.545s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_cExport.cmake
+[3.545s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_cExport-release.cmake
+[3.545s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_cppExport.cmake
+[3.545s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+[3.554s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_typesupport_fastrtps_cppExport-release.cmake
+[3.554s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_introspection_cppExport.cmake
+[3.554s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_introspection_cppExport-release.cmake
+[3.554s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_cppExport.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfaces__rosidl_typesupport_cppExport-release.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_pyExport.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/export_llm_interfaces__rosidl_generator_pyExport-release.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/rosidl_cmake-extras.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/ament_cmake_export_targets-extras.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+[3.555s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[3.556s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfacesConfig.cmake
+[3.556s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/cmake/llm_interfacesConfig-version.cmake
+[3.556s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/llm_interfaces/share/llm_interfaces/package.xml
+[3.570s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/llm_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gustav/ws_moveit2/install/moveit_configs_utils:/home/gustav/ws_moveit2/install/launch_param_builder:/home/gustav/lbr_stack/install/lbr_demos_py:/home/gustav/lbr_stack/install/lbr_demos_advanced_py:/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/llm_interfaces

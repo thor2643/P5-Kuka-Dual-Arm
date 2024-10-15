@@ -1,0 +1,51 @@
+[0.243s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit_resources/panda_description -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description
+[0.256s] -- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.526s] -- Configuring done
+[0.527s] -- Generating done
+[0.529s] -- Build files have been written to: /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description
+[0.655s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit_resources/panda_description -DCMAKE_INSTALL_PREFIX=/home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description
+[0.656s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description -- -j8 -l8
+[0.708s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description -- -j8 -l8
+[0.740s] Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description
+[0.749s] -- Install configuration: "Release"
+[0.755s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/ament_index/resource_index/package_run_dependencies/moveit_resources_panda_description
+[0.755s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/ament_index/resource_index/parent_prefix_path/moveit_resources_panda_description
+[0.758s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/environment/ament_prefix_path.sh
+[0.758s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/environment/ament_prefix_path.dsv
+[0.758s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/environment/path.sh
+[0.758s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/environment/path.dsv
+[0.758s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/local_setup.bash
+[0.758s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/local_setup.sh
+[0.759s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/local_setup.zsh
+[0.759s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/local_setup.dsv
+[0.759s] -- Installing: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/package.dsv
+[0.759s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/ament_index/resource_index/packages/moveit_resources_panda_description
+[0.760s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/cmake/moveit_resources_panda_descriptionConfig.cmake
+[0.761s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/cmake/moveit_resources_panda_descriptionConfig-version.cmake
+[0.761s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/package.xml
+[0.761s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes
+[0.761s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual
+[0.763s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/link7.dae
+[0.763s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/link6.dae
+[0.763s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/link5.dae
+[0.763s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/link1.dae
+[0.764s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/link4.dae
+[0.764s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/hand.dae
+[0.764s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/link3.dae
+[0.764s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/finger.dae
+[0.764s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/link2.dae
+[0.765s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/visual/link0.dae
+[0.765s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision
+[0.767s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/link3.stl
+[0.767s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/link0.stl
+[0.767s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/hand.stl
+[0.767s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/finger.stl
+[0.768s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/link4.stl
+[0.768s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/link2.stl
+[0.768s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/link6.stl
+[0.768s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/link7.stl
+[0.768s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/link5.stl
+[0.768s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/meshes/collision/link1.stl
+[0.768s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/urdf
+[0.768s] -- Up-to-date: /home/gustav/P5-Kuka-Dual-Arm/install/moveit_resources_panda_description/share/moveit_resources_panda_description/urdf/panda.urdf
+[0.823s] Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_panda_description

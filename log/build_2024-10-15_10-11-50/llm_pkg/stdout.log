@@ -1,0 +1,36 @@
+running egg_info
+creating ../../../build/llm_pkg/llm_pkg.egg-info
+writing ../../../build/llm_pkg/llm_pkg.egg-info/PKG-INFO
+writing dependency_links to ../../../build/llm_pkg/llm_pkg.egg-info/dependency_links.txt
+writing entry points to ../../../build/llm_pkg/llm_pkg.egg-info/entry_points.txt
+writing requirements to ../../../build/llm_pkg/llm_pkg.egg-info/requires.txt
+writing top-level names to ../../../build/llm_pkg/llm_pkg.egg-info/top_level.txt
+writing manifest file '../../../build/llm_pkg/llm_pkg.egg-info/SOURCES.txt'
+reading manifest file '../../../build/llm_pkg/llm_pkg.egg-info/SOURCES.txt'
+writing manifest file '../../../build/llm_pkg/llm_pkg.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build
+creating /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib
+creating /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg
+copying llm_pkg/llm_node.py -> /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg
+copying llm_pkg/__init__.py -> /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg
+running install
+running install_lib
+creating /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg
+copying /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg/llm_node.py -> /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg
+copying /home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/build/lib/llm_pkg/__init__.py -> /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg
+byte-compiling /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg/llm_node.py to llm_node.cpython-310.pyc
+byte-compiling /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/ament_index
+creating /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/ament_index/resource_index
+creating /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/ament_index/resource_index/packages
+copying resource/llm_pkg -> /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/ament_index/resource_index/packages
+copying package.xml -> /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/share/llm_pkg
+running install_egg_info
+Copying ../../../build/llm_pkg/llm_pkg.egg-info to /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/python3.10/site-packages/llm_pkg-0.0.0-py3.10.egg-info
+running install_scripts
+Installing llm_node script to /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/llm_pkg
+Installing speech_services script to /home/gustav/P5-Kuka-Dual-Arm/install/llm_pkg/lib/llm_pkg
+writing list of installed files to '/home/gustav/P5-Kuka-Dual-Arm/build/llm_pkg/install.log'
