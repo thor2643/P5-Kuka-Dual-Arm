@@ -1,5 +1,0 @@
-{% if value|length -%}
-{{name}} = {{value}}
-{% else -%}
-{{name}} = None
-{% endif -%}

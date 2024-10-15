@@ -1,4 +1,0 @@
-Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support -- -j8 -l8
-Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support -- -j8 -l8
-Invoking command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support
-Invoked command in '/home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/gustav/P5-Kuka-Dual-Arm/build/moveit_resources_prbt_support

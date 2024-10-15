@@ -1,8 +1,0 @@
-[ 11%] Built target gtest
-[ 23%] Built target admittance_controller_parameters
-[ 41%] Built target gmock
-[ 52%] Built target test_node
-[ 58%] [32mBuilding CXX object CMakeFiles/test_example_gtest.dir/test/example_test_gtest.cpp.o[0m
-[ 70%] Built target test_descriptor_gtest
-[ 82%] Built target minimal_publisher
-[ 88%] [32mBuilding CXX object CMakeFiles/test_example_gmock.dir/test/example_test_gmock.cpp.o[0m

@@ -1,7 +1,0 @@
-{
-  "package_name": "llm_interfaces",
-  "non_idl_tuples": [
-    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/llm_interfaces:srv/SpeechToText.srv",
-    "/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/llm_interfaces:srv/TextToSpeech.srv"
-  ]
-}

@@ -1,9 +1,0 @@
-setup.py
-launch_mixins/__init__.py
-launch_mixins/lbr_bringup.py
-launch_mixins/lbr_description.py
-launch_mixins/lbr_ros2_control.py
-launch_mixins.egg-info/PKG-INFO
-launch_mixins.egg-info/SOURCES.txt
-launch_mixins.egg-info/dependency_links.txt
-launch_mixins.egg-info/top_level.txt

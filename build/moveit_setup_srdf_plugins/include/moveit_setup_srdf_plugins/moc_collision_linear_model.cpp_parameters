@@ -1,4 +1,0 @@
--DROS_PACKAGE_NAME="moveit_setup_srdf_plugins"
--o
-/home/gustav/P5-Kuka-Dual-Arm/build/moveit_setup_srdf_plugins/include/moveit_setup_srdf_plugins/moc_collision_linear_model.cpp
-/home/gustav/P5-Kuka-Dual-Arm/p5_ws/src/moveit2/moveit_setup_assistant/moveit_setup_srdf_plugins/include/moveit_setup_srdf_plugins/collision_linear_model.hpp

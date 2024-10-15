@@ -1,4 +1,0 @@
-[console_scripts]
-llm_node = llm_pkg.llm_node:main
-speech_services = llm_pkg.speech_services_node:main
-

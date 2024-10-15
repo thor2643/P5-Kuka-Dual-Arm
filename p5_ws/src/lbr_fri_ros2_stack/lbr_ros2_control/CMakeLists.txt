@@ -20,8 +20,6 @@ find_package(FRIClient REQUIRED)
 find_package(hardware_interface REQUIRED)
 find_package(lbr_fri_idl REQUIRED)
 find_package(lbr_fri_ros2 REQUIRED)
-
-# My system was not able to find this, and thus not build.
 find_package(kinematics_interface REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(rclcpp REQUIRED)

@@ -1,3 +1,0 @@
-[console_scripts]
-test_node = generate_parameter_module_example.minimal_publisher:main
-
