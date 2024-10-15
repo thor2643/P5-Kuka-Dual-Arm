@@ -13,6 +13,8 @@ CMakeFiles/
 CMakeCache.txt
 CMakeScripts/
 build/
+install/
+log/
 devel/
 
 # Visual Studio
