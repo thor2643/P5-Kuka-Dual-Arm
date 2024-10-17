@@ -13,9 +13,7 @@ class RealSenseCamera:
         self.pipeline = rs.pipeline()
         self.config = rs.config()
 
-        # self.config.enable_stream(
-        #     rs.stream.depth, 640, 480, rs.format.z16, 30
-        # )
+        # Enable color stream
         self.config.enable_stream(
             rs.stream.color, 640, 480, rs.format.bgr8, 30
         )
@@ -23,16 +21,20 @@ class RealSenseCamera:
         # Enable depth stream
         self.config.enable_stream(
             rs.stream.depth, 640, 480, rs.format.z16, 30
-)
+        )
 
+        
     def __enter__(self):
         self.pipeline.start(self.config)
+
+        self.align_to = rs.stream.color
+        self.align = rs.align(self.align_to)
 
         color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
 
         # set options for color sensor
         color_sensor.set_option(rs.option.brightness, 0)
-        color_sensor.set_option(rs.option.exposure, 166)
+        color_sensor.set_option(rs.option.exposure, 566)
         color_sensor.set_option(rs.option.white_balance, 4200)
 
         return self.pipeline
@@ -50,10 +52,13 @@ class ObjectDetector(Node):
 
         self.object_file = 'src/object_detector/object_detector/lego_bricks_config.json'
 
-    
+        # Dictionary to store object detection descriptions e.g. color range, size range
         self.lego_bricks = {}
-        
-        self.load_object_descriptions()
+        self.load_object_descriptions() #Loads json file with saved descriptions into lego bricks
+
+        # Create a dictionary to store found objects with relevant information
+        self.found_objects = {}
+
 
     def show_depth_map(self):
         cv2.namedWindow("Depth Map", cv2.WINDOW_AUTOSIZE)
@@ -61,8 +66,11 @@ class ObjectDetector(Node):
             with self.realsense_camera as cam:
                 frames = cam.wait_for_frames()
 
+                aligned_frames = self.align.process(frames)
+
                 # Retrieve the depth frame
-                depth_frame = frames.get_depth_frame()
+                depth_frame = aligned_frames.get_depth_frame()
+                
                 if not depth_frame:
                     print("No depth frame captured.")
                     continue
@@ -157,18 +165,41 @@ class ObjectDetector(Node):
         # Find contours (or blobs)
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-        # List to store bounding boxes
+        # Lists to store bounding boxes
+        rotated_bounding_boxes = []
         bounding_boxes = []
 
+        i=0
         for contour in contours:
             # Calculate area to filter by size
             area = cv2.contourArea(contour)
+
             if size_min < area < size_max:
+                # Get the bounding box for the contour
                 x, y, w, h = cv2.boundingRect(contour)
                 bounding_boxes.append((x, y, x + w, y + h))
 
+                # Get the minimum area rectangle for the contour
+                rect = cv2.minAreaRect(contour) # returns ((center_x, center_y), (width, height), angle)
+                box = cv2.boxPoints(rect)       # returns the four vertices of the rectangle
+                box = np.int0(box)
+                rotated_bounding_boxes.append(box)
+
+                self.found_objects[f"{object_name}_{i}"] = {'bounding_box': (x, y, x + w, y + h), 'rotated_bounding_box': box, 'rotated_rect': rect}
+                i += 1
+
+        print("Found objects:")
+        print(self.found_objects)
+        print()
+                
+
         # Return list of bounding boxes for the detected object as well as the mask
-        return bounding_boxes, mask
+        return bounding_boxes, rotated_bounding_boxes, mask
+
+    def draw_rotated_boxes(self, image, rotated_bounding_boxes):
+        for box in rotated_bounding_boxes:
+            cv2.drawContours(image, [box], 0, (0, 0, 255), 2)
+        return image
 
     def draw_boxes(self, image, bounding_boxes):
         for box in bounding_boxes:
@@ -232,7 +263,7 @@ class ObjectDetector(Node):
             self.lego_bricks[object_name]['size_range'] = (min_size, max_size)
 
             # Use find_object to get bounding boxes with the current settings
-            bounding_boxes, mask = self.find_object(image, object_name)
+            bounding_boxes, rotated_bounding_boxes, mask = self.find_object(image, object_name)
 
             # Apply mask to the original image using the current HSV range
             lower_bound = np.array([lower_h, lower_s, lower_v], dtype=np.uint8)
@@ -255,6 +286,7 @@ class ObjectDetector(Node):
             # Draw bounding boxes on the result image
             image_copy = image.copy()
             result_with_boxes = self.draw_boxes(image_copy, bounding_boxes)
+            result_with_boxes = self.draw_rotated_boxes(result_with_boxes, rotated_bounding_boxes)
 
             # Show the resulting image
             cv2.imshow('Image with Bounding Boxes', result_with_boxes)
@@ -323,11 +355,12 @@ def main(args=None):
 
             #Find a specific object available in the dictionary
             object_name = input("Enter the name of the object you want to find: ")
-            bounding_boxes, _ = detector.find_object(image, object_name)
+            bounding_boxes, rotated_bounding_boxes, _ = detector.find_object(image, object_name)
 
             if bounding_boxes:
                 print(f"{object_name} found in the image.")
                 image_bbxs = detector.draw_boxes(image.copy(), bounding_boxes)
+                image_bbxs = detector.draw_rotated_boxes(image_bbxs, rotated_bounding_boxes)
                 detector.show_image(image_bbxs)
             else:
                 print(f"{object_name} not found in the image.")
