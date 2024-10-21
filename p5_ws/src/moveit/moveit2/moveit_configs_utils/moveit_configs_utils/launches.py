@@ -201,6 +201,7 @@ def generate_move_group_launch(moveit_config):
         DeclareLaunchArgument(
             "capabilities",
             default_value=moveit_config.move_group_capabilities,
+            # there was a problem with capabillites, this fixed it https://github.com/moveit/moveit2/issues/2734#issuecomment-2055368880
             #default_value=moveit_config.move_group_capabilities["capabilities"],
         )
     )
