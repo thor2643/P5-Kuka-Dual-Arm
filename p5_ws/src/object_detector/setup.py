@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'detector_service = object_detector.object_detector:main',
+            'detector_client = object_detector.detector_client:main',
         ],
     },
 )
