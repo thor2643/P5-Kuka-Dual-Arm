@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<robot name="kuka_bord" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find kuka_bord_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find kuka_bord_description)/urdf/kuka_bord.trans" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.47511520643410643 0.9340356249199337 1.753635248949686" rpy="0 0 0"/>
+    <mass value="1382.7919279449686"/>
+    <inertia ixx="1994.27355" iyy="2787.103818" izz="966.579181" ixy="-0.365832" iyz="-145.275916" ixz="-0.552572"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://kuka_bord_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="steel_satin"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://kuka_bord_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+</robot>
