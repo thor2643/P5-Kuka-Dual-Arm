@@ -7,7 +7,7 @@
   <maintainer email="signeskuldbol@hotmail.com">signe</maintainer>
   <license>Apache-2.0</license>
   
-  <exec_depend>tutorial_interfaces</exec_depend>
+  <exec_depend>project_interfaces</exec_depend>
   <depend>rclpy</depend>
   <depend>example_interfaces</depend>
 

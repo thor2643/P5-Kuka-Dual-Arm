@@ -1,8 +1,0 @@
-msg/Num.idl
-msg/Num.msg
-msg/Sphere.idl
-msg/Sphere.msg
-srv/GetSixInts.idl
-srv/GetSixInts.srv
-srv/GetSixInts_Request.msg
-srv/GetSixInts_Response.msg
