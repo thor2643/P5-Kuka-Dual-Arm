@@ -1,10 +1,6 @@
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   find_package(ros_testing REQUIRED)
-  find_package(moveit_resources_fanuc_description REQUIRED)
-  find_package(moveit_resources_fanuc_moveit_config REQUIRED)
-  find_package(moveit_resources_panda_description REQUIRED)
-  find_package(moveit_resources_panda_moveit_config REQUIRED)
   find_package(moveit_ros_planning REQUIRED)
 
   ament_add_gtest_executable(test_kinematics_plugin test_kinematics_plugin.cpp)
