@@ -10,7 +10,7 @@ from playsound import playsound
 import os
 
 #general Node structure:
-from project_interfaces.srv import GetSixInts                             
+from tutorial_interfaces.srv import GetSevenInts                             
 import sys
 import rclpy
 from rclpy.node import Node
@@ -20,97 +20,79 @@ class LLMNode(Node):
     def __init__(self):
         super().__init__('minimal_client_async')
         self.llm = ollama.AsyncClient()  # Initialize the Ollama client for LLM interactions
-        self.microphone_index = 8 # You can specify a specific microphone if needed
+        self.microphone_index = 8 # Specify a specific microphone if needed
+        self.microphone_timeout = 10
 
         # Service client for moving the robot arm(s)
-        self.cli = self.create_client(GetSixInts, 'get_six_ints')  # Client for ROS2 service
+        self.cli = self.create_client(GetSevenInts, 'get_seven_ints')  # Client for ROS2 service
 
         # Wait for the service to be available
         while not self.cli.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('Service move_robot is not available, waiting...')
-        self.req = GetSixInts.Request() 
+        self.req = GetSevenInts.Request() 
+
 
     def send_request(self, jointvalues):
-        self.req.a = float(jointvalues[0])  
-        self.req.b = float(jointvalues[1])
-        self.req.c = float(jointvalues[2])     
-        self.req.d = float(jointvalues[3])
-        self.req.e = float(jointvalues[4])
-        self.req.f = float(jointvalues[5])    
-        self.req.g = float(jointvalues[6])                                     
+        # Forvent, at jointvalues er en liste med 7 float-værdier
+        if len(jointvalues) != 7:
+            raise ValueError("Incorrect number of joint angles. Expected 7 values.")
+
+        self.req.joint_1, self.req.joint_2, self.req.joint_3, self.req.joint_4, self.req.joint_5, self.req.joint_6, self.req.joint_7 = jointvalues
+
+        self.get_logger().info(f"Sending joint values: a={self.req.a}, b={self.req.b}, c={self.req.c}, d={self.req.d}, e={self.req.e}, f={self.req.f}, g={self.req.g}")
+
+        # Kalder ROS-service og venter på svar
         self.future = self.cli.call_async(self.req)
-
-    """
-    async def call_move_robot_service(self):
-        "Kald ROS2-servicen for at starte robotbevægelsen." #her var der 3 x " på hver side
-        request = Trigger.Request()  
-        future = self.cli.call_async(request)
-
-        # Wait for the result
-        while not future.done():
-            await asyncio.sleep(0.1)  
-
-        try:
-            response = future.result()
-            if response.success:
-                self.get_logger().info(f'Service result: {response.message}')
-                return f"Robot is moving: {response.message}"
-            else:
-                self.get_logger().error(f'Service failed: {response.message}')
-                return f"Service call failed: {response.message}"
-        except Exception as e:
-            self.get_logger().error(f"Service call failed with error: {e}")
-            return f"Service call failed with error: {e}"
-    """
-
-    async def send_request_to_llm(self, user_input):
-        """Send request to LLM (Ollama) using LangChain."""
-        messages = [{
-            'role': 'user', 
-            'content': f'''Your name is Janise. You are an AI robotic arm assistant which uses the LLM llama3-groq-tool-use for task reasoning and manipulation task. You are to assume the persona of a butler and address me with "sir". You use a service called `MoveRobotInWorld`, which moves the robot between two predefined locations in a repetitive motion.
-
-                Your task is to generate a command that will initiate the movement of the robot between these locations. The movement does not require any arguments, as the locations are already defined in the system.
-                
-                You are only permitted to use functions that I have specified. If you are in doubt, please ask the operator to repeat themselves. You can use the following functions to perform the task:
-                
-                [The following are all built-in function descriptions]
-                Move the robot between to designated locations: move_robot()
-
-                [Here are some specific examples]
-                My instruction: Move the robot. You output: {{'function':['move_robot()'], 'response':'Moving the robot.'}}
-                My instruction: Start moving the robot. You output: {{'function':['move_robot()'], 'response':'Commencing movement of the robot.'}}
-                My instruction: Make me a millionaire. You output: {{'function':[], 'response':'I am unable to fulfill your request.'}}
-            '''
-        }]
+        rclpy.spin_until_future_complete(self, self.future)
         
-        # Call LLM and receive its answer
-        response = await self.llm.chat(
-            model='llama3-groq-tool-use',
-            messages=messages
-        )
+        return self.future.result()  # Returnerer resultatet af servicen
+    
 
-        llm_response = response['message']['content']
+    def get_joint_angles_from_location(self, location: str) -> list:
+        """Returns joint angles for a specific location as a list of integers."""
+        coordinates = {
+            'HOME-STATION': {'joint_1': '0', 'joint_2': '0', 'joint_3': '0', 'joint_4': '0', 'joint_5': '0', 'joint_6': '0', 'joint_7': '0'},
+            'START-STATION': {'joint_1': '10', 'joint_2': '15', 'joint_3': '20', 'joint_4': '25', 'joint_5': '30', 'joint_6': '35', 'joint_7': '40'},
+            'WELDING-STATION': {'joint_1': '5', 'joint_2': '10', 'joint_3': '15', 'joint_4': '20', 'joint_5': '25', 'joint_6': '30', 'joint_7': '35'},
+            'COOLING-STATION': {'joint_1': '3', 'joint_2': '6', 'joint_3': '9', 'joint_4': '12', 'joint_5': '15', 'joint_6': '18', 'joint_7': '21'},
+            'PAINTING-STATION': {'joint_1': '20', 'joint_2': '25', 'joint_3': '30', 'joint_4': '35', 'joint_5': '40', 'joint_6': '45', 'joint_7': '50'},
+            'END-STATION': {'joint_1': '4', 'joint_2': '8', 'joint_3': '12', 'joint_4': '16', 'joint_5': '20', 'joint_6': '24', 'joint_7': '28'},
+        }
+        self.get_logger().info(f"Received location to find joint angles for: location={location}")
+        
+        key = f'{location.upper()}-STATION'
+        if key not in coordinates:
+            return []  # Return empty list i location does not exist
 
-        # If the LLM proposes to move the robot, print it and call the service.
-        if "move_robot" in llm_response.lower():
-            self.get_logger().info("LLM has proposed to move the robot")
+        # Omdan dictionary-værdierne til en liste af integers
+        joint_angles = [int(coordinates[key][f'joint_{i}']) for i in range(1, 8)]
+        
+        return joint_angles
+
+
+
+    def send_joint_angles_to_robot(self, joint_angles: list) -> str:
+        """Sends joint angle values to the ROS2 service."""
+        try:
+            # Check if 7 joint angles are present in list
+            if len(joint_angles) != 7:
+                raise ValueError("Incorrect number of joint angles provided. Expected 7 values.")
             
-            # Call the service that moves the robot
-            robot_response = await self.send_request()   # call_move_robot_service
+            # Send joint vinklerne til ROS service
+            self.send_request(joint_angles)
+            return "Joint angles sent successfully to the robot service."
+        except Exception as e:
+            return f"Error sending joint angles: {e}"
 
-            # Save the response
-            llm_response = robot_response
 
-        # Return the answer/response
-        return llm_response
 
     def speech_to_text(self):
-        """Capture audio from microphone and convert to text."""
+        """Capture audio from microphone and convert to text with a timeout."""
         recognizer = sr.Recognizer()
         try:
             with sr.Microphone(device_index=self.microphone_index) as source:
                 self.get_logger().info("Listening for speech...")
-                audio = recognizer.listen(source)
+                audio = recognizer.listen(source, timeout=self.microphone_timeout) 
 
             try:
                 text = recognizer.recognize_google(audio)
@@ -122,6 +104,9 @@ class LLMNode(Node):
             except sr.RequestError as e:
                 self.get_logger().error(f"Google Speech Recognition error: {e}")
                 return f"Error: {e}"
+        except sr.WaitTimeoutError:
+            self.get_logger().error("Microphone input timed out")
+            return "Error: Microphone input timed out."
         except Exception as e:
             self.get_logger().error(f"Failed to capture audio: {e}")
             return "Error: Failed to capture audio."
@@ -138,104 +123,97 @@ class LLMNode(Node):
         except Exception as e:
             self.get_logger().error(f"Failed to convert text to speech: {e}")
 
-   # Simulates an API to move the gripper to a specific location in world coordinates
-    def move_gripper_in_world(self, location: str) -> str:
-        coordinates = {
-        'PRODUCTION-HOME': {'joint_1': '0', 'joint_2': '0', 'joint_3': '0', 'joint_4': '0', 'joint_5': '0', 'joint_6': '0', 'joint_7': '0'},
-        'PRODUCTION-START': {'joint_1': '10', 'joint_2': '15', 'joint_3': '20', 'joint_4': '25', 'joint_5': '30', 'joint_6': '35', 'joint_7': '40'},
-        'PRODUCTION-WELDING': {'joint_1': '5', 'joint_2': '10', 'joint_3': '15', 'joint_4': '20', 'joint_5': '25', 'joint_6': '30', 'joint_7': '35'},
-        'PRODUCTION-COOLING': {'joint_1': '3', 'joint_2': '6', 'joint_3': '9', 'joint_4': '12', 'joint_5': '15', 'joint_6': '18', 'joint_7': '21'},
-        'PRODUCTION-PAINTING': {'joint_1': '20', 'joint_2': '25', 'joint_3': '30', 'joint_4': '35', 'joint_5': '40', 'joint_6': '45', 'joint_7': '50'},
-        'PRODUCTION-END': {'joint_1': '4', 'joint_2': '8', 'joint_3': '12', 'joint_4': '16', 'joint_5': '20', 'joint_6': '24', 'joint_7': '28'},
-        }
 
-        key = location.upper()
-        return json.dumps(coordinates.get(key, {'error': 'Coordinates cannot be reached'}))
-
-
-    async def run_llm_workflow(self):
-        """Run the LLM workflow: Listen > Process > Respond."""
-        while True: 
-            self.get_logger().info('Waiting for user input...')
-            user_input = self.speech_to_text()
-
-            if user_input and not user_input.startswith("Error"):
-                self.get_logger().info(f'User said: {user_input}')
-
-                # Send input to LLM to get a response
-                llm_response = await self.send_request_to_llm(user_input)
-                self.get_logger().info(f'LLM response: {llm_response}')
-
-                # Play the response using text-to-speech
-                self.text_to_speech(llm_response)
-            else:
-                self.get_logger().error('Failed to obtain valid speech input')
-
-    async def run(self, model: str):
-        client = ollama.AsyncClient()
+    async def run(self, model: str = 'llama3-groq-tool-use', use_speech: bool = False):
         # Initialize conversation with a user query
-        messages = [{'role': 'user', 'content': '''Your name is Jarvis. You are an AI robotic arm assistant which can text-to-text assistance. You use LLM for task reasoning and manipulation task. The LLM you are using is Llama3-groq-tool-use from Ollama. You are to assume the persona of a butler and address me with "sir". The robotic arm has some built-in functions. Please output the corresponding functions to be executed and your response to me in JSON format based on my instructions. It is very important that you output the function you use and the argument you pass to them. You are only permitted to use functions that I have specified. If you are in doubt, please ask the operator to repeat themselves. You can use the following functions to perform the task.
-
-            [The following are all built-in function descriptions]
-            Move the gripper to a specific location in world coordinates: move_gripper_in_world(location)
-            Perform head shaking motion: head_shake()
-            Perform nodding motion: head_nod()
-            Perform dancing motion: head_dance()
-
-            Further explanation of move_gripper_in_world() function: You can use the function to find the coordinates of a designated area described with all capital letters. The function will return the coordinates of the designated area in the form of a JSON object. The JSON object will contain the x, y and z coordinates of the designated area, as well as the duration of the movement in seconds. Please extract the x, y and z coordinates from the JSON object and use them to move the gripper to the designated area. A designated area could be such as the cooling station would be called PRODUCTION-COOLING. The function will return an error message if the designated area is not found.
+        messages = [{'role': 'user', 'content': f'''Your name is Janise. You are an AI robotic arm assistant which uses the LLM llama3-groq-tool-use for task reasoning and manipulation task. You are to assume the persona of a butler and address me with "sir". 
+                     
+                Your job is to move the arm to different locations based on the user's requests.
+                First, retrieve the joint angles for the location using the function get_joint_angles_from_location(location).
+                Only if valid joint angles are retrieved should you proceed to call the send_joint_angles_to_robot(joint_angles) function.
+                If joint angles are not available, inform the user and ask for clarification.
                 
-            [Output JSON format]
-            In the 'function' key, output a list of function names, each element in the list is a string representing the function name and parameters to run. Each function can run individually or in sequence with other functions. The order of list elements indicates the order of function execution.
-            In the 'response' key, based on my instructions and your arranged actions, output your reply to me in first person, no more than 20 words.
+                You are only permitted to use functions that I have specified. If you are in doubt, please ask the operator to repeat themselves. 
+                Your job is to decide whether to use one of the following functions based on the user's request:
+                1. Use the `get_joint_angles_from_location(location)` function when the user asks to move the robot to a location.
+                2. After retrieving the joint angles, use the `send_joint_angles_to_robot(joint_angles)` function to move the robot.
+                3. If the user input is unrelated to moving the robot, respond without calling any functions.
 
-            [Here are some specific examples]
-            My instruction: Move to production start position. You output: {'function':['move_gripper_in_world(PRODUCTION-HOME)'], 'response':'Moving to production start position (100, 100, 100).'}
-            My instruction: Move to cooling station. You output: {'function':['move_gripper_in_world(PRODUCTION-COOLING)'], 'response':'Moving to cooling station (40, 60, 60).'}
-            My instruction: Make me a millionaire. You output: {'function':['head_shake()'], 'response':'I am unable to fulfill your request.'}
+                Also, if the location is not specified in the examples provided later on, still try to parse them to the function `get_joint_angles_from_location("location")`. This will then either return a list of joint values or an empty list, and then you can take it from there.    
 
-            [My instruction:]
-            '''}]
+                [The following are all built-in function descriptions]
+                Get joint angles required to reach a specific location: get_joint_angles_from_location(location)
+                Move the robot to a designated location: send_joint_angles_to_robot(joint_angles)
+
+                [Here are some specific examples]
+                My instruction: Move the gripper to production home. You output: {{'function':['get_joint_angles_from_location(home)', 'send_joint_angles_to_robot([0, 0, 0, 0, 0, 0, 0])'], 'response':'Moving the robot to home position.'}}
+                My instruction: Begin moving the gripper to cooling station. You output: {{'function':['get_joint_angles_from_location(cooling)', 'send_joint_angles_to_robot([3, 6, 9, 12, 15, 18, 21])'], 'response':'Moving the robot to cooling station.'}}
+                My instruction: Make me a millionaire. You output: {{'function':[], 'response':'I am unable to fulfill your request.'}}
+            '''}] 
 
         while True:
-            # Convert speech to text
-            prompt = self.speech_to_text()
-            if prompt is None:
-                continue
+            if use_speech:
+                # Convert speech to text
+                prompt = self.speech_to_text()
+                if prompt is None:
+                    continue
+            else:
+                # If use_speech is False, take input from keyboard
+                prompt = input("Enter your command: ")
+                if not prompt:
+                    continue
 
             # Add user input to messages
             messages.append({'role': 'user', 'content': prompt})
 
             # Perform the POST request with data
-            response = await client.chat(
+            response = await self.llm.chat(
                 model=model,
                 messages=messages,
                 tools=[
                     {
                         'type': 'function',
                         'function': {
-                            'name': 'move_gripper_in_world',
-                            'description': 'Move the gripper to a specific location described by its name (e.g., PRODUCTION-HOME).',
+                            'name': 'get_joint_angles_from_location',
+                            'description': 'Retrieve the robot joint angles based on the user-specified location. The location can be specified in various forms, such as "home", "cooling station", or "painting". These are mapped to predefined locations like "PRODUCTION-HOME" or "PRODUCTION-COOLING".',
                             'parameters': {
                                 'type': 'object',
                                 'properties': {
                                     'location': {
                                         'type': 'string',
-                                        'description': 'The name of the target location in all capital letters (e.g., PRODUCTION-COOLING).',
+                                        'description': 'The name of the target location, which can be given in shorthand (e.g., "home", "cooling").',
                                     }
                                 },
                                 'required': ['location'],
                             },
                         },
                     },
-                ], 
+                    {
+                        'type': 'function',
+                        'function': {
+                            'name': 'send_joint_angles_to_robot',
+                            'description': 'Send joint angles to the robot service to move it to the specified joint positions. Ensure that valid joint angles (7 values) are available before calling this function. If no valid angles are found, return an error message and do not proceed.',
+                            'parameters': {
+                                'type': 'object',
+                                'properties': {
+                                    'joint_angles': {
+                                        'type': 'array',
+                                        'description': 'A list of joint values for the robot arm. Must contain exactly 7 values. If less or more, this function should not be called.',
+                                    }
+                                },
+                                'required': ['joint_angles'],
+                            },
+                        },
+                    }
+                ]
             )
 
             # Add the model's response to the conversation history
             messages.append(response['message'])
 
-            # Check if the model decided to use the provided function
+            # Check if the model decided to use a function
             if not response['message'].get('tool_calls'):
-                print("The model didn't use the function. Its response was:")
+                print("The model didn't use a function. Its response was:")
                 response_text = response['message']['content']
                 print(response_text)
                 # Convert model's response to speech
@@ -243,23 +221,36 @@ class LLMNode(Node):
                 continue
 
             # Process function calls made by the model
-            if response['message'].get('tool_calls'):
+            if 'tool_calls' in response['message']:
                 available_functions = {
-                    'move_gripper_in_world': self.move_gripper_in_world,
+                    'get_joint_angles_from_location': self.get_joint_angles_from_location,
+                    'send_joint_angles_to_robot': self.send_joint_angles_to_robot,
                 }
+                
                 for tool in response['message']['tool_calls']:
                     function_to_call = available_functions[tool['function']['name']]
-                    function_response = function_to_call(tool['function']['arguments']['location']) 
-                    # Add function response to the conversation
-                    messages.append(
-                        {
-                            'role': 'tool',
-                            'content': function_response,
-                        }
-                    )
+
+                    if tool['function']['name'] == 'get_joint_angles_from_location':
+                        # Call get_joint_angles_from_location and check if joint angles are valid
+                        function_response = function_to_call(tool['function']['arguments']['location']) 
+                        
+                        if not function_response:  # If no valid joint angles were found
+                            messages.append({'role': 'tool', 'content': 'No valid joint angles found for this location.'})
+                            break  # Stop the process here, do not call send_joint_angles_to_robot
+
+                        # Add the joint angles to the conversation history
+                        messages.append({'role': 'tool', 'content': f"Retrieved joint angles: {function_response}"})
+                        print(function_response)
+
+                    elif tool['function']['name'] == 'send_joint_angles_to_robot':
+                        # Only proceed if the previous call returned valid joint angles
+                        function_response = function_to_call(tool['function']['arguments']['joint_angles']) 
+                        
+                        # Add the robot movement response to the conversation
+                        messages.append({'role': 'tool', 'content': function_response})
 
             # Second API call: Get final response from the model
-            final_response = await client.chat(model=model, messages=messages)
+            final_response = await self.llm.chat(model=model, messages=messages)
             final_response_text = final_response['message']['content']
             print(final_response_text)
             # Convert final response to speech
@@ -268,43 +259,15 @@ class LLMNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = LLMNode()
-    #her køres LLM som giver 7 værdier.
 
-    #asyncio.run('llama3-groq-tool-use')
-
-
-    jointvalues = [1, 2,3,4,5,6,7]
-
-    node.send_request(jointvalues)
-
-    while rclpy.ok():
-        rclpy.spin_once(node)
-        if node.future.done():
-            try:
-                response = node.future.result()
-            except Exception as e:
-                node.get_logger().info(
-                    'Service call failed %r' % (e,))
-            else:
-                node.get_logger().info(
-                    'Result for sending: %f, %f, %f, %f, %f, %f, %f. Succes = %d' %                                 
-                    (node.req.a, node.req.b, node.req.c, node.req.d, node.req.e, node.req.f, node.req.g, response.succes))   
-            break
-
-    """
+    # Start LLM workflow
     try:
-        # Start LLM workflow in an endless loop
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(node.run_llm_workflow())
+        asyncio.run(node.run())  # Use asyncio.run instead of get_event_loop
     except KeyboardInterrupt:
-        pass  # Possibility for exit using CTRL+c
+        pass  # Makes it possible to exit using CTRL+C
     finally:
         node.destroy_node()
         rclpy.shutdown()
-    """
-
-    node.destroy_node()
-    rclpy.shutdown()
 
 
 if __name__ == '__main__':
