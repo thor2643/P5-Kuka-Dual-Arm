@@ -1,0 +1,4 @@
+[console_scripts]
+detector_client = object_detector.detector_client:main
+detector_service = object_detector.object_detector:main
+
