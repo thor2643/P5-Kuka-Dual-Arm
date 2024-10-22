@@ -2,8 +2,6 @@
 import json
 import ollama
 import asyncio
-import rclpy
-from rclpy.node import Node
 import speech_recognition as sr
 from gtts import gTTS
 from playsound import playsound
@@ -13,50 +11,89 @@ import os
 from tutorial_interfaces.srv import GetSevenInts                             
 import sys
 import rclpy
+from rclpy.action import ActionClient
 from rclpy.node import Node
+
+#message
+from action_msg_package.action import JointValues   
 
 
 class LLMNode(Node):
     def __init__(self):
         super().__init__('minimal_client_async')
+
+        #Action Client
+        self._action_client = ActionClient(self, JointValues, 'JointValues')
+        self.jointvalues = [0,0,0,0,0,0,0] 
+
+        #LLM
         self.llm = ollama.AsyncClient()  # Initialize the Ollama client for LLM interactions
         self.microphone_index = 8 # Specify a specific microphone if needed
         self.microphone_timeout = 10
 
         # Service client for moving the robot arm(s)
-        self.cli = self.create_client(GetSevenInts, 'get_seven_ints')  # Client for ROS2 service
+        self.cli = self.create_client(JointValues, 'JointValues')  # Client for ROS2 service
 
         # Wait for the service to be available
         while not self.cli.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('Service move_robot is not available, waiting...')
-        self.req = GetSevenInts.Request() 
+        
+        #not sure if this schould be here
+        #self.req = GetSevenInts.Request() 
+        #self.req = JointValues.Goal()
 
 
-    def send_request(self, jointvalues):
-        # Forvent, at jointvalues er en liste med 7 float-værdier
+    def send_goal(self, jointvalues):
+        # Check if 7 joint angles are present in list
         if len(jointvalues) != 7:
             raise ValueError("Incorrect number of joint angles. Expected 7 values.")
 
-        self.req.joint_1, self.req.joint_2, self.req.joint_3, self.req.joint_4, self.req.joint_5, self.req.joint_6, self.req.joint_7 = jointvalues
+        joint_values = JointValues.Goal()
+        joint_values.joint_1, joint_values.joint_2, joint_values.joint_3, joint_values.joint_4, joint_values.joint_5, joint_values.joint_6, joint_values.joint_7 = jointvalues
 
-        self.get_logger().info(f"Sending joint values: a={self.req.a}, b={self.req.b}, c={self.req.c}, d={self.req.d}, e={self.req.e}, f={self.req.f}, g={self.req.g}")
+        self.get_logger().info(f"Sending joint values: 1={joint_values.joint_1}, 2={joint_values.joint_2}, 3={joint_values.joint_3}, 4={joint_values.joint_4}, 5={joint_values.joint_5}, 6={joint_values.joint_6}, 7={joint_values.joint_7}")
 
-        # Kalder ROS-service og venter på svar
-        self.future = self.cli.call_async(self.req)
-        rclpy.spin_until_future_complete(self, self.future)
-        
-        return self.future.result()  # Returnerer resultatet af servicen
+        self._action_client.wait_for_server()
+
+        self._send_goal_future = self._action_client.send_goal_async(
+            joint_values,
+            feedback_callback=self.feedback_callback)
+
+        self._send_goal_future.add_done_callback(self.goal_response_callback)
+
+
+    def goal_response_callback(self, future):
+        goal_handle = future.result()
+
+        if not goal_handle.accepted:
+            self.get_logger().info('Goal rejected :(')
+            return
+
+        self.get_logger().info('Goal accepted :)')
+
+        self._get_result_future = goal_handle.get_result_async()
+
+        self._get_result_future.add_done_callback(self.get_result_callback)
+
+    def get_result_callback(self, future):
+        result = future.result().result
+        self.get_logger().info('Result: {0}'.format(result.success))
+        rclpy.shutdown()
+
+    def feedback_callback(self, feedback_msg):
+        feedback = feedback_msg.feedback
+        self.get_logger().info('Received feedback: {0}'.format(feedback.progress))
+
     
-
     def get_joint_angles_from_location(self, location: str) -> list:
         """Returns joint angles for a specific location as a list of integers."""
-        coordinates = {
+        coordinates = { # Predefined joint angles for different locations
             'HOME-STATION': {'joint_1': '0', 'joint_2': '0', 'joint_3': '0', 'joint_4': '0', 'joint_5': '0', 'joint_6': '0', 'joint_7': '0'},
-            'START-STATION': {'joint_1': '10', 'joint_2': '15', 'joint_3': '20', 'joint_4': '25', 'joint_5': '30', 'joint_6': '35', 'joint_7': '40'},
-            'WELDING-STATION': {'joint_1': '5', 'joint_2': '10', 'joint_3': '15', 'joint_4': '20', 'joint_5': '25', 'joint_6': '30', 'joint_7': '35'},
-            'COOLING-STATION': {'joint_1': '3', 'joint_2': '6', 'joint_3': '9', 'joint_4': '12', 'joint_5': '15', 'joint_6': '18', 'joint_7': '21'},
-            'PAINTING-STATION': {'joint_1': '20', 'joint_2': '25', 'joint_3': '30', 'joint_4': '35', 'joint_5': '40', 'joint_6': '45', 'joint_7': '50'},
-            'END-STATION': {'joint_1': '4', 'joint_2': '8', 'joint_3': '12', 'joint_4': '16', 'joint_5': '20', 'joint_6': '24', 'joint_7': '28'},
+            'START-STATION': {'joint_1': '0.1745', 'joint_2': '0.2618', 'joint_3': '0.3491', 'joint_4': '0.4363', 'joint_5': '0.5236', 'joint_6': '0.5236', 'joint_7': '0.5236'},
+            'WELDING-STATION': {'joint_1': '0.0873', 'joint_2': '0.1745', 'joint_3': '0.2618', 'joint_4': '0.3491', 'joint_5': '0.4363', 'joint_6': '0.5236', 'joint_7': '0.5236'},
+            'COOLING-STATION': {'joint_1': '0.0524', 'joint_2': '0.1047', 'joint_3': '0.1571', 'joint_4': '0.2094', 'joint_5': '0.2618', 'joint_6': '0.3142', 'joint_7': '0.3665'},
+            'PAINTING-STATION': {'joint_1': '0.3491', 'joint_2': '0.4363', 'joint_3': '0.5236', 'joint_4': '0.5236', 'joint_5': '0.5236', 'joint_6': '0.5236', 'joint_7': '0.5236'},
+            'END-STATION': {'joint_1': '0.0698', 'joint_2': '0.1396', 'joint_3': '0.2094', 'joint_4': '0.2793', 'joint_5': '0.3491', 'joint_6': '0.4189', 'joint_7': '0.4887'},
         }
         self.get_logger().info(f"Received location to find joint angles for: location={location}")
         
@@ -70,7 +107,7 @@ class LLMNode(Node):
         return joint_angles
 
 
-
+######this must be updated to action see send_goal
     def send_joint_angles_to_robot(self, joint_angles: list) -> str:
         """Sends joint angle values to the ROS2 service."""
         try:
@@ -242,7 +279,9 @@ class LLMNode(Node):
                         messages.append({'role': 'tool', 'content': f"Retrieved joint angles: {function_response}"})
                         print(function_response)
 
-                    elif tool['function']['name'] == 'send_joint_angles_to_robot':
+
+                    #OBS det her su skal ændre send_joint_angles_to_robot til send_goal og rette det rundt omkring
+                    elif tool['function']['name'] == 'send_goal':   
                         # Only proceed if the previous call returned valid joint angles
                         function_response = function_to_call(tool['function']['arguments']['joint_angles']) 
                         
@@ -259,6 +298,7 @@ class LLMNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = LLMNode()
+
 
     # Start LLM workflow
     try:
