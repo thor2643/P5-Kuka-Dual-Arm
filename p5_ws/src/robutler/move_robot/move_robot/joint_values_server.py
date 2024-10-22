@@ -1,5 +1,5 @@
 #message
-from action_msg_package.action import JointValues    
+from project_interfaces.action import JointValues    
 
 #ROS2 KUKA FRI imports
 from lbr_fri_idl.msg import LBRJointPositionCommand, LBRState # Joint control message, Data from KUKA
@@ -29,7 +29,7 @@ class MoveRobotInWorld(Node):
         
         #initisalize goal and control feedback
         self.goal= [0,0,0,0,0,0,0]
-        self.control_feedbak 
+        self.control_feedback = 0
 
         # Create publisher to command/joint_position
         self._lbr_joint_position_command_pub = self.create_publisher(LBRJointPositionCommand, 
@@ -56,8 +56,8 @@ class MoveRobotInWorld(Node):
         #here our code must be checking if goal is reached. if it isnt we keep sending feedback and not the result
         while np.all(np.abs(np.subtract(self.goal, self._lbr_state.measured_joint_position)) >= 0.1): #Maybe this should be based on a bool variable that is set to True when the goal is reached
             feedback_msg.progress = True #telling the client that the goal has not been reached yet, but the robot is working on it
-            self.control_feedbak = +1 
-            if self.control_feedback % 10 == 0:
+            self.control_feedback += 1 
+            if self.control_feedback % 10 == 0:   #chance this based on need or use rclpy.sleep()
                 goal_handle.publish_feedback(feedback_msg) #OBS this might spam the client
             
 
