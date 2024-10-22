@@ -7,7 +7,8 @@ import json
 import os
 
 #ROS stuff
-from example_interfaces.srv import AddTwoInts
+from project_interfaces.srv import GetObjectInfo
+from geometry_msgs.msg import Point
 
 
 class RealSenseCamera:
@@ -49,7 +50,7 @@ class RealSenseCamera:
 class ObjectDetector(Node):
     def __init__(self):
         super().__init__('object_detector')
-        self.srv = self.create_service(AddTwoInts, 'add_two_ints', self.get_object_information)
+        self.srv = self.create_service(GetObjectInfo, 'get_object_info', self.get_object_information)
 
         # Instantiate the RealSenseCamera object
         self.realsense_camera = RealSenseCamera()
@@ -70,22 +71,32 @@ class ObjectDetector(Node):
     
     #The callback function for the service
     def get_object_information(self, request, response):
-        if request.a == 0 and request.b == 0:
-            self.get_logger().info('Requested to find green brick\n')
+        object = request.object_name
+        self.get_logger().info(f'Requested to find {object}\n')
 
+        if object in self.lego_bricks:
             self.capture_aligned_frames()
-            self.find_object(self.get_color_image(), 'green_brick')
+            self.find_object(self.get_color_image(), object)
 
-            len_found_objects = len(self.found_objects)
+            response.object_count = len(self.found_objects)
 
-            response.sum = len_found_objects
+            for obj in self.found_objects:
+                point = Point()
+                point.x = float(self.found_objects[obj]['center_coords'][0])
+                point.y = float(self.found_objects[obj]['center_coords'][1])
+                point.z = float(self.found_objects[obj]['center_coords'][2])
 
-            self.get_logger().info(f'Found {len_found_objects} green bricks\n')
-            self.get_logger().info('Incoming request\na: %d b: %d' % (request.a, request.b))
+                response.centers.append(point)
+                response.orientations.append(self.found_objects[obj]['rotated_rect'][2])
+                response.grasp_widths.append(self.found_objects[obj]['width'])
+
+            self.get_logger().info(f'Found {response.object_count} {object}\n')
+
+            # Clear the found objects dictionary
+            self.found_objects.clear()
         else:
-            response.sum = request.a + request.b
-            self.get_logger().info('Returning Sum\n')
-            self.get_logger().info('Incoming request\na: %d b: %d' % (request.a, request.b))
+            self.get_logger().info('Object thresholds not available. Consider adding the object by running the adjust_hsv option at startup.\n')
+            response.object_count = 0
 
         return response
 
@@ -220,22 +231,16 @@ class ObjectDetector(Node):
                 width_point_1, width_point_2 = box[0], box[1] 
                 height_point_1, height_point_2 = box[1], box[2]
 
-                print(f"Width points: {width_point_1}, {width_point_2}")
-                print(f"Height points: {height_point_1}, {height_point_2}")
-
                 width_point_1_metric = self.get_cartesian_coordinates(width_point_1[0], width_point_1[1])
                 width_point_2_metric = self.get_cartesian_coordinates(width_point_2[0], width_point_2[1])
                 height_point_1_metric = self.get_cartesian_coordinates(height_point_1[0], height_point_1[1])
                 height_point_2_metric = self.get_cartesian_coordinates(height_point_2[0], height_point_2[1])
 
-                print(f"Height points: {height_point_1_metric}, {height_point_2_metric}")
 
                 if width_point_1_metric is not None and width_point_2_metric is not None:
                     # Calculate the width of the bounding box
                     width = np.linalg.norm(width_point_1_metric[:2] - width_point_2_metric[:2])
                     height = np.linalg.norm(height_point_1_metric[:2] - height_point_2_metric[:2])
-
-                    print(f"Index Test: {height_point_2_metric[:2]}")
 
                     # Add width and height of object to the dictionary
                     self.found_objects[f"{object_name}_{i}"].update({'width': width, 'height': height})
@@ -248,10 +253,6 @@ class ObjectDetector(Node):
 
                 
                 i += 1
-
-        print("Found objects:")
-        print(self.found_objects)
-        print()
 
         # Consider implementing the conversion from pixel to world coordinates here
         # Use the method shown in the link below to calibrate the camera and get the intrinsic parameters
@@ -442,7 +443,9 @@ def main(args=None):
         print("3. Adjust HSV and Size Thresholds")
         print("4. Show Depth Map")
         print("5. Print Cartesian Coordinates")
-        print("6. Exit\n")
+        print("6. Spin the node")
+        print("7. Exit\n")
+
         choice = input("Enter your choice: ")
 
 
