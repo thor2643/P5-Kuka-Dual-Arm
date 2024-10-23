@@ -36,27 +36,30 @@ class LLMNode(Node):
 
 
     def send_goal(self, jointvalues: list) -> str:
-        """Sends joint angle values to the ROS2 service."""
-        print(" send_goal startet") #debugging
-
+        print("send_goal started with jointvalues:", jointvalues)  # Debugging
         try:
             if len(jointvalues) != 7:
                 raise ValueError("Incorrect number of joint angles. Expected 7 values.")
-
+            
+            print("Correct number of joint angles received")  # Debugging
             joint_values = JointValues.Goal()
-            joint_values.joint_1, joint_values.joint_2, joint_values.joint_3, joint_values.joint_4, joint_values.joint_5, joint_values.joint_6, joint_values.joint_7 = jointvalues
+            joint_values.joint_1, joint_values.joint_2, joint_values.joint_3, joint_values.joint_4, \
+            joint_values.joint_5, joint_values.joint_6, joint_values.joint_7 = jointvalues
 
-            self.get_logger().info(f"Sending joint values: 1={joint_values.joint_1}, 2={joint_values.joint_2}, 3={joint_values.joint_3}, 4={joint_values.joint_4}, 5={joint_values.joint_5}, 6={joint_values.joint_6}, 7={joint_values.joint_7}")
+            self.get_logger().info(f"Sending joint values: {joint_values}")
 
-            self._action_client.wait_for_server() #might block the code if the server is not available or if called to early
-
+            if not self._action_client.wait_for_server(timeout_sec=5.0):
+                self.get_logger().error("Action server not available after waiting.")
+                return "Action server unavailable"
+            
+            print("Action server available. Sending goal now...")  # Debugging
             self._send_goal_future = self._action_client.send_goal_async(
-                joint_values,
-                feedback_callback=self.feedback_callback)
-
+                joint_values, feedback_callback=self.feedback_callback)
+            
             self._send_goal_future.add_done_callback(self.goal_response_callback)
 
         except Exception as e:
+            print(f"Exception in send_goal: {e}")  # Debugging
             return f"Error sending joint angles: {e}"
 
 
@@ -84,9 +87,8 @@ class LLMNode(Node):
 
     
     def get_joint_values_from_location(self, location: str) -> list:
-        """Returns joint angles for a specific location as a list of integers."""
         coordinates = { # Predefined joint angles for different locations
-            'HOME-STATION': {'joint_1': '0', 'joint_2': '0', 'joint_3': '0', 'joint_4': '0', 'joint_5': '0', 'joint_6': '0', 'joint_7': '0'},
+            'HOME-STATION': {'joint_1': '0.0', 'joint_2': '0.0', 'joint_3': '0.0', 'joint_4': '0.0', 'joint_5': '0.0', 'joint_6': '0.0', 'joint_7': '0.0'},
             'START-STATION': {'joint_1': '0.1745', 'joint_2': '0.2618', 'joint_3': '0.3491', 'joint_4': '0.4363', 'joint_5': '0.5236', 'joint_6': '0.5236', 'joint_7': '0.5236'},
             'WELDING-STATION': {'joint_1': '0.0873', 'joint_2': '0.1745', 'joint_3': '0.2618', 'joint_4': '0.3491', 'joint_5': '0.4363', 'joint_6': '0.5236', 'joint_7': '0.5236'},
             'COOLING-STATION': {'joint_1': '0.0524', 'joint_2': '0.1047', 'joint_3': '0.1571', 'joint_4': '0.2094', 'joint_5': '0.2618', 'joint_6': '0.3142', 'joint_7': '0.3665'},
@@ -100,12 +102,11 @@ class LLMNode(Node):
             return []  # Return empty list i location does not exist
 
         # Omdan dictionary-værdierne til en liste af integers
-        joint_values = [int(coordinates[key][f'joint_{i}']) for i in range(1, 8)]
+        joint_values = [float(coordinates[key][f'joint_{i}']) for i in range(1, 8)]
         
         return joint_values
 
     def speech_to_text(self):
-        """Capture audio from microphone and convert to text with a timeout."""
         recognizer = sr.Recognizer()
         try:
             with sr.Microphone(device_index=self.microphone_index) as source:
@@ -130,7 +131,6 @@ class LLMNode(Node):
             return "Error: Failed to capture audio."
 
     def text_to_speech(self, text):
-        """Convert text to speech and play it."""
         self.get_logger().info(f"Converting text to speech: {text}")
         try:
             unique_filename = f"output_{os.getpid()}.mp3"
@@ -144,28 +144,28 @@ class LLMNode(Node):
 
     async def run(self, model: str = 'llama3-groq-tool-use', use_speech: bool = False):
         # Initialize conversation with a user query
-        messages = [{'role': 'user', 'content': f'''Your name is Janise. You are an AI robotic arm assistant which uses the LLM llama3-groq-tool-use for task reasoning and manipulation task. You are to assume the persona of a butler and address me with "sir". 
+        messages = [{'role': 'system', 'content': f'''Your name is Janise. You are an AI robotic arm assistant which uses the LLM llama3-groq-tool-use for task reasoning and manipulation task. You are to assume the persona of a butler and address me with "sir". 
                      
-                Your job is to move the arm to different locations based on the user's requests.
+                Your job is to move the robot arm to different locations based on the user's requests.
                 First, retrieve the joint angles for the location using the function get_joint_values_from_location(location).
-                Only if valid joint angles are retrieved should you proceed to call the send_joint_values_to_robot(joint_values) function.
+                After having retrieved the joint angles you must always proceed to call the send_goal(joint_values) function.
                 If joint angles are not available, inform the user and ask for clarification.
                 
                 You are only permitted to use functions that I have specified. If you are in doubt, please ask the operator to repeat themselves. 
-                Your job is to decide whether to use one of the following functions based on the user's request:
+                You can use one or more of the functions described below based on the user's request:
                 1. Use the `get_joint_values_from_location(location)` function when the user asks to move the robot to a location.
-                2. After retrieving the joint angles, use the `send_joint_values_to_robot(joint_values)` function to move the robot.
-                3. If the user input is unrelated to moving the robot, respond without calling any functions.
+                2. Always, after retrieving the joint angles, use the `send_goal(joint_values)` function to move the robot.
+                3. If the user input is unrelated to moving the robot, respond without calling any functions.  
 
-                Also, if the location is not specified in the examples provided later on, still try to parse them to the function `get_joint_values_from_location("location")`. This will then either return a list of joint values or an empty list, and then you can take it from there.    
-
+                So, to clarify, if you decide to use the get_joint_values_from_location() function, then you must ALWAYS follow up with the function send_goal() by using the retrieved joint values as the argument.
+                     
                 [The following are all built-in function descriptions]
                 Get joint angles required to reach a specific location: get_joint_values_from_location(location)
-                Move the robot to a designated location: send_joint_values_to_robot(joint_values)
+                Move the robot to a designated location: send_goal(joint_values)
 
                 [Here are some specific examples]
-                My instruction: Move the gripper to production home. You output: {{'function':['get_joint_values_from_location(home)', 'send_joint_values_to_robot([0, 0, 0, 0, 0, 0, 0])'], 'response':'Moving the robot to home position.'}}
-                My instruction: Begin moving the gripper to cooling station. You output: {{'function':['get_joint_values_from_location(cooling)', 'send_joint_values_to_robot([3, 6, 9, 12, 15, 18, 21])'], 'response':'Moving the robot to cooling station.'}}
+                My instruction: Move the gripper to production home. You output: {{'function':['get_joint_values_from_location(home)', 'send_goal([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])'], 'response':'Moving the robot to home position.'}}
+                My instruction: Begin moving the gripper to cooling station. You output: {{'function':['get_joint_values_from_location(cooling)', 'send_goal([0.0524, 0.1047, 0.1571, 0.2094, 0.2618, 0.3142, 0.3665])'], 'response':'Moving the robot to cooling station.'}}
                 My instruction: Make me a millionaire. You output: {{'function':[], 'response':'I am unable to fulfill your request.'}}
             '''}] 
 
@@ -193,7 +193,7 @@ class LLMNode(Node):
                         'type': 'function',
                         'function': {
                             'name': 'get_joint_values_from_location',
-                            'description': 'Retrieve the robot joint angles based on the user-specified location. The location can be specified in various forms, such as "home", "cooling station", or "painting". These are mapped to predefined locations like "PRODUCTION-HOME" or "PRODUCTION-COOLING".',
+                            'description': 'Retrieve the robot joint angles based on the user-specified location. The location can be specified in various forms, such as "home", "cooling station", or "painting". These are mapped to predefined locations like "HOME-STATION" or "COOLING-STATION".',
                             'parameters': {
                                 'type': 'object',
                                 'properties': {
@@ -209,7 +209,7 @@ class LLMNode(Node):
                     {
                         'type': 'function',
                         'function': {
-                            'name': 'send_joint_values_to_robot',
+                            'name': 'send_goal',
                             'description': 'Send joint angles to the robot service to move it to the specified joint positions. Ensure that valid joint angles (7 values) are available before calling this function. If no valid angles are found, return an error message and do not proceed.',
                             'parameters': {
                                 'type': 'object',
@@ -244,8 +244,11 @@ class LLMNode(Node):
                     'get_joint_values_from_location': self.get_joint_values_from_location,
                     'send_goal': self.send_goal,
                 }
-                
+                print("Tool calls received from model: ", response['message']['tool_calls'])  # Debugging
+                print("Clean response from model: ", response) # Debugging
+
                 for tool in response['message']['tool_calls']:
+                    print("Function name called by model: ", tool['function']['name'])  # Debugging
                     function_to_call = available_functions[tool['function']['name']]
 
                     if tool['function']['name'] == 'get_joint_values_from_location':
@@ -254,7 +257,7 @@ class LLMNode(Node):
                         
                         if not function_response:  # If no valid joint angles were found
                             messages.append({'role': 'tool', 'content': 'No valid joint angles found for this location.'})
-                            break  # Stop the process here, do not call send_joint_values_to_robot
+                            break  # Stop the process here, do not call send_goal
 
                         # Add the joint angles to the conversation history
                         messages.append({'role': 'tool', 'content': f"Retrieved joint angles: {function_response}"})
@@ -263,17 +266,17 @@ class LLMNode(Node):
 
 
                     
-                    if tool['function']['name'] == 'send_goal':  #changed from elif to if  
+                    elif tool['function']['name'] == 'send_goal': 
+                        print("Arguments sent to send_goal: ", tool['function']['arguments'])  # Debugging
                         # Only proceed if the previous call returned valid joint angles
                         function_response = function_to_call(tool['function']['arguments']['joint_values']) 
-                        
+                        print("function response for send_goal: ", function_response)
                         # Add the robot movement response to the conversation
                         messages.append({'role': 'tool', 'content': function_response})
 
             # Second API call: Get final response from the model
             final_response = await self.llm.chat(model=model, messages=messages)
             final_response_text = final_response['message']['content']
-            print(final_response_text)
             # Convert final response to speech
             self.text_to_speech(final_response_text)
 

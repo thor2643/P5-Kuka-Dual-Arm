@@ -98,6 +98,24 @@ class MoveRobotInWorld(Node):
 
 
 def main(args=None):
+    # Intilize ROS2 and Class
+    rclpy.init(args=args)
+    node = MoveRobotInWorld("robot_control_world_axis", '/lbr')
+
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        print("shutting down")
+        node.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+
+"""
+def main(args=None):
     # TODO: Make a seperate program for the LLM to update the target location by publishing to a message. So this program just reads that message,
     # as the current system only allows for one position per run of the code. 
     #location_args = sys.argv[1:] # Take additional argument inputs from terminal, needed to set desired positon
@@ -117,10 +135,7 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-
-
-
-
+"""
 """
     # Sanity check for number of inputs
     if len(location_args) != 6:
