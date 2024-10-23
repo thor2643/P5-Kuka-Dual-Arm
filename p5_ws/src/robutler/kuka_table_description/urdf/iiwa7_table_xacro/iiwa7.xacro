@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
- 
+
 <!-- top level -->
 <robot name="iiwa7" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
@@ -12,30 +12,36 @@
         name="system_parameters_path"
         default="$(find lbr_ros2_control)/config/lbr_system_parameters.yaml" />
 
+    <material name="steel_satin">
+        <color rgba="0.6274509803921569 0.6274509803921569 0.6274509803921569 1.0"/>
+    </material> 
+
     <!-- fixed to world, see http://classic.gazebosim.org/tutorials?tut=ros_urdf&cat=connect_ros -->
     <link name="world" />
 
-     <!-- Table link -->
+    <!-- table mount -->
     <link name="table">
-      <inertial>
-        <origin rpy="0 0 0" xyz="0.47511520643410643 0.9340356249199337 1.753635248949686"/>
-        <mass value="1382.7919279449686"/>
-        <inertia ixx="1994.27355" ixy="-0.365832" ixz="-0.552572" iyy="2787.103818" iyz="-145.275916" izz="966.579181"/>
-      </inertial>
-      <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://kuka_bord_description/meshes/table_meshes/visual/base_link.stl" scale="0.001 0.001 0.001"/>
-        </geometry>
-        <material name="steel_satin"/>
-      </visual>
-      <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://kuka_bord_description/meshes/table_meshes/collision/base_link_low_polly.stl" scale="0.001 0.001 0.001"/>
-        </geometry>
-      </collision>
+        <inertial>
+            <origin xyz="0.47511520643410643 0.9340356249199337 1.753635248949686" rpy="0 0 0"/>
+            <mass value="1382.7919279449686"/>
+            <inertia ixx="1994.27355" iyy="2787.103818" izz="966.579181" ixy="-0.365832" iyz="-145.275916" ixz="-0.552572"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://kuka_table_description/meshes/table_meshes/visual/base_link.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="steel_satin"/>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://kuka_table_description/meshes/table_meshes/collision/base_link_low_polly.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
     </link>
+    
 
     <!--joint between world and table-->
     <joint name="world_joint" type="fixed">
@@ -43,13 +49,15 @@
         <child link="table" />
     </joint>
 
-    <!-- joint between table and iiwa7-->
-    <joint name="world_joint" type="fixed">
+    <!--joint between table and right iiwa7 -->
+    <joint name="mount_right" type="fixed">
         <parent link="table" />
         <child link="link_0" />
         <origin xyz="0.273705 0.76 1.037203" rpy="0.785398163 0 -1.57079633"/>
     </joint>
 
+    <!--<origin xyz="0.716295 0.76 1.037203" rpy="-0.785398163 0 -1.57079633"/>-->
+    
     <!-- iiwa -->
     <xacro:iiwa7
         robot_name="$(arg robot_name)"
