@@ -11,7 +11,7 @@ find_package(ament_cmake_pytest REQUIRED)
 
 # install
 install(
-  DIRECTORY gazebo meshes urdf
+  DIRECTORY config gazebo meshes urdf
   DESTINATION share/${PROJECT_NAME}
 )
 

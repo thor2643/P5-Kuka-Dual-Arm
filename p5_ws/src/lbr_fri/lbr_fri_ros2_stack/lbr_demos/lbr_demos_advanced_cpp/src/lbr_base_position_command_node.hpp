@@ -64,5 +64,5 @@ protected:
     return future.get()[0];
   }
 };
-} // namespace lbr_demos
+} // end of namespace lbr_demos
 #endif // LBR_DEMOS_ADVANCED_CPP__LBR_BASE_POSITION_COMMAND_NODE_HPP_

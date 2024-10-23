@@ -47,4 +47,4 @@ void WrenchCommandInterface::buffered_command_to_fri(fri_command_t_ref command,
   command.setJointPosition(command_.joint_position.data());
   command.setWrench(command_.wrench.data());
 }
-} // namespace lbr_fri_ros2
+} // end of namespace lbr_fri_ros2

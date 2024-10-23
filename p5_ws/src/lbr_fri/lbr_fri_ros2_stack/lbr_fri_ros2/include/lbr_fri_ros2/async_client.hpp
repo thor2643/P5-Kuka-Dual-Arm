@@ -50,5 +50,5 @@ protected:
 
   bool open_loop_;
 };
-} // namespace lbr_fri_ros2
+} // end of namespace lbr_fri_ros2
 #endif // LBR_FRI_ROS2__ASYNC_CLIENT_HPP_

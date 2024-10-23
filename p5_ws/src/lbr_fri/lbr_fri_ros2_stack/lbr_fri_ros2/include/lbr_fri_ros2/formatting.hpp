@@ -76,5 +76,5 @@ struct EnumMaps {
     }
   };
 };
-} // namespace lbr_fri_ros2
+} // end of namespace lbr_fri_ros2
 #endif // LBR_FRI_ROS2__ENUM_MAPS_HPP

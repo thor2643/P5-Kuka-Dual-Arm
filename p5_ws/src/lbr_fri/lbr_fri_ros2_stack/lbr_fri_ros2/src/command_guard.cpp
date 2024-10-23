@@ -110,4 +110,4 @@ command_guard_factory(const CommandGuardParameters &command_guard_parameters,
                       ColorScheme::ERROR << err.c_str() << ColorScheme::ENDC);
   throw std::runtime_error(err);
 }
-} // namespace lbr_fri_ros2
+} // end of namespace lbr_fri_ros2

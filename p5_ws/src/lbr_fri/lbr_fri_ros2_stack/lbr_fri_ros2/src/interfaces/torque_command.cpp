@@ -48,4 +48,4 @@ void TorqueCommandInterface::buffered_command_to_fri(fri_command_t_ref command,
   command.setJointPosition(command_.joint_position.data());
   command.setTorque(command_.torque.data());
 }
-} // namespace lbr_fri_ros2
+} // end of namespace lbr_fri_ros2

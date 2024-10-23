@@ -55,5 +55,5 @@ protected:
   StateInterfaceParameters parameters_;
   JointExponentialFilterArray external_torque_filter_, measured_torque_filter_;
 };
-} // namespace lbr_fri_ros2
+} // end of namespace lbr_fri_ros2
 #endif // LBR_FRI_ROS2__INTERFACES__STATE_HPP_
