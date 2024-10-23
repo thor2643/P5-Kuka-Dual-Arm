@@ -36,7 +36,11 @@ class LLMNode(Node):
 
 
     def send_goal(self, jointvalues: list) -> str:
-        print("send_goal started with jointvalues:", jointvalues)  # Debugging
+        print("\nsend_goal started with jointvalues:", jointvalues)  # Debugging
+
+        # Convert the string to a list of floats
+        jointvalues = json.loads(jointvalues)
+
         try:
             if len(jointvalues) != 7:
                 raise ValueError("Incorrect number of joint angles. Expected 7 values.")
@@ -142,7 +146,7 @@ class LLMNode(Node):
             self.get_logger().error(f"Failed to convert text to speech: {e}")
 
 
-    async def run(self, model: str = 'llama3-groq-tool-use', use_speech: bool = False):
+    async def run(self, model: str = 'llama3.1:8b', use_speech: bool = False):
         # Initialize conversation with a user query
         messages = [{'role': 'system', 'content': f'''Your name is Janise. You are an AI robotic arm assistant which uses the LLM llama3-groq-tool-use for task reasoning and manipulation task. You are to assume the persona of a butler and address me with "sir". 
                      
@@ -215,7 +219,7 @@ class LLMNode(Node):
                                 'type': 'object',
                                 'properties': {
                                     'joint_values': {
-                                        'type': 'array',
+                                        'type': 'float',
                                         'description': 'A list of joint values for the robot arm. Must contain exactly 7 values. If less or more, this function should not be called.',
                                     }
                                 },
@@ -244,11 +248,11 @@ class LLMNode(Node):
                     'get_joint_values_from_location': self.get_joint_values_from_location,
                     'send_goal': self.send_goal,
                 }
-                print("Tool calls received from model: ", response['message']['tool_calls'])  # Debugging
+                print("\nTool calls received from model: ", response['message']['tool_calls'])  # Debugging
                 print("Clean response from model: ", response) # Debugging
 
                 for tool in response['message']['tool_calls']:
-                    print("Function name called by model: ", tool['function']['name'])  # Debugging
+                    print("\nFunction name called by model: ", tool['function']['name'])  # Debugging
                     function_to_call = available_functions[tool['function']['name']]
 
                     if tool['function']['name'] == 'get_joint_values_from_location':
