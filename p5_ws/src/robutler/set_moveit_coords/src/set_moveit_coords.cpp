@@ -7,14 +7,14 @@ int main(int argc, char **argv) {
 
   // Configure node
   auto node_ptr = rclcpp::Node::make_shared("set_moveit_coords");
-  node_ptr->declare_parameter("robot_name", "lbr");
+  node_ptr->declare_parameter("robot_name", "iiwa7_table");
   auto robot_name = node_ptr->get_parameter("robot_name").as_string();
 
   // Create MoveGroupInterface (lives inside robot_name namespace)
   auto move_group_interface = moveit::planning_interface::MoveGroupInterface(
       node_ptr, moveit::planning_interface::MoveGroupInterface::Options("right_arm", "robot_description",
                                                                         robot_name));
-
+                                                                        
   // Set a target pose
   geometry_msgs::msg::Pose target_pose;
   target_pose.orientation.w = 1.0;

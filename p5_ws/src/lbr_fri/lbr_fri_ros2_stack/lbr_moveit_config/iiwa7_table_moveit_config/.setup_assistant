@@ -5,6 +5,21 @@ moveit_setup_assistant_config:
   srdf:
     relative_path: config/iiwa7_table.srdf
   package_settings:
-    author_name: Gustav bay
+    author_name: Gustav
     author_email: gustavbay@live.dk
-    generated_timestamp: 1729716048
+    generated_timestamp: 1729760356
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

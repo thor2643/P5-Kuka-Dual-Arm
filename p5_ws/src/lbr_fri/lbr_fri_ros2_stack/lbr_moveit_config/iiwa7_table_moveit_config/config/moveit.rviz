@@ -114,6 +114,10 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          table:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
         Loop Animation: true
         Robot Alpha: 0.5
         Robot Color: 150; 50; 150
@@ -205,6 +209,10 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
           world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          table:
             Alpha: 1
             Show Axes: false
             Show Trail: false
