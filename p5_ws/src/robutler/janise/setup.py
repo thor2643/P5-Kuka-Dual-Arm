@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'move_robot'
+package_name = 'janise'
 
 setup(
     name=package_name,
@@ -13,15 +13,14 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='signe',
-    maintainer_email='signeskuldbol@hotmail.com',
+    maintainer='thor',
+    maintainer_email='thor951753@hotmail.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'service = move_robot.joint_values_server:main', 
-            'test = move_robot.test_joint_values_server:main',
+            'client = janise.janise_client:main', 
         ],
     },
 )
