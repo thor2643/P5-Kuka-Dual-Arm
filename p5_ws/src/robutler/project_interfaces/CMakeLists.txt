@@ -28,6 +28,10 @@ find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "action/JointValues.action"
+  "srv/GetObjectinfo.srv"
+  "srv/RobotIQ2FOutput.srv"
+  "msg/RobotIQ2FOutputReg.msg"
+  "msg/RobotIQ2FInputReg.msg"
 )
 
 ament_package()

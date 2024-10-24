@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>3f_gripper_control</name>
+  <name>bimanuel_gripper_control</name>
   <version>0.0.0</version>
   <description>Client for RobotIQ 3f control, aims to allow LLM to control gripper</description>
   <maintainer email="kkl@stofanet.dk">kazzi</maintainer>
@@ -9,6 +9,7 @@
 
   <exec_depend>robotiq_3f_gripper_ros2_control</exec_depend>
   <exec_depend>robotiq_3f_gripper_ros2_interfaces</exec_depend>
+  <exec_depend>project_interfaces</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

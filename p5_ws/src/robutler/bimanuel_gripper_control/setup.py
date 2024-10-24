@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = '3f_gripper_control'
+package_name = 'bimanuel_gripper_control'
 
 setup(
     name=package_name,
@@ -20,7 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-        	'client = 3f_gripper_control.3f_client:main',
+        	'client3f = bimanuel_gripper_control.3f_client:main',
+        	'client2f = bimanuel_gripper_control.2f_client:main',
+        	'service2f = bimanuel_gripper_control.2f_service:main',
         ],
     },
 )
