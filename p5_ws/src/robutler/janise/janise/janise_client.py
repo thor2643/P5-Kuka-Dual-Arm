@@ -169,6 +169,9 @@ class LLMNode(Node):
                 Your job is to call functions that will result in the users command to be succesfully achieved.
                 Successfully performing a task will require you to call the correct functions in the correct order.
                 Notice that you sometimes must call mutliple functions to achieve specific tasks.
+                     
+                You are only allowed to use the specified function. 
+                Do not call any other functions than the ones specified in the task.
 
                 If you are in doubt of which functions to call, you can ask the user for help. 
                 Also if you don't think you can solve the task with the given functions you can suggest the user to create a new function.
@@ -200,7 +203,7 @@ class LLMNode(Node):
                         'type': 'function',
                         'function': {
                             'name': 'get_joint_values_from_location',
-                            'description': 'Retrieve the robot joint angles based on the user-specified location. The location can be specified in various forms, such as "home", "cooling station", or "painting". These are mapped to predefined locations like "HOME-STATION" or "COOLING-STATION".',
+                            'description': 'Retrieve the robot joint angles based on the user-specified location. The location can be specified in various forms, such as "home", "cooling station", or "painting". The function only retrieves the joint angles and does not move the robot arm.',
                             'parameters': {
                                 'type': 'object',
                                 'properties': {
