@@ -51,8 +51,9 @@ class LLMNode(Node):
     def send_goal(self, jointvalues: list) -> str:
         print("\nsend_goal started with jointvalues:", jointvalues)  # Debugging
 
-        # Convert the string to a list of floats
-        jointvalues = json.loads(jointvalues)
+        if type(jointvalues) == str:
+            # Convert the string to a list of floats
+            jointvalues = json.loads(jointvalues)
 
         try:
             if len(jointvalues) != 7:
@@ -161,32 +162,19 @@ class LLMNode(Node):
 
     async def run(self, model: str = 'llama3.1:8b', use_speech: bool = False):
         # Initialize conversation with a user query
-        messages = [{'role': 'system', 'content': f'''Your name is Janise. You are an AI robotic arm assistant which uses the LLM llama3-groq-tool-use for task reasoning and manipulation task. You are to assume the persona of a butler and address me with "sir". 
+        messages = [{'role': 'system', 'content': f'''
+                Your name is Janise. You are an AI robotic dual arm assistant which can perform relevant robotics tasks based on user commands. 
+                You are to assume the persona of a butler and address me with "sir". 
                      
-                Your job is to move the robot arm to different locations based on the user's requests.
-                First, retrieve the joint angles for the location using the function get_joint_values_from_location(location).
-                After having retrieved the joint angles you must always proceed to call the send_goal(joint_values) function.
-                If joint angles are not available, inform the user and ask for clarification.
-                
-                You are only permitted to use functions that I have specified. If you are in doubt, please ask the operator to repeat themselves. 
-                You can use one or more of the functions described below based on the user's request:
-                1. Use the `get_joint_values_from_location(location)` function when the user asks to move the robot to a location.
-                2. Always, after retrieving the joint angles, use the `send_goal(joint_values)` function to move the robot.
-                3. If the user input is unrelated to moving the robot, respond without calling any functions.  
+                Your job is to call functions that will result in the users command to be succesfully achieved.
+                Successfully performing a task will require you to call the correct functions in the correct order.
+                Notice that you sometimes must call mutliple functions to achieve specific tasks.
 
-                So, to clarify, if you decide to use the get_joint_values_from_location() function, then you must ALWAYS follow up with the function send_goal() by using the retrieved joint values as the argument.
-                     
-                [The following are all built-in function descriptions]
-                Get joint angles required to reach a specific location: get_joint_values_from_location(location)
-                Move the robot to a designated location: send_goal(joint_values)
+                If you are in doubt of which functions to call, you can ask the user for help. 
+                Also if you don't think you can solve the task with the given functions you can suggest the user to create a new function.
+                If you request the use for a new function, you must also provide a description of the function and the parameters it requires.
             '''}] 
         
-        """
-        [Here are some specific examples]
-                My instruction: Move the gripper to production home. You output: {{'function':['get_joint_values_from_location(home)', 'send_goal([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])'], 'response':'Moving the robot to home position.'}}
-                My instruction: Begin moving the gripper to cooling station. You output: {{'function':['get_joint_values_from_location(cooling)', 'send_goal([0.0524, 0.1047, 0.1571, 0.2094, 0.2618, 0.3142, 0.3665])'], 'response':'Moving the robot to cooling station.'}}
-                My instruction: Make me a millionaire. You output: {{'function':[], 'response':'I am unable to fulfill your request.'}}
-        """
 
         while True:
             if use_speech:
