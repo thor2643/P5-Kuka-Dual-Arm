@@ -5,7 +5,7 @@
 
     <!-- include the lbr iiwa macro -->
     <xacro:include filename="$(find lbr_description)/urdf/iiwa7_table/iiwa7_table_description.xacro" />
-
+    
     <xacro:arg name="robot_name" default="lbr" />
     <xacro:arg name="sim" default="true" />
     <xacro:arg
