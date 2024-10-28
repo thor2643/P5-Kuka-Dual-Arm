@@ -194,6 +194,10 @@ class LLMNode(Node):
             # Add user input to messages
             messages.append({'role': 'user', 'content': prompt})
 
+            # Debug: Print the entire prompt before sending it to the model
+            print("\nFull prompt being sent to model:")
+            print(json.dumps(messages, indent=2))  # Pretty-print the prompt for easier readability
+
             # Perform the POST request with data
             response = await self.llm.chat(
                 model=model,
@@ -253,6 +257,10 @@ class LLMNode(Node):
                 ]
             )
 
+            # Debug: Print the model's first response
+            print("\nFirst response from the model:")
+            print(json.dumps(response, indent=2))  # Pretty-print the model response for clarity
+
             # Add the model's response to the conversation history
             messages.append(response['message'])
 
@@ -305,6 +313,10 @@ class LLMNode(Node):
             # Second API call: Get final response from the model
             final_response = await self.llm.chat(model=model, messages=messages)
             final_response_text = final_response['message']['content']
+
+            # Add the model's response to the conversation history
+            messages.append(response['message'])
+            
             # Convert final response to speech
             self.text_to_speech(final_response_text)
 
