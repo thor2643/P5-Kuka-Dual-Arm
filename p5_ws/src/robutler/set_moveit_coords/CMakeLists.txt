@@ -14,7 +14,6 @@ find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(lbr_description REQUIRED)
 
 add_executable(set_moveit_coords src/set_moveit_coords.cpp)
 

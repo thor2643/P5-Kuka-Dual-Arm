@@ -10,7 +10,6 @@
     <xacro:include filename="$(find lbr_description)/urdf/robotiq-3f-gripper/robotiq-3f-gripper_articulated_macro.xacro" />
     <xacro:robotiq-3f-gripper_articulated prefix="3f_" />
 
-
     <xacro:arg name="robot_name" default="lbr" />
     <xacro:arg name="sim" default="true" />
     <xacro:arg
@@ -21,7 +20,7 @@
         <color rgba="0.6274509803921569 0.6274509803921569 0.6274509803921569 1.0"/> 
     </material> 
     <material name="wood">
-        <color rgba="0.6274509803921569 0.6274509803921569 0.6274509803921569 1.0"/>
+        <color rgba="0.588235294 0.375 0 1.0"/>
     </material> 
 
     <!-- fixed to world, see http://classic.gazebosim.org/tutorials?tut=ros_urdf&cat=connect_ros -->
@@ -51,23 +50,27 @@
     </link>
 
     <link name="cam_mount">
+        <inertial>
+            <origin xyz="0.47511520643410643 0.9340356249199337 1.753635248949686" rpy="0 0 0"/>
+            <mass value="1382.7919279449686"/>
+            <inertia ixx="1994.27355" iyy="2787.103818" izz="966.579181" ixy="-0.365832" iyz="-145.275916" ixz="-0.552572"/>
+        </inertial>
+        
         <visual>
             <origin xyz="-0.096012 -0.03490 59.336" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://lbr_description/meshes/table/visual/base_link.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://lbr_description/meshes/camera_mount/Camera_Mount_V2_v2.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="steel_satin"/>
+            <material name="wood"/>
         </visual>
 
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="-0.096012 -0.03490 59.336" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://lbr_description/meshes/table/collision/base_link_low_polly.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://lbr_description/meshes/camera_mount/Camera_Mount_V2_v2.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </collision>
-
     </link>
-
 
     <!--joint between world and table-->
     <joint name="world_joint" type="fixed">
@@ -75,6 +78,13 @@
         <child link="table" />
     </joint>
 
+    <!--joint between table and camera mount-->
+    <joint name="cam_table_joint" type="fixed">
+        <parent link="table" />
+        <child link="cam_mount" />
+        <origin xyz="0.489819 0.84691 1.428" rpy="0 0 0"/>
+    </joint>
+    
     <!--joint between table and right iiwa7 -->
     <joint name="mount_right" type="fixed">
         <parent link="table" />
