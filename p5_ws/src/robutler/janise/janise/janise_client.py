@@ -28,7 +28,7 @@ class LLMNode(Node):
 
         #Object detector service client
         self.detector_client = self.create_client(GetObjectInfo, 'get_object_info')
-        self.detetector_req = GetObjectInfo.Request()
+        self.detector_req = GetObjectInfo.Request()
 
         #LLM
         self.llm = ollama.AsyncClient()  # Initialize the Ollama client for LLM interactions
@@ -41,12 +41,23 @@ class LLMNode(Node):
 
     def find_object(self, object: str) -> GetObjectInfo.Response:
         print(f"\nRequesting the detector service to find {object}")  # Debugging
-        self.detetector_req.object_name = object
+        self.get_logger().info(f"\nLooking for object: {object}\n")
+        self.detector_req.object_name = object
  
         self.future = self.detector_client.call_async(self.detector_req)
         rclpy.spin_until_future_complete(self, self.future)
 
-        return self.future.result()
+        if self.future.result() is not None:
+            response = self.future.result()
+            self.get_logger().info(f"\nObjects found: {response.object_count}")
+            self.get_logger().info(f"Center points: {response.centers}")
+            self.get_logger().info(f"Object orientations: {response.orientations}")
+            self.get_logger().info(f"Grasping widths: {response.grasp_widths}\n")
+            
+            return response
+        else:
+            self.get_logger().error('Service call failed')
+            return GetObjectInfo.Response()
 
     def send_goal(self, jointvalues: list) -> str:
         print("\nsend_goal started with jointvalues:", jointvalues)  # Debugging
@@ -299,8 +310,6 @@ class LLMNode(Node):
                         messages.append({'role': 'tool', 'content': f"Retrieved joint angles: {function_response}"})
                         print(function_response)
                         print("1: Joint values: ", function_response)
-
-
                     
                     elif tool['function']['name'] == 'send_goal': 
                         print("Arguments sent to send_goal: ", tool['function']['arguments'])  # Debugging
@@ -309,6 +318,14 @@ class LLMNode(Node):
                         print("function response for send_goal: ", function_response)
                         # Add the robot movement response to the conversation
                         messages.append({'role': 'tool', 'content': function_response})
+
+                    elif tool['function']['name'] == 'find_object':
+                        print("Arguments sent to find_object: ", tool['function']['arguments'])
+                        # Call the find_object function
+                        function_response = function_to_call(tool['function']['arguments']['object_name'])
+                        print("function response for find_object: ", function_response)
+                        # Add the object detection response to the conversation
+                        messages.append({'role': 'tool', 'content': f"Found {function_response.object_count} objects."})
 
             # Second API call: Get final response from the model
             final_response = await self.llm.chat(model=model, messages=messages)
