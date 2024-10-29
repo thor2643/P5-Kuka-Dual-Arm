@@ -5,9 +5,11 @@ import cv2
 import numpy as np
 import json
 import os
+import time
 
 #ROS stuff
-from example_interfaces.srv import AddTwoInts
+from project_interfaces.srv import GetObjectInfo
+from geometry_msgs.msg import Point
 
 
 class RealSenseCamera:
@@ -26,6 +28,45 @@ class RealSenseCamera:
             rs.stream.depth, 640, 480, rs.format.z16, 30
         )
 
+        # Reset the camera to default settings (avoids an error when starting the pipeline)
+        ctx = rs.context()
+        devices = ctx.query_devices()
+        for dev in devices:
+            dev.hardware_reset()
+        print("reset done")
+
+        # Placeholder for calibrated values
+        self.calibrated_exposure = 166
+        self.calibrated_white_balance = 4600
+
+    def calibrate_camera(self):
+        # Start the pipeline temporarily for calibration
+        self.pipeline.start(self.config)
+
+        # Alignment setup
+        self.align_to = rs.stream.color
+        self.align = rs.align(self.align_to)
+
+        # Access the color sensor
+        color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
+
+        # Enable auto-exposure and auto-white-balance
+        color_sensor.set_option(rs.option.enable_auto_exposure, 1)
+        color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
+
+        # Allow time for auto-exposure and auto-white-balance to stabilize
+        for _ in range(30):
+            frames = self.pipeline.wait_for_frames()
+
+        # Retrieve and store the settled values
+        self.calibrated_exposure = color_sensor.get_option(rs.option.exposure)
+        self.calibrated_white_balance = color_sensor.get_option(rs.option.white_balance)
+        
+        print(f"Calibrated exposure: {self.calibrated_exposure}")
+        print(f"Calibrated white balance: {self.calibrated_white_balance}")
+
+        # Stop the pipeline after calibration
+        self.pipeline.stop()
         
     def __enter__(self):
         self.pipeline.start(self.config)
@@ -35,10 +76,16 @@ class RealSenseCamera:
 
         color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
 
-        # set options for color sensor
-        color_sensor.set_option(rs.option.brightness, 0)
-        color_sensor.set_option(rs.option.exposure, 650)
-        color_sensor.set_option(rs.option.white_balance, 4200)
+         # If calibrated values exist, apply them
+        if self.calibrated_exposure and self.calibrated_white_balance:
+            color_sensor.set_option(rs.option.enable_auto_exposure, 0)
+            color_sensor.set_option(rs.option.enable_auto_white_balance, 0)
+            color_sensor.set_option(rs.option.exposure, self.calibrated_exposure)
+            color_sensor.set_option(rs.option.white_balance, self.calibrated_white_balance)
+        else:
+            # If no calibrated values are present, enable auto settings
+            color_sensor.set_option(rs.option.enable_auto_exposure, 1)
+            color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
 
         return self.pipeline
 
@@ -49,7 +96,7 @@ class RealSenseCamera:
 class ObjectDetector(Node):
     def __init__(self):
         super().__init__('object_detector')
-        self.srv = self.create_service(AddTwoInts, 'add_two_ints', self.get_object_information)
+        self.srv = self.create_service(GetObjectInfo, 'get_object_info', self.get_object_information)
 
         # Instantiate the RealSenseCamera object
         self.realsense_camera = RealSenseCamera()
@@ -70,22 +117,32 @@ class ObjectDetector(Node):
     
     #The callback function for the service
     def get_object_information(self, request, response):
-        if request.a == 0 and request.b == 0:
-            self.get_logger().info('Requested to find green brick\n')
+        object = request.object_name
+        self.get_logger().info(f'Requested to find {object}\n')
 
+        if object in self.lego_bricks:
             self.capture_aligned_frames()
-            self.find_object(self.get_color_image(), 'green_brick')
+            self.find_object(self.get_color_image(), object)
 
-            len_found_objects = len(self.found_objects)
+            response.object_count = len(self.found_objects)
 
-            response.sum = len_found_objects
+            for obj in self.found_objects:
+                point = Point()
+                point.x = float(self.found_objects[obj]['center_coords'][0])
+                point.y = float(self.found_objects[obj]['center_coords'][1])
+                point.z = float(self.found_objects[obj]['center_coords'][2])
 
-            self.get_logger().info(f'Found {len_found_objects} green bricks\n')
-            self.get_logger().info('Incoming request\na: %d b: %d' % (request.a, request.b))
+                response.centers.append(point)
+                response.orientations.append(self.found_objects[obj]['rotated_rect'][2])
+                response.grasp_widths.append(self.found_objects[obj]['width'])
+
+            self.get_logger().info(f'Found {response.object_count} {object}\n')
+
+            # Clear the found objects dictionary
+            self.found_objects.clear()
         else:
-            response.sum = request.a + request.b
-            self.get_logger().info('Returning Sum\n')
-            self.get_logger().info('Incoming request\na: %d b: %d' % (request.a, request.b))
+            self.get_logger().info('Object thresholds not available. Consider adding the object by running the adjust_hsv option at startup.\n')
+            response.object_count = 0
 
         return response
 
@@ -111,7 +168,9 @@ class ObjectDetector(Node):
 
             # Convert the depth frame to a NumPy array
             depth_image = np.asanyarray(self.depth_frame.get_data())
-            
+
+            #depth_image = cv2.rotate(depth_image, cv2.ROTATE_180)
+
             # Normalize the depth image for display
             depth_image = cv2.normalize(depth_image, None, 0, 255, cv2.NORM_MINMAX)
             depth_image = np.uint8(depth_image)
@@ -135,10 +194,10 @@ class ObjectDetector(Node):
             self.capture_aligned_frames()
 
             # Convert the frame to a NumPy array for OpenCV
-            color_frame = np.asanyarray(self.color_frame.get_data())
+            color_frame = self.get_color_image()
 
             # Show the frame using OpenCV's imshow
-            cv2.imshow("Image", color_frame)
+            cv2.imshow("Image", cv2.rotate(color_frame, cv2.ROTATE_180))
 
             # Break the loop when 'q' is pressed
             if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -147,10 +206,11 @@ class ObjectDetector(Node):
         cv2.destroyAllWindows()
 
     def get_color_image(self):
+        #return cv2.rotate(np.asanyarray(self.color_frame.get_data()), cv2.ROTATE_180)
         return np.asanyarray(self.color_frame.get_data())
 
     def show_image(self, image):
-        cv2.imshow("Image", image)
+        cv2.imshow("Image", cv2.rotate(image, cv2.ROTATE_180))
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
@@ -198,7 +258,6 @@ class ObjectDetector(Node):
                 rect = cv2.minAreaRect(contour) # returns ((center_x, center_y), (width, height), angle)
                 box = cv2.boxPoints(rect)       # returns the four vertices of the rectangle
                 box = np.int0(box)
-                print(box)
                 rotated_bounding_boxes.append(box)
 
                 self.found_objects[f"{object_name}_{i}"] = {'bounding_box': (x, y, x + w, y + h), 
@@ -220,22 +279,16 @@ class ObjectDetector(Node):
                 width_point_1, width_point_2 = box[0], box[1] 
                 height_point_1, height_point_2 = box[1], box[2]
 
-                print(f"Width points: {width_point_1}, {width_point_2}")
-                print(f"Height points: {height_point_1}, {height_point_2}")
-
                 width_point_1_metric = self.get_cartesian_coordinates(width_point_1[0], width_point_1[1])
                 width_point_2_metric = self.get_cartesian_coordinates(width_point_2[0], width_point_2[1])
                 height_point_1_metric = self.get_cartesian_coordinates(height_point_1[0], height_point_1[1])
                 height_point_2_metric = self.get_cartesian_coordinates(height_point_2[0], height_point_2[1])
 
-                print(f"Height points: {height_point_1_metric}, {height_point_2_metric}")
 
                 if width_point_1_metric is not None and width_point_2_metric is not None:
                     # Calculate the width of the bounding box
                     width = np.linalg.norm(width_point_1_metric[:2] - width_point_2_metric[:2])
                     height = np.linalg.norm(height_point_1_metric[:2] - height_point_2_metric[:2])
-
-                    print(f"Index Test: {height_point_2_metric[:2]}")
 
                     # Add width and height of object to the dictionary
                     self.found_objects[f"{object_name}_{i}"].update({'width': width, 'height': height})
@@ -248,10 +301,6 @@ class ObjectDetector(Node):
 
                 
                 i += 1
-
-        print("Found objects:")
-        print(self.found_objects)
-        print()
 
         # Consider implementing the conversion from pixel to world coordinates here
         # Use the method shown in the link below to calibrate the camera and get the intrinsic parameters
@@ -351,8 +400,8 @@ class ObjectDetector(Node):
             result_with_boxes = self.draw_rotated_boxes(result_with_boxes, rotated_bounding_boxes)
 
             # Show the resulting image
-            cv2.imshow('Image with Bounding Boxes', result_with_boxes)
-            cv2.imshow('The Masked Image', result)
+            cv2.imshow('Image with Bounding Boxes', cv2.rotate(result_with_boxes, cv2.ROTATE_180))
+            cv2.imshow('The Masked Image', cv2.ROTATE_180(result, cv2.ROTATE_180))  
 
             # Break the loop when 'q' is pressed
             if cv2.waitKey(1) & 0xFF == ord('q') or self.close_windows:
@@ -384,7 +433,18 @@ class ObjectDetector(Node):
         if 0 <= index < len(vertices):
             # Access the 3D coordinates corresponding to the pixel
             cartesian_coordinates = vertices[index]
-            print(f"Cartesian coordinates for pixel ({pixel_x}, {pixel_y}): {cartesian_coordinates}")
+
+            #print(f"Cartesian coordinates for pixel ({pixel_x}, {pixel_y}): {cartesian_coordinates}")
+
+            # Rotate the Cartesian coordinates 180 degrees around the z-axis
+            # Because the camera has been flipped 180 degrees
+            #rotation_matrix = np.array([[-1, 0, 0],
+            #                            [0, -1, 0],
+            #                            [0, 0, 1]])
+
+            #rotated_coordinates = np.dot(rotation_matrix, cartesian_coordinates)
+
+            #return rotated_coordinates
             return cartesian_coordinates
         else:
             print(f"Pixel coordinates ({pixel_x}, {pixel_y}) are out of bounds.")
@@ -393,18 +453,23 @@ class ObjectDetector(Node):
     def show_cartesian_coordinates(self):
         def mouse_callback(event, x, y, flags, param):
             if event == cv2.EVENT_MOUSEMOVE:
-                coordinates = self.get_cartesian_coordinates(x, y)
+                # Adjust the x, y coordinates to reflect a rotated image
+                height, width, _ = color_image.shape
+                adjusted_x = width - x
+                adjusted_y = height - y
+                coordinates = self.get_cartesian_coordinates(adjusted_x, adjusted_y)
+                #coordinates = self.get_cartesian_coordinates(x, y)
                 if coordinates is not None:
                     print(f"Cartesian coordinates at ({x}, {y}): {coordinates}")
 
         cv2.namedWindow("Image with Coordinates")
         cv2.setMouseCallback("Image with Coordinates", mouse_callback)
 
-        while True:
-            self.capture_aligned_frames()
-            color_image = self.get_color_image()
+        self.capture_aligned_frames()
+        color_image = self.get_color_image()
 
-            cv2.imshow("Image with Coordinates", color_image)
+        while True:
+            cv2.imshow("Image with Coordinates", cv2.rotate(color_image, cv2.ROTATE_180))
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -442,7 +507,10 @@ def main(args=None):
         print("3. Adjust HSV and Size Thresholds")
         print("4. Show Depth Map")
         print("5. Print Cartesian Coordinates")
-        print("6. Exit\n")
+        print("6. Spin the node")
+        print("7. Calibrate Camera")
+        print("8. Exit\n")
+
         choice = input("Enter your choice: ")
 
 
@@ -451,17 +519,13 @@ def main(args=None):
             detector.show_frame()
 
         elif choice == '2':
-            # Ask user whether to use example image or image from camera
-            use_example_image = input("Do you want to use the example image? (y/n): ").strip().lower()
+            #Find an object in the image
+            detector.capture_aligned_frames()
+            image = detector.get_color_image()
 
-            if use_example_image == 'y':
-                image = image_example
-            else:
-                detector.capture_aligned_frames()
-                image = detector.get_color_image()
-                if image is None:
-                    print("Failed to capture image from camera.")
-                    continue
+            if image is None:
+                print("Failed to capture image from camera.")
+                continue
 
             #Find a specific object available in the dictionary
             object_name = input("Enter the name of the object you want to find: ")
@@ -476,17 +540,12 @@ def main(args=None):
                 print(f"{object_name} not found in the image.")
 
         elif choice == '3':
-            # Ask user whether to use example image or image from camera
-            use_example_image = input("Do you want to use the example image? (y/n): ").strip().lower()
+            detector.capture_aligned_frames()
+            image = detector.get_color_image()
 
-            if use_example_image == 'y':
-                image = image_example
-            else:
-                detector.capture_aligned_frames()
-                image = detector.get_color_image()
-                if image is None:
-                    print("Failed to capture image from camera.")
-                    continue
+            if image is None:
+                print("Failed to capture image from camera.")
+                continue
 
             #Manually adjust the HSV thresholds and size range
             lower_bound, upper_bound, min_size, max_size = detector.adjust_hsv_and_size_thresholds(image)
@@ -502,9 +561,12 @@ def main(args=None):
             detector.show_cartesian_coordinates()
 
         elif choice == '6':
-            rclpy.spin(detector)            
+            rclpy.spin(detector) 
 
         elif choice == '7':
+            detector.realsense_camera.calibrate_camera()               
+
+        elif choice == '8':
             break
 
         else:

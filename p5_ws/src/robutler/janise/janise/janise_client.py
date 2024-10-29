@@ -15,6 +15,7 @@ from rclpy.node import Node
 
 #message
 from project_interfaces.action import JointValues   
+from project_interfaces.srv import GetObjectInfo
 
 
 class LLMNode(Node):
@@ -25,6 +26,10 @@ class LLMNode(Node):
         self._action_client = ActionClient(self, JointValues, 'JointValues')
         self.jointvalues = [0,0,0,0,0,0,0] 
 
+        #Object detector service client
+        self.detector_client = self.create_client(GetObjectInfo, 'get_object_info')
+        self.detetector_req = GetObjectInfo.Request()
+
         #LLM
         self.llm = ollama.AsyncClient()  # Initialize the Ollama client for LLM interactions
         self.microphone_index = 8 # Specify a specific microphone if needed
@@ -34,6 +39,14 @@ class LLMNode(Node):
         #while not self.cli.wait_for_service(timeout_sec=1.0):
         #    self.get_logger().info('Service move_robot is not available, waiting...')
 
+    def find_object(self, object: str) -> GetObjectInfo.Response:
+        print(f"\nRequesting the detector service to find {object}")  # Debugging
+        self.detetector_req.object_name = object
+ 
+        self.future = self.detector_client.call_async(self.detector_req)
+        rclpy.spin_until_future_complete(self, self.future)
+
+        return self.future.result()
 
     def send_goal(self, jointvalues: list) -> str:
         print("\nsend_goal started with jointvalues:", jointvalues)  # Debugging
@@ -166,12 +179,14 @@ class LLMNode(Node):
                 [The following are all built-in function descriptions]
                 Get joint angles required to reach a specific location: get_joint_values_from_location(location)
                 Move the robot to a designated location: send_goal(joint_values)
-
-                [Here are some specific examples]
+            '''}] 
+        
+        """
+        [Here are some specific examples]
                 My instruction: Move the gripper to production home. You output: {{'function':['get_joint_values_from_location(home)', 'send_goal([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])'], 'response':'Moving the robot to home position.'}}
                 My instruction: Begin moving the gripper to cooling station. You output: {{'function':['get_joint_values_from_location(cooling)', 'send_goal([0.0524, 0.1047, 0.1571, 0.2094, 0.2618, 0.3142, 0.3665])'], 'response':'Moving the robot to cooling station.'}}
                 My instruction: Make me a millionaire. You output: {{'function':[], 'response':'I am unable to fulfill your request.'}}
-            '''}] 
+        """
 
         while True:
             if use_speech:
@@ -226,6 +241,23 @@ class LLMNode(Node):
                                 'required': ['joint_values'],
                             },
                         },
+                    },
+                    {
+                        'type': 'function',
+                        'function': {
+                            'name': 'find_object',
+                            'description': 'Find the object in the environment using the object detector service. The object name should be provided as an argument to this function. The object detector service will return the number of objects found as well as the cartesian center point, width, height and orientation of each object.',
+                            'parameters': {
+                                'type': 'object',
+                                'properties': {
+                                    'object_name': {
+                                        'type': 'string',
+                                        'description': 'The name of the object that must be found. Only one name can be provided. Must use _ (underscore) instead of spaces.',
+                                    }
+                                },
+                                'required': ['object_name'],
+                            },
+                        },
                     }
                 ]
             )
@@ -247,6 +279,7 @@ class LLMNode(Node):
                 available_functions = {
                     'get_joint_values_from_location': self.get_joint_values_from_location,
                     'send_goal': self.send_goal,
+                    'find_object': self.find_object,
                 }
                 print("\nTool calls received from model: ", response['message']['tool_calls'])  # Debugging
                 print("Clean response from model: ", response) # Debugging
