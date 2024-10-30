@@ -36,9 +36,10 @@ class RealSenseCamera:
         color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
 
         # set options for color sensor
-        color_sensor.set_option(rs.option.brightness, 0)
-        color_sensor.set_option(rs.option.exposure, 650)
-        color_sensor.set_option(rs.option.white_balance, 4200)
+        color_sensor.set_option(rs.option.brightness, 0) #0
+        color_sensor.set_option(rs.option.exposure, 150) #650
+        color_sensor.set_option(rs.option.white_balance, 3000) #4200
+
 
         return self.pipeline
 
