@@ -17,10 +17,82 @@ from launch_mixins.lbr_ros2_control import LBRROS2ControlMixin
 
 def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     ld = LaunchDescription()
-
-    robot_description = LBRDescriptionMixin.param_robot_description(sim=False)
+    
     world_robot_tf = [0, 0, 0, 0, 0, 0]  # keep zero
 
+    
+    ### Code Section ###
+    # MoveIt 2
+    ld.add_action(LBRMoveGroupMixin.arg_allow_trajectory_execution())
+    ld.add_action(LBRMoveGroupMixin.arg_capabilities())
+    ld.add_action(LBRMoveGroupMixin.arg_disable_capabilities())
+    ld.add_action(LBRMoveGroupMixin.arg_monitor_dynamics())
+    ld.add_action(LBRMoveGroupMixin.args_publish_monitored_planning_scene())
+    
+    model = LaunchConfiguration("model").perform(context)
+    moveit_configs_builder = LBRMoveGroupMixin.moveit_configs_builder(
+        robot_name=model,
+        package_name=f"{model}_moveit_config",
+    )
+    move_group_params = LBRMoveGroupMixin.params_move_group()
+
+    # MoveGroup:
+    # - requires world frame
+    # - urdf only has robot_name/world
+    # This transform needs publishing
+    robot_name = LaunchConfiguration("robot_name").perform(context)
+    
+    ld.add_action(
+        LBRDescriptionMixin.node_static_tf(
+            tf=world_robot_tf,
+            parent="world",
+            child=PathJoinSubstitution(
+                [
+                    robot_name,
+                    "world",
+                ]  # results in robot_name/world
+            ),
+        )
+    )
+
+
+    ld.add_action(
+        LBRMoveGroupMixin.node_move_group(
+            parameters=[
+                moveit_configs_builder.to_dict(),
+                move_group_params,
+                {"use_sim_time": False},
+            ],
+            condition=IfCondition(LaunchConfiguration("moveit")),
+            namespace=robot_name,
+        )
+    ) 
+    ### Code Section ###
+    
+    # RViz and MoveIt
+    rviz_moveit = RVizMixin.node_rviz(
+        rviz_config_pkg=f"{model}_moveit_config",
+        rviz_config="config/moveit.rviz",
+        parameters=LBRMoveGroupMixin.params_rviz(
+            moveit_configs=moveit_configs_builder.to_moveit_configs()
+        )
+        + [{"use_sim_time": False}],
+        condition=IfCondition(
+            AndSubstitution(LaunchConfiguration("moveit"), LaunchConfiguration("rviz"))
+        ),
+        remappings=[
+            ("display_planned_path", robot_name + "/display_planned_path"),
+            ("joint_states", robot_name + "/joint_states"),
+            ("monitored_planning_scene", robot_name + "/monitored_planning_scene"),
+            ("planning_scene", robot_name + "/planning_scene"),
+            ("planning_scene_world", robot_name + "/planning_scene_world"),
+            ("robot_description", robot_name + "/robot_description"),
+            ("robot_description_semantic", robot_name + "/robot_description_semantic"),
+        ],
+    )
+
+    robot_description = LBRDescriptionMixin.param_robot_description(sim=False)
+    
     # robot state publisher
     robot_state_publisher = LBRROS2ControlMixin.node_robot_state_publisher(
         robot_description=robot_description, use_sim_time=False
@@ -57,72 +129,10 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
         )
     )
     ld.add_action(controller_event_handler)
-
-    # MoveIt 2
-    ld.add_action(LBRMoveGroupMixin.arg_allow_trajectory_execution())
-    ld.add_action(LBRMoveGroupMixin.arg_capabilities())
-    ld.add_action(LBRMoveGroupMixin.arg_disable_capabilities())
-    ld.add_action(LBRMoveGroupMixin.arg_monitor_dynamics())
-    ld.add_action(LBRMoveGroupMixin.args_publish_monitored_planning_scene())
-
-    # MoveGroup:
-    # - requires world frame
-    # - urdf only has robot_name/world
-    # This transform needs publishing
-    robot_name = LaunchConfiguration("robot_name").perform(context)
-    ld.add_action(
-        LBRDescriptionMixin.node_static_tf(
-            tf=world_robot_tf,
-            parent="world",
-            child=PathJoinSubstitution(
-                [
-                    robot_name,
-                    "world",
-                ]  # results in robot_name/world
-            ),
-        )
-    )
-
-    model = LaunchConfiguration("model").perform(context)
-    moveit_configs_builder = LBRMoveGroupMixin.moveit_configs_builder(
-        robot_name=model,
-        package_name=f"{model}_moveit_config",
-    )
-    move_group_params = LBRMoveGroupMixin.params_move_group()
-
-    ld.add_action(
-        LBRMoveGroupMixin.node_move_group(
-            parameters=[
-                moveit_configs_builder.to_dict(),
-                move_group_params,
-                {"use_sim_time": False},
-            ],
-            condition=IfCondition(LaunchConfiguration("moveit")),
-            namespace=robot_name,
-        )
-    )
-
-    # RViz and MoveIt
-    rviz_moveit = RVizMixin.node_rviz(
-        rviz_config_pkg=f"{model}_moveit_config",
-        rviz_config="config/moveit.rviz",
-        parameters=LBRMoveGroupMixin.params_rviz(
-            moveit_configs=moveit_configs_builder.to_moveit_configs()
-        )
-        + [{"use_sim_time": False}],
-        condition=IfCondition(
-            AndSubstitution(LaunchConfiguration("moveit"), LaunchConfiguration("rviz"))
-        ),
-        remappings=[
-            ("display_planned_path", robot_name + "/display_planned_path"),
-            ("joint_states", robot_name + "/joint_states"),
-            ("monitored_planning_scene", robot_name + "/monitored_planning_scene"),
-            ("planning_scene", robot_name + "/planning_scene"),
-            ("planning_scene_world", robot_name + "/planning_scene_world"),
-            ("robot_description", robot_name + "/robot_description"),
-            ("robot_description_semantic", robot_name + "/robot_description_semantic"),
-        ],
-    )
+    
+    ### Indsæt under ###
+    
+    ### Indsæt over ###
 
     # RViz no MoveIt
     rviz = RVizMixin.node_rviz(
@@ -155,7 +165,7 @@ def generate_launch_description() -> LaunchDescription:
     ld.add_action(
         DeclareLaunchArgument(
             name="moveit",
-            default_value="false",
+            default_value="true", # Changed to true
             description="Whether to launch MoveIt 2.",
         )
     )
