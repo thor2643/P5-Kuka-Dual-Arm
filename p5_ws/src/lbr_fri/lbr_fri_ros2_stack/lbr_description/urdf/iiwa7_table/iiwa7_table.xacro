@@ -29,7 +29,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://lbr_description/meshes/table/visual/base_link.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://lbr_description/meshes/table/visual/base_link_low_polly.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="steel_satin"/>
         </visual>
@@ -37,7 +37,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://lbr_description/meshes/table/collision/base_link_low_polly.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://lbr_description/meshes/table/collision/iiwa7_table_collision.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </collision>
     </link>

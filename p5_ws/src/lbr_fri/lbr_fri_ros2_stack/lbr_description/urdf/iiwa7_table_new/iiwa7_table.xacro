@@ -17,11 +17,15 @@
         default="$(find lbr_ros2_control)/config/lbr_system_parameters.yaml" />
 
     <material name="steel_satin">
-        <color rgba="0.6274509803921569 0.6274509803921569 0.6274509803921569 1.0"/> 
+        <color rgba="0.6274509803921569 0.6274509803921569 0.6274509803921569 1"/> 
     </material> 
     <material name="wood">
-        <color rgba="0.588235294 0.375 0 1.0"/>
+        <color rgba="0.588235294 0.375 0.1 1"/>
     </material> 
+    <material name="red">
+        <color rgba="1 0 0 1"/>
+    </material> 
+
 
     <!-- fixed to world, see http://classic.gazebosim.org/tutorials?tut=ros_urdf&cat=connect_ros -->
     <link name="world" />
@@ -36,7 +40,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://lbr_description/meshes/table/visual/base_link.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://lbr_description/meshes/table/visual/base_link_low_polly.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="steel_satin"/>
         </visual>
@@ -44,20 +48,14 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://lbr_description/meshes/table/collision/base_link_low_polly.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://lbr_description/meshes/table/collision/iiwa7_table_collision.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </collision>
     </link>
 
     <link name="cam_mount">
-        <inertial>
-            <origin xyz="0.47511520643410643 0.9340356249199337 1.753635248949686" rpy="0 0 0"/>
-            <mass value="1382.7919279449686"/>
-            <inertia ixx="1994.27355" iyy="2787.103818" izz="966.579181" ixy="-0.365832" iyz="-145.275916" ixz="-0.552572"/>
-        </inertial>
-        
         <visual>
-            <origin xyz="-0.096012 -0.03490 59.336" rpy="0 0 0"/>
+            <origin xyz="0.096012 0.03490 -0.59336" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="package://lbr_description/meshes/camera_mount/Camera_Mount_V2_v2.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -65,7 +63,7 @@
         </visual>
 
         <collision>
-            <origin xyz="-0.096012 -0.03490 59.336" rpy="0 0 0"/>
+            <origin xyz="0.096012 0.03490 -0.59336" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="package://lbr_description/meshes/camera_mount/Camera_Mount_V2_v2.stl" scale="0.001 0.001 0.001"/>
             </geometry>
