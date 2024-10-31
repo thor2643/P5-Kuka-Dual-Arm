@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
             'service = move_robot.joint_values_server:main', 
             'test = move_robot.test_joint_values_server:main',
+            'robot_client = move_robot.robot_commander:main',
         ],
     },
 )
