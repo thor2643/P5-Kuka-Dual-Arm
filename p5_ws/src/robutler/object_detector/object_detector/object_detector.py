@@ -237,13 +237,6 @@ class ObjectDetector(Node):
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
         mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8))
 
-        cv2.imshow("Mask", cv2.rotate(mask, cv2.ROTATE_180))
-
-        while True:
-            # Break the loop when 'q' is pressed
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
         # Find contours (or blobs)
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
