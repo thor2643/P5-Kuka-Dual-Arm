@@ -20,12 +20,12 @@ class RealSenseCamera:
 
         # Enable color stream
         self.config.enable_stream(
-            rs.stream.color, 640, 480, rs.format.bgr8, 30
+            rs.stream.color, 1280, 720, rs.format.bgr8, 30
         )
 
         # Enable depth stream
         self.config.enable_stream(
-            rs.stream.depth, 640, 480, rs.format.z16, 30
+            rs.stream.depth, 1280, 720, rs.format.z16, 30
         )
 
         # Reset the camera to default settings (avoids an error when starting the pipeline)
