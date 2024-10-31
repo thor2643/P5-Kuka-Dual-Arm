@@ -41,17 +41,34 @@ class MoveRobotInWorld(Node):
         "state", self._on_lbr_state, 1) #gets called each time the state of the robot chances, so _on_lbr_state can be used to move the robot and so on 
 
 
-
     def JointValues_callback(self, goal_handle):  #Sets the goal position to the recieved values and sends back a confirmation response
-        self.goal = [goal_handle.joint_1, goal_handle.joint_2, goal_handle.joint_3, goal_handle.joint_4, goal_handle.joint_5, goal_handle.joint_6, goal_handle.joint_7]                                                 
-        self.get_logger().info('Incoming request\n joint_1: %f 2: %f 3: %f 4: %f 5: %f 6: %f 7: %f' % (goal_handle.joint_1, goal_handle.joint_2, goal_handle.joint_3, goal_handle.joint_4, goal_handle.joint_5, goal_handle.joint_6, goal_handle.joint_7))
+        self.goal = [
+            goal_handle.request.joint_1,
+            goal_handle.request.joint_2,
+            goal_handle.request.joint_3,
+            goal_handle.request.joint_4,
+            goal_handle.request.joint_5,
+            goal_handle.request.joint_6,
+            goal_handle.request.joint_7
+        ]  
+        self.get_logger().info('Incoming request\n joint_1: %f 2: %f 3: %f 4: %f 5: %f 6: %f 7: %f' % (goal_handle.request.joint_1, goal_handle.request.joint_2, goal_handle.request.joint_3, goal_handle.request.joint_4, goal_handle.request.joint_5, goal_handle.request.joint_6, goal_handle.request.joint_7))
 
-        feedback_msg = JointValues.Feedback()
+        feedback_msg = JointValues.Feedback()   
         feedback_msg.progress = True 
 
+        """
         print('Goal before: ' + str(self.goal))  
-        self.goal = [goal_handle.joint_1, goal_handle.joint_2, goal_handle.joint_3, goal_handle.joint_4, goal_handle.joint_5, goal_handle.joint_6, goal_handle.joint_7]
+        self.goal = [
+            goal_handle.request.joint_1,
+            goal_handle.request.joint_2,
+            goal_handle.request.joint_3,
+            goal_handle.request.joint_4,
+            goal_handle.request.joint_5,
+            goal_handle.request.joint_6,
+            goal_handle.request.joint_7
+        ]  
         print('Goal after:' + str(self.goal))  
+        """
 
         #here our code must be checking if goal is reached. if it isnt we keep sending feedback and not the result
         while np.all(np.abs(np.subtract(self.goal, self._lbr_state.measured_joint_position)) >= 0.1): #Maybe this should be based on a bool variable that is set to True when the goal is reached
