@@ -7,6 +7,7 @@ import speech_recognition as sr
 from gtts import gTTS
 from playsound import playsound
 import os
+import numpy as np
 
 # ROS 2 libraries and Node structure
 import rclpy
@@ -16,6 +17,7 @@ from rclpy.node import Node
 # ROS 2 messages
 from project_interfaces.action import JointValues
 from project_interfaces.srv import GetObjectInfo
+from project_interfaces.srv import MoveCommand
 
 class LLMNode(Node):
     def __init__(self):
@@ -28,6 +30,10 @@ class LLMNode(Node):
         #Object detector service client
         self.detector_client = self.create_client(GetObjectInfo, 'get_object_info')
         self.detector_req = GetObjectInfo.Request()
+
+        # Robot service client
+        self.robot_client = self.create_client(MoveCommand, 'move_command')
+        self.robot_req = MoveCommand.Request()
 
         # Specify a specific microphone if needed
         self.microphone_index = 8
@@ -104,6 +110,24 @@ class LLMNode(Node):
                                     }
                                 },
                                 'required': ['object_name'],
+                            },
+                        },
+                    },
+                    {
+                        'type': 'function',
+                        'function': {
+                            'name': 'move_robot_to_pose',
+                            'description': 'Move the robot to a specific pose in the environment. The pose should be provided as an argument to this function. The robot will move to the specified pose.',
+                            'parameters': {
+                                'type': 'object',
+                                'properties': {
+                                    'pose': {
+                                        "type": "array",
+                                        "items": {"type": "number"},
+                                        "description": "A list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees."
+                                    }
+                                },
+                                'required': ['pose'],
                             },
                         },
                     }
@@ -257,12 +281,38 @@ class LLMNode(Node):
             self.get_logger().info(f"Center points: {response.centers}")
             self.get_logger().info(f"Object orientations: {response.orientations}")
             self.get_logger().info(f"Grasping widths: {response.grasp_widths}\n")
-            
+
+            # Define the transformation matrix from camera coordinates to world coordinates
+            T_cam_world = np.array([
+                [-1, 0, 0, -0.487],  # Example values, replace with actual transformation values
+                [0, 1, 0, 0.336],
+                [0, 0, -1, 1.011],
+                [0, 0, 0, 1]
+            ])
+
             return response
         else:
             self.get_logger().error('Service call failed')
             return GetObjectInfo.Response()
-
+        
+    def move_robot_to_pose(self, pose):
+        print(f"\nMoving robot to pose: {pose}\n")
+        self.robot_req.position.x = float(0.0)
+        self.robot_req.position.y = float(0.5)
+        self.robot_req.position.z = float(1.8)
+        self.robot_req.orientation.w = float(1.0)
+ 
+        self.future = self.robot_client.call_async(self.robot_req)
+        try:
+            rclpy.spin_until_future_complete(self, self.future, timeout_sec=5.0)
+            if self.future.result() is not None:
+                return self.future.result()
+            else:
+                self.get_logger().error('Service call timed out')
+                return None
+        except Exception as e:
+            self.get_logger().error(f'Service call failed: {e}')
+            return None
 
     ################################################################################################
     # -------------------------- INTERACTION WITH LARGE LANGUAGE MODELS -------------------------- #
@@ -278,6 +328,7 @@ class LLMNode(Node):
                     The user must always be replied to, and it should follow a style similar to the following examples, but only make this type of reply if the send_goal() function is called:
                     Yes, sir. Moving the gripper to cooling station.
                     Right away, sir. The gripper will be moved to home position.
+
                 """}]
 
         while True:
@@ -318,7 +369,8 @@ class LLMNode(Node):
                 'get_joint_values_from_location': self.get_joint_values_from_location,
                 'send_goal': self.send_goal,
                 'move_to_location': self.move_to_location,
-                'find_object': self.find_object
+                'find_object': self.find_object,
+                'move_robot_to_pose': self.move_robot_to_pose
             }
 
             # Iterate through every function in tool_calls list
@@ -389,6 +441,21 @@ class LLMNode(Node):
                         'role': 'function',
                         'name': func_name, 
                         'content': f"Found {function_response.object_count} objects."
+                    })
+
+                    break
+
+                elif func_name == 'move_robot_to_pose':
+                    print("Arguments sent to move_robot_to_pose: ", func_args['pose'])
+                    # Call the find_object function
+                    function_response = available_functions[func_name](func_args['pose'])
+                    print("function response for move_robot_to_pose: ", function_response)
+
+                    # Add the object detection response to the conversation
+                    messages.append({
+                        'role': 'function',
+                        'name': func_name, 
+                        'content': f"Found {function_response.result}."
                     })
 
                     break
