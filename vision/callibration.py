@@ -64,3 +64,21 @@ point_in_global = T @ point
 
 print("test result")
 print(point_in_global)
+
+
+#calculate the error for each value x,y,z compared to the real value in P_robot
+Error = np.zeros((9,3))
+for i in range(9):
+    point = np.array([P_camera[i][0],P_camera[i][1],P_camera[i][2],1])
+    point_in_global = T @ point
+    Error[i] = point_in_global[:3] - P_robot[i]
+
+print("Error for each point")
+print(Error)
+
+#calculate the mean error for each value x,y,z
+mean_error = np.mean(Error,axis=0)
+print("Mean error for each value x,y,z")
+print(mean_error)
+
+
