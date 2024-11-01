@@ -296,15 +296,50 @@ class LLMNode(Node):
             return GetObjectInfo.Response()
         
     def move_robot_to_pose(self, pose):
+        # Define the transformation matrix from camera coordinates to world coordinates
+        # Found by CAD model and modified to using print_cartesian in detect_objects.py
+        angle_around_x = 180-33
+        T_world_cam = np.array([
+                        [1, 0, 0, 0.487],  # Example values, replace with actual transformation values
+                        [0, np.cos(np.pi/180*angle_around_x), -np.sin(np.pi/180*angle_around_x), 0.77],
+                        [0, np.sin(np.pi/180*angle_around_x), np.cos(np.pi/180*angle_around_x), 0.62],
+                        [0, 0, 0, 1]
+                    ])
+        
+        # Found in CAD model
+        T_world_moveit = np.array([
+                        [1, 0, 0, -0.35],  # Example values, replace with actual transformation values
+                        [0, 1, 0, -0.34],
+                        [0, 0, 1, 0.809],
+                        [0, 0, 0, 1]
+                    ])
+        
+        # Extract the position from the pose and append 1 to make it a 4D vector
+        pos_cam = pose[:3].append(1)
+
+        # Transform the position from camera to world coordinates
+        #pos_world = np.dot(T_world_cam, pos_cam)
+        #pos_moveit = np.dot(T_world_moveit, pos_world)
+
+        #TODO: Add orientation transformation
+        #0.14205068 -0.08728484  0.75022754 
+
+        #target_pose.position.x = 0;
+        #target_pose.position.y = 0.5;
+        #target_pose.position.z = 1.8;
+
         print(f"\nMoving robot to pose: {pose}\n")
-        self.robot_req.position.x = float(0.0)
-        self.robot_req.position.y = float(0.5)
-        self.robot_req.position.z = float(1.8)
-        self.robot_req.orientation.w = float(1.0)
+        self.robot_req.position.x = 0.527    #float(pos_moveit[0])
+        self.robot_req.position.y = 0.286     #0.286 #float(pos_moveit[1])
+        self.robot_req.position.z = 1.0     #float(pos_moveit[2])
+        self.robot_req.orientation.x = float(0.707) # float(0) # Example values, replace with actual orientation values
+        self.robot_req.orientation.y = float(0.707) #float(0.8)
+        self.robot_req.orientation.z = float(0)     #float(0.5)
+        self.robot_req.orientation.w = float(0)     #float(0.2)
  
         self.future = self.robot_client.call_async(self.robot_req)
         try:
-            rclpy.spin_until_future_complete(self, self.future, timeout_sec=5.0)
+            rclpy.spin_until_future_complete(self, self.future, timeout_sec=15.0)
             if self.future.result() is not None:
                 return self.future.result()
             else:

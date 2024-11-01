@@ -31,10 +31,12 @@ private:
                       const std::shared_ptr<project_interfaces::srv::MoveCommand::Response> response) {
     geometry_msgs::msg::Pose target_pose;
 
-    target_pose.orientation.x = request->orientation.x;
-    target_pose.orientation.y = request->orientation.y;
-    target_pose.orientation.z = request->orientation.z;
-    target_pose.orientation.w = request->orientation.w;
+    RCLCPP_INFO(this->get_logger(), "Received request to move to target pose");
+
+    target_pose.orientation.x = request->orientation.x; //0.707; //request->orientation.x;
+    target_pose.orientation.y = request->orientation.y; //0.707; //request->orientation.y;
+    target_pose.orientation.z = request->orientation.z; //0; //request->orientation.z;
+    target_pose.orientation.w = request->orientation.w; //0; //request->orientation.w;
     target_pose.position.x = request->position.x; // Example usage of request data
     target_pose.position.y = request->position.y;
     target_pose.position.z = request->position.z;
