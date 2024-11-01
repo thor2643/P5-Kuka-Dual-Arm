@@ -25,6 +25,7 @@ class LLMNode(Node):
         #Object detector service client
         self.detector_client = self.create_client(GetObjectInfo, 'get_object_info')
         self.detector_req = GetObjectInfo.Request()
+        self.objects_on_table = {}
 
         # Robot service client
         self.robot_client = self.create_client(MoveCommand, 'move_command')
@@ -228,12 +229,36 @@ class LLMNode(Node):
             self.get_logger().info(f"Grasping widths: {response.grasp_widths}\n")
 
             # Define the transformation matrix from camera coordinates to world coordinates
-            T_cam_world = np.array([
-                [-1, 0, 0, -0.487],  # Example values, replace with actual transformation values
-                [0, 1, 0, 0.336],
-                [0, 0, -1, 1.011],
-                [0, 0, 0, 1]
-            ])
+            angle_around_x = 180-33
+            T_world_cam = np.array([
+                        [1, 0, 0, 0.487],  # Example values, replace with actual transformation values
+                        [0, np.cos(np.pi/180*angle_around_x), -np.sin(np.pi/180*angle_around_x), 0.77],
+                        [0, np.sin(np.pi/180*angle_around_x), np.cos(np.pi/180*angle_around_x), 0.62],
+                        [0, 0, 0, 1]
+                        ])
+            
+            # Extract the position from the pose and append 1 to make it a 4D vector
+            center_pts = []
+            for point in response.centers:
+                center_pts.append([point.x, point.y, point.z, 1])
+
+            # Transform the position from camera to world coordinates
+            center_pts_world = np.dot(T_world_cam, np.array(center_pts).T).T
+
+            # Save the object information in a dictionary
+            for i, center in enumerate(center_pts_world):
+                # Make sure the object name is unique
+                object_name = object 
+                count = 1
+                while object_name in self.objects_on_table:
+                    object_name = f"{object}_{count}"
+                    count += 1
+
+                self.objects_on_table[object_name] = {
+                    'center': center.tolist()[0:3],
+                    'orientation': response.orientations[i],
+                    'grasp_width': response.grasp_widths[i]
+                }
 
             return response
         else:
