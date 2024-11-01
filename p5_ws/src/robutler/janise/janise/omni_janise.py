@@ -137,7 +137,11 @@ class LLMNode(Node):
         if self.use_ollama:
             self.client = ollama.AsyncClient()
         else:
-            self.client = AsyncOpenAI(api_key="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", project="proj_N8LBnKf1RyyimXNIe2DykEAk")
+            # load the project id and key from json file
+            with open('src/robutler/janise/api_key.json') as f:
+                api_data = json.load(f)
+            api_key = api_data['api_key']
+            self.client = AsyncOpenAI(api_key=api_key)
 
 
     ##############################################################################
