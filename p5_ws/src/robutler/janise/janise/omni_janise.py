@@ -401,7 +401,7 @@ class LLMNode(Node):
                 response_text = response.choices[0].message.content
                 print("The model didn't use a function.")
                 self.text_to_speech(response_text)
-                break
+                continue
 
             # Process functions calls from the model
             available_functions = {
