@@ -319,7 +319,7 @@ class LLMNode(Node):
                     'grasp_width': response.grasp_widths[i]
                 }
 
-            return response
+            return self.objects_on_table
         else:
             self.get_logger().error('Service call failed')
             return GetObjectInfo.Response()
@@ -360,7 +360,8 @@ class LLMNode(Node):
                     ])
         
         # Extract the position from the pose and append 1 to make it a 4D vector
-        pos_world = pose[:3].append(1)
+        pos_world = pose[:3]
+        pos_world.append(1)
 
         # Transform the position from camera to world coordinates
         #pos_world = np.dot(T_world_cam, pos_cam)
@@ -516,7 +517,7 @@ class LLMNode(Node):
                     messages.append({
                         'role': 'function',
                         'name': func_name, 
-                        'content': f"Found {function_response.object_count} objects."
+                        'content': f"Found {function_response}."
                     })
 
                     break
