@@ -15,17 +15,12 @@ from rclpy.action import ActionClient
 from rclpy.node import Node
 
 # ROS 2 messages
-from project_interfaces.action import JointValues
 from project_interfaces.srv import GetObjectInfo
 from project_interfaces.srv import MoveCommand
 
 class LLMNode(Node):
     def __init__(self):
         super().__init__('minimal_client_async')
-
-        # Action Client setup
-        self._action_client = ActionClient(self, JointValues, 'JointValues')
-        self.jointvalues = [0, 0, 0, 0, 0, 0, 0]
 
         #Object detector service client
         self.detector_client = self.create_client(GetObjectInfo, 'get_object_info')
@@ -48,8 +43,8 @@ class LLMNode(Node):
                     {
                         "type": "function",
                         "function": {
-                            'name': 'get_joint_values_from_location',
-                            'description': 'Used only to retrieve the robot joint angles based on the user-specified location. It does not move the robot',
+                            'name': 'get_pose_values_from_location',
+                            'description': 'Used only to retrieve the robot world coordinates based on the user-specified location. It does not move the robot',
                             'parameters': {
                                 'type': 'object',
                                 'properties': {
@@ -65,32 +60,14 @@ class LLMNode(Node):
                     {
                         "type": "function",
                         "function": {
-                            "name": "send_goal",
-                            "description": "Sends joint angles to move the robot to the specified joint positions, which in turn moves the robot.",
-                            "parameters": {
-                                "type": "object",
-                                "properties": {
-                                    "joint_values": {
-                                        "type": "array",
-                                        "items": {"type": "number"},
-                                        "description": "A list of 7 floating-point numbers representing joint angles for the robot arm."
-                                    }
-                                },
-                                "required": ["joint_values"]
-                            }
-                        }
-                    },
-                    {
-                        "type": "function",
-                        "function": {
                             'name': 'move_to_location',
-                            'description': 'Retrieves the robot joint angles based on the user-specified location and sends them to the robot to make it move to said location.',
+                            'description': 'Retrieves the robot pose based on the user-specified location and sends them to the robot to make it move to said location.',
                             'parameters': {
                                 'type': 'object',
                                 'properties': {
                                     'location': {
                                         'type': 'string',
-                                        'description': 'The name of the target location, e.g., "home", "cooling", or "painting".',
+                                        'description': 'The name of the target location, e.g., "home".',
                                     }
                                 },
                                 'required': ['location'],
@@ -217,60 +194,24 @@ class LLMNode(Node):
     ########################################################################################
 
 
-    async def get_joint_values_from_location(self, location: str) -> list:
-        coordinates = { # Predefined joint angles for different locations
-            'HOME-STATION': {'joint_1': '0.0', 'joint_2': '0.0', 'joint_3': '0.0', 'joint_4': '0.0', 'joint_5': '0.0', 'joint_6': '0.0', 'joint_7': '0.0'},
-            'START-STATION': {'joint_1': '0.1745', 'joint_2': '0.2618', 'joint_3': '0.3491', 'joint_4': '0.4363', 'joint_5': '0.5236', 'joint_6': '0.5236', 'joint_7': '0.5236'},
-            'WELDING-STATION': {'joint_1': '0.0873', 'joint_2': '0.1745', 'joint_3': '0.2618', 'joint_4': '0.3491', 'joint_5': '0.4363', 'joint_6': '0.5236', 'joint_7': '0.5236'},
-            'COOLING-STATION': {'joint_1': '0.0524', 'joint_2': '0.1047', 'joint_3': '0.1571', 'joint_4': '0.2094', 'joint_5': '0.2618', 'joint_6': '0.3142', 'joint_7': '0.3665'},
-            'PAINTING-STATION': {'joint_1': '0.3491', 'joint_2': '0.4363', 'joint_3': '0.5236', 'joint_4': '0.5236', 'joint_5': '0.5236', 'joint_6': '0.5236', 'joint_7': '0.5236'},
-            'END-STATION': {'joint_1': '0.0698', 'joint_2': '0.1396', 'joint_3': '0.2094', 'joint_4': '0.2793', 'joint_5': '0.3491', 'joint_6': '0.4189', 'joint_7': '0.4887'},
+    async def get_pose_values_from_location(self, location: str) -> list:
+        coordinates = { # Predefined poses for different locations
+            'HOME-STATION': {'x': '0.5', 'y': '0.3', 'z': "0.9", 'roll': '180', 'pitch': '0', 'yaw': '0'}
         }
-        self.get_logger().info(f"Received location to find joint angles for: location={location}")
 
-        joint_dict = coordinates.get(location.upper() + '-STATION', {})
+        self.get_logger().info(f"Received location to find pose for: location={location}")
+
+        pose_dict = coordinates.get(location.upper() + '-STATION', {})
     
         # Convert dictionary values to a list of floats
-        joint_values = [float(value) for value in joint_dict.values()]
+        pose_values = [float(value) for value in pose_dict.values()]
 
-        return joint_values
+        return pose_values
     
-    def send_goal(self, jointvalues: list) -> str:
-        print("\nsend_goal started with jointvalues:", jointvalues)
-
-        # Convert the string to a list of floats
-        if type(jointvalues) == str:
-            jointvalues = json.loads(jointvalues)
-
-        try:
-            if len(jointvalues) != 7:
-                raise ValueError("Incorrect number of joint angles. Expected 7 values.")
-
-            print("Correct number of joint angles received")
-            joint_values = JointValues.Goal()
-            joint_values.joint_1, joint_values.joint_2, joint_values.joint_3, joint_values.joint_4, \
-            joint_values.joint_5, joint_values.joint_6, joint_values.joint_7 = jointvalues
-
-            self.get_logger().info(f"Sending joint values: {joint_values}")
-
-            if not self._action_client.wait_for_server(timeout_sec=5.0):
-                self.get_logger().error("Action server not available after waiting.")
-                return "Action server unavailable"
-
-            print("Action server available. Sending goal now...")
-            self._send_goal_future = self._action_client.send_goal_async(
-                joint_values, feedback_callback=self.feedback_callback)
-            self._send_goal_future.add_done_callback(self.goal_response_callback)
-
-        except Exception as e:
-            print(f"Exception in send_goal: {e}")
-            return f"Error sending joint angles: {e}"
-
     async def move_to_location(self, location):
-        # Get joint values asynchronously
-        joint_values = await self.get_joint_values_from_location(location)
-        self.send_goal(joint_values)
-        return f"Moving to {location} station with joint values: {joint_values}"
+        pose = await self.get_pose_values_from_location(location)
+        self.move_robot_to_pose(pose)
+        return f"Moving to {location} station with pose: {pose}"
 
     def find_object(self, object: str) -> GetObjectInfo.Response:
         print(f"\nRequesting the detector service to find {object}")  # Debugging
@@ -325,12 +266,12 @@ class LLMNode(Node):
             return GetObjectInfo.Response()
     
     def euler_to_quat(self, euler_angles):
-        cr = np.cos(euler_angles[0] * 0.5)
-        sr = np.sin(euler_angles[0] * 0.5)
-        cp = np.cos(euler_angles[1] * 0.5)
-        sp = np.sin(euler_angles[1] * 0.5)
-        cy = np.cos(euler_angles[2] * 0.5)
-        sy = np.sin(euler_angles[2] * 0.5)
+        cr = np.cos(np.deg2rad(euler_angles[0]) * 0.5)
+        sr = np.sin(np.deg2rad(euler_angles[0]) * 0.5)
+        cp = np.cos(np.deg2rad(euler_angles[1]) * 0.5)
+        sp = np.sin(np.deg2rad(euler_angles[1]) * 0.5)
+        cy = np.cos(np.deg2rad(euler_angles[2]) * 0.5)
+        sy = np.sin(np.deg2rad(euler_angles[2]) * 0.5)
 
         q_w = cr * cp * cy + sr * sp * sy
         q_x = sr * cp * cy - cr * sp * sy
@@ -402,7 +343,7 @@ class LLMNode(Node):
 
                     When the user asks for the gripper or robot to be moved to a certain location use your functions to do so. 
                                 
-                    The user must always be replied to, and it should follow a style similar to the following examples, but only make this type of reply if the send_goal() function is called:
+                    The user must always be replied to, and it should follow a style similar to the following examples, but only make this type of reply if the move_robot_to_pose() function is called:
                     Yes, sir. Moving the gripper to cooling station.
                     Right away, sir. The gripper will be moved to home position.
 
@@ -443,8 +384,7 @@ class LLMNode(Node):
 
             # Process functions calls from the model
             available_functions = {
-                'get_joint_values_from_location': self.get_joint_values_from_location,
-                'send_goal': self.send_goal,
+                'get_pose_values_from_location': self.get_pose_values_from_location,
                 'move_to_location': self.move_to_location,
                 'find_object': self.find_object,
                 'move_robot_to_pose': self.move_robot_to_pose
@@ -461,36 +401,22 @@ class LLMNode(Node):
                 print(f"Arguments received: {func_args}")
 
                 # Call a fitting function and add the result to message history
-                if func_name == 'get_joint_values_from_location':
-                    # Call function and verify if joint angles are valid
+                if func_name == 'get_pose_values_from_location':
+                    # Call function and verify if poses are valid
                     function_response = await available_functions[func_name](func_args['location'])
-                    print("The function response for get_joint_values_from_location: ", function_response)
+                    print("The function response for get_pose_values_from_location: ", function_response)
                     if not function_response:  
-                        messages.append({'role': 'assistant', 'content': 'No valid joint angles found for this location.'})
-                        self.text_to_speech("No valid joint angles found for the specified location, sir.")
+                        messages.append({'role': 'assistant', 'content': 'No valid pose found for this location.'})
+                        self.text_to_speech("No valid pose was found for the specified location, sir.")
                         break  
                     
-                    # Add found joint angles to message history
+                    # Add found pose to message history
                     messages.append({
                         'role': 'function',
                         'name': func_name,
                         'content': json.dumps(function_response)
                     })
                     
-                    break
-
-                elif func_name == 'send_goal':
-                    # Call send_goal function with joint values
-                    function_response = available_functions[func_name](func_args['joint_values'])
-                    print("The function response for send_goal:", function_response)
-
-                    # Add send_goal response to message history
-                    messages.append({
-                        'role': 'function',
-                        'name': func_name,
-                        'content': function_response
-                    })
-
                     break
 
                 elif func_name == 'move_to_location':
@@ -611,9 +537,10 @@ class LLMNode(Node):
             # Process function calls made by the model
             if 'tool_calls' in response['message']:
                 available_functions = {
-                    'get_joint_values_from_location': self.get_joint_values_from_location,
-                    'send_goal': self.send_goal,
-                    'find_object': self.find_object,
+                    'get_pose_values_from_location': self.get_pose_values_from_location,
+                    'move_to_location': self.move_to_location,
+                    'move_robot_to_pose': self.move_robot_to_pose,
+                    'find_object': self.find_object
                 }
                 print("\nTool calls received from model: ", response['message']['tool_calls'])  # Debugging
                 print("Clean response from model: ", response) # Debugging
@@ -622,26 +549,18 @@ class LLMNode(Node):
                     print("\nFunction name called by model: ", tool['function']['name'])  # Debugging
                     function_to_call = available_functions[tool['function']['name']]
 
-                    if tool['function']['name'] == 'get_joint_values_from_location':
-                        # Call get_joint_values_from_location and check if joint angles are valid
+                    if tool['function']['name'] == 'get_pose_values_from_location':
+                        # Call get_pose_values_from_location and check if pose is valid
                         function_response = function_to_call(tool['function']['arguments']['location']) 
                         
-                        if not function_response:  # If no valid joint angles were found
-                            messages.append({'role': 'tool', 'content': 'No valid joint angles found for this location.'})
-                            break  # Stop the process here, do not call send_goal
+                        if not function_response:  # If no valid pose is found
+                            messages.append({'role': 'tool', 'content': 'No valid pose was found for this location.'})
+                            break  # Stop the process here
 
-                        # Add the joint angles to the conversation history
-                        messages.append({'role': 'tool', 'content': f"Retrieved joint angles: {function_response}"})
+                        # Add the pose to the conversation history
+                        messages.append({'role': 'tool', 'content': f"Retrieved pose: {function_response}"})
                         print(function_response)
-                        print("1: Joint values: ", function_response)
-                    
-                    elif tool['function']['name'] == 'send_goal': 
-                        print("Arguments sent to send_goal: ", tool['function']['arguments'])  # Debugging
-                        # Only proceed if the previous call returned valid joint angles
-                        function_response = function_to_call(tool['function']['arguments']['joint_values']) 
-                        print("function response for send_goal: ", function_response)
-                        # Add the robot movement response to the conversation
-                        messages.append({'role': 'tool', 'content': function_response})
+                        print("1: pose: ", function_response)
 
                     elif tool['function']['name'] == 'find_object':
                         print("Arguments sent to find_object: ", tool['function']['arguments'])
