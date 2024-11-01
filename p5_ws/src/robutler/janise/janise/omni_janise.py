@@ -323,10 +323,26 @@ class LLMNode(Node):
         else:
             self.get_logger().error('Service call failed')
             return GetObjectInfo.Response()
+    
+    def euler_to_quat(self, euler_angles):
+        cr = np.cos(euler_angles[0] * 0.5)
+        sr = np.sin(euler_angles[0] * 0.5)
+        cp = np.cos(euler_angles[1] * 0.5)
+        sp = np.sin(euler_angles[1] * 0.5)
+        cy = np.cos(euler_angles[2] * 0.5)
+        sy = np.sin(euler_angles[2] * 0.5)
+
+        q_w = cr * cp * cy + sr * sp * sy
+        q_x = sr * cp * cy - cr * sp * sy
+        q_y = cr * sp * cy + sr * cp * sy
+        q_z = cr * cp * sy - sr * sp * cy
         
+        return [q_w, q_x, q_y, q_z]
+
     def move_robot_to_pose(self, pose):
         # Define the transformation matrix from camera coordinates to world coordinates
         # Found by CAD model and modified to using print_cartesian in detect_objects.py
+        """
         angle_around_x = 180-33
         T_world_cam = np.array([
                         [1, 0, 0, 0.487],  # Example values, replace with actual transformation values
@@ -334,7 +350,7 @@ class LLMNode(Node):
                         [0, np.sin(np.pi/180*angle_around_x), np.cos(np.pi/180*angle_around_x), 0.62],
                         [0, 0, 0, 1]
                     ])
-        
+        """
         # Found in CAD model
         T_world_moveit = np.array([
                         [1, 0, 0, -0.35],  # Example values, replace with actual transformation values
@@ -344,27 +360,23 @@ class LLMNode(Node):
                     ])
         
         # Extract the position from the pose and append 1 to make it a 4D vector
-        pos_cam = pose[:3].append(1)
+        pos_world = pose[:3].append(1)
 
         # Transform the position from camera to world coordinates
         #pos_world = np.dot(T_world_cam, pos_cam)
-        #pos_moveit = np.dot(T_world_moveit, pos_world)
+        pos_moveit = np.dot(T_world_moveit, pos_world)
 
-        #TODO: Add orientation transformation
-        #0.14205068 -0.08728484  0.75022754 
-
-        #target_pose.position.x = 0;
-        #target_pose.position.y = 0.5;
-        #target_pose.position.z = 1.8;
+        rpy_world = pose[3:]
+        quat_moveit = self.euler_to_quat(rpy_world)
 
         print(f"\nMoving robot to pose: {pose}\n")
-        self.robot_req.position.x = 0.527    #float(pos_moveit[0])
-        self.robot_req.position.y = 0.286     #0.286 #float(pos_moveit[1])
-        self.robot_req.position.z = 1.0     #float(pos_moveit[2])
-        self.robot_req.orientation.x = float(0.707) # float(0) # Example values, replace with actual orientation values
-        self.robot_req.orientation.y = float(0.707) #float(0.8)
-        self.robot_req.orientation.z = float(0)     #float(0.5)
-        self.robot_req.orientation.w = float(0)     #float(0.2)
+        self.robot_req.position.x = float(pos_moveit[0])
+        self.robot_req.position.y = float(pos_moveit[1])
+        self.robot_req.position.z = float(pos_moveit[2])
+        self.robot_req.orientation.x = float(quat_moveit[1])
+        self.robot_req.orientation.y = float(quat_moveit[2])
+        self.robot_req.orientation.z = float(quat_moveit[3])
+        self.robot_req.orientation.w = float(quat_moveit[0])
  
         self.future = self.robot_client.call_async(self.robot_req)
         try:
