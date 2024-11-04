@@ -7,13 +7,15 @@
   <maintainer email="signeskuldbol@hotmail.com">signe</maintainer>
   <license>TODO: License declaration</license>
 
+
+  <exec_depend>project_interfaces</exec_depend>
+
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
   <test_depend>python3-pytest</test_depend>
   
-  #added based on tutorial github:https://github.com/ros2/demos/blob/humble/action_tutorials/action_tutorials_py/package.xml
-  <depend>action_msg_package</depend>
+
   <exec_depend>rclpy</exec_depend>
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
