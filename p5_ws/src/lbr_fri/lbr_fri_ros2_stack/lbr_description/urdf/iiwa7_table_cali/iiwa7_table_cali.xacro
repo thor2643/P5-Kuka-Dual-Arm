@@ -3,24 +3,20 @@
 <!-- top level -->
 <robot name="iiwa7_table" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <!-- include the lbr iiwa7 macro -->
-    <xacro:include filename="$(find lbr_description)/urdf/iiwa7_table/iiwa7_table_description.xacro" />
+    <!-- include the lbr iiwa macro -->
+    <xacro:include filename="$(find lbr_description)/urdf/iiwa7_table_cali/iiwa7_table_cali_description.xacro" />
     
-    <!-- include 3f gripper and set its macro prefix to 3f-->
+    <!-- include 3f gripper and set its macro prefix to 3f-
     <xacro:include filename="$(find lbr_description)/urdf/robotiq-3f-gripper/robotiq-3f-gripper_articulated_macro.xacro" />
     <xacro:robotiq-3f-gripper_articulated prefix="3f_" />
-
-    <!-- include realsense camera -->
-    <xacro:include filename="$(find lbr_description)/urdf/realsense/_d435.urdf.xacro" />
-     
+    -->
 
     <xacro:arg name="robot_name" default="lbr" />
-    <xacro:arg name="sim" default="false" />
+    <xacro:arg name="sim" default="true" />
     <xacro:arg
         name="system_parameters_path"
         default="$(find lbr_ros2_control)/config/lbr_system_parameters.yaml" />
 
-    <!-- materials -->
     <material name="steel_satin">
         <color rgba="0.6274509803921569 0.6274509803921569 0.6274509803921569 1"/> 
     </material> 
@@ -35,7 +31,7 @@
     <!-- fixed to world, see http://classic.gazebosim.org/tutorials?tut=ros_urdf&cat=connect_ros -->
     <link name="world" />
 
-    <!-- table link -->
+    <!-- table mount -->
     <link name="table">
         <inertial>
             <origin xyz="0.47511520643410643 0.9340356249199337 1.753635248949686" rpy="0 0 0"/>
@@ -58,7 +54,6 @@
         </collision>
     </link>
 
-    <!-- the wooden laser cut camera mount-->
     <link name="cam_mount">
         <visual>
             <origin xyz="0.096012 0.03490 -0.059336" rpy="0 0 0"/>
@@ -66,7 +61,26 @@
                 <mesh filename="package://lbr_description/meshes/camera_mount/Camera_Mount_V2_v2.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="wood"/>
-        </visual>        
+        </visual>    
+        <!-- Might want to add collision, tho the table takes care of it-->    
+    </link>
+    
+    <link name="tip">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://lbr_description/meshes/calibration_tip/calli_tip.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="white"/>
+        </visual>    
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://lbr_description/meshes/calibration_tip/calli_tip.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+       
     </link>
 
     <!--joint between world and table-->
@@ -75,13 +89,13 @@
         <child link="table" />
     </joint>
 
-    <!--joint between table and wooden camera mount-->
+    <!--joint between table and camera mount-->
     <joint name="cam_table_joint" type="fixed">
         <parent link="table" />
         <child link="cam_mount" />
         <origin xyz="0.489819 0.84691 1.428" rpy="1.57079633 0 0"/>
     </joint>
-       
+    
     <!--joint between table and right iiwa7 -->
     <joint name="mount_right" type="fixed">
         <parent link="table" />
@@ -92,14 +106,18 @@
     <!-- joint between right iiwa7 and 3f gripper-->
     <joint name="ee_mount" type="fixed">    
         <parent link="link_ee" />
-        <child link="3f_palm" />
-        <origin xyz="0 0 0.05" rpy="1.57079633 0 0"/>
+        <child link="tip" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <!-- joint between 3d-printed tip and it's tip-->
+    <link name = "tip_point" />
+    <joint name="tip_point" type="fixed">    
+        <parent link="tip" />
+        <child link="tip_point" />
+        <origin xyz="0 0 0.05" rpy="0 0 0"/>
     </joint>
     
-    <!-- joint between wooden camera mount and camera, done using d435 xacro macro
-    <xacro:sensor_d435 parent="table" name="camera" origin="xyz='0 0 0.1' rpy='0 0 0'" />
-    -->
-
     <!-- Left iiwa7 (Needs to be uptated) <origin xyz="0.716295 0.76 1.037203" rpy="-0.785398163 0 -1.57079633"/>-->
 
     <!-- iiwa -->
@@ -107,4 +125,4 @@
         robot_name="$(arg robot_name)"
         sim="$(arg sim)"
         system_parameters_path="$(arg system_parameters_path)" />
-    </robot>
+</robot>
