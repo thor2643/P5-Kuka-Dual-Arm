@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>iiwa7_table_moveit_config</name>
+  <name>iiwa7_table_cali_moveit_config</name>
   <version>0.3.0</version>
   <description>
      An automatically generated package with all the configuration and launch files for using the iiwa7_table with the MoveIt Motion Planning Framework
   </description>
-  <maintainer email="gustavbay@live.dk">gustav bay</maintainer>
+  <maintainer email="Gustavbay@live.dk">Gustav bay</maintainer>
 
   <license>BSD</license>
 
@@ -14,7 +14,7 @@
   <url type="bugtracker">https://github.com/ros-planning/moveit2/issues</url>
   <url type="repository">https://github.com/ros-planning/moveit2</url>
 
-  <author email="gustavbay@live.dk">gustav bay</author>
+  <author email="Gustavbay@live.dk">Gustav bay</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

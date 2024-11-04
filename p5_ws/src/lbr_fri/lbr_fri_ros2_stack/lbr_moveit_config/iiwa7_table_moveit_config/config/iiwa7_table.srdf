@@ -12,6 +12,22 @@
     <group name="right_arm">
         <chain base_link="link_0" tip_link="link_ee"/>
     </group>
+    <group name="3f_gripper">
+        <link name="3f_palm"/>
+        <link name="3f_tool0"/>
+        <link name="3f_finger_middle_link_2"/>
+        <link name="3f_finger_middle_link_3"/>
+        <link name="3f_finger_middle_link_1"/>
+        <link name="3f_finger_middle_link_0"/>
+        <link name="3f_finger_2_link_3"/>
+        <link name="3f_finger_2_link_2"/>
+        <link name="3f_finger_2_link_1"/>
+        <link name="3f_finger_2_link_0"/>
+        <link name="3f_finger_1_link_3"/>
+        <link name="3f_finger_1_link_1"/>
+        <link name="3f_finger_1_link_2"/>
+        <link name="3f_finger_1_link_0"/>
+    </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="zero" group="right_arm">
         <joint name="A1" value="0"/>
@@ -24,13 +40,41 @@
     </group_state>
     <group_state name="transport" group="right_arm">
         <joint name="A1" value="0"/>
-        <joint name="A2" value="1.4863"/>
+        <joint name="A2" value="1.6552"/>
         <joint name="A3" value="0"/>
         <joint name="A4" value="0"/>
         <joint name="A5" value="0"/>
         <joint name="A6" value="0"/>
         <joint name="A7" value="0"/>
     </group_state>
+    <group_state name="closed" group="3f_gripper">
+        <joint name="3f_finger_1_joint_1" value="0.7396"/>
+        <joint name="3f_finger_1_joint_2" value="0"/>
+        <joint name="3f_finger_1_joint_3" value="-0.6653"/>
+        <joint name="3f_finger_2_joint_1" value="0.7869"/>
+        <joint name="3f_finger_2_joint_2" value="0"/>
+        <joint name="3f_finger_2_joint_3" value="-0.6936"/>
+        <joint name="3f_finger_middle_joint_1" value="0.768"/>
+        <joint name="3f_finger_middle_joint_2" value="0"/>
+        <joint name="3f_finger_middle_joint_3" value="-0.571"/>
+        <joint name="3f_palm_finger_1_joint" value="0.0576"/>
+        <joint name="3f_palm_finger_2_joint" value="0.041"/>
+    </group_state>
+    <group_state name="open" group="3f_gripper">
+        <joint name="3f_finger_1_joint_1" value="0.5978"/>
+        <joint name="3f_finger_1_joint_2" value="0.1393"/>
+        <joint name="3f_finger_1_joint_3" value="-0.6181"/>
+        <joint name="3f_finger_2_joint_1" value="0.6735"/>
+        <joint name="3f_finger_2_joint_2" value="0.0633"/>
+        <joint name="3f_finger_2_joint_3" value="-0.5238"/>
+        <joint name="3f_finger_middle_joint_1" value="0.8153"/>
+        <joint name="3f_finger_middle_joint_2" value="0"/>
+        <joint name="3f_finger_middle_joint_3" value="-0.637"/>
+        <joint name="3f_palm_finger_1_joint" value="0"/>
+        <joint name="3f_palm_finger_2_joint" value="-0.1054"/>
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="3f_gripper" parent_link="link_ee" group="3f_gripper"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="3f_finger_1_link_0" link2="3f_finger_1_link_1" reason="Adjacent"/>
     <disable_collisions link1="3f_finger_1_link_0" link2="3f_finger_1_link_2" reason="Never"/>
@@ -60,7 +104,6 @@
     <disable_collisions link1="3f_finger_1_link_1" link2="3f_finger_middle_link_0" reason="Never"/>
     <disable_collisions link1="3f_finger_1_link_1" link2="3f_finger_middle_link_1" reason="Never"/>
     <disable_collisions link1="3f_finger_1_link_1" link2="3f_palm" reason="Never"/>
-    <disable_collisions link1="3f_finger_1_link_1" link2="link_2" reason="Never"/>
     <disable_collisions link1="3f_finger_1_link_1" link2="link_3" reason="Never"/>
     <disable_collisions link1="3f_finger_1_link_1" link2="link_4" reason="Never"/>
     <disable_collisions link1="3f_finger_1_link_1" link2="link_5" reason="Never"/>
@@ -94,7 +137,6 @@
     <disable_collisions link1="3f_finger_2_link_0" link2="3f_finger_middle_link_2" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_0" link2="3f_finger_middle_link_3" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_0" link2="3f_palm" reason="Adjacent"/>
-    <disable_collisions link1="3f_finger_2_link_0" link2="link_1" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_0" link2="link_2" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_0" link2="link_3" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_0" link2="link_4" reason="Never"/>
@@ -120,7 +162,6 @@
     <disable_collisions link1="3f_finger_2_link_2" link2="link_6" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_2" link2="link_7" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_3" link2="3f_finger_middle_link_0" reason="Never"/>
-    <disable_collisions link1="3f_finger_2_link_3" link2="link_2" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_3" link2="link_3" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_3" link2="link_4" reason="Never"/>
     <disable_collisions link1="3f_finger_2_link_3" link2="link_5" reason="Never"/>
@@ -130,7 +171,6 @@
     <disable_collisions link1="3f_finger_middle_link_0" link2="3f_finger_middle_link_2" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_0" link2="3f_finger_middle_link_3" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_0" link2="3f_palm" reason="Adjacent"/>
-    <disable_collisions link1="3f_finger_middle_link_0" link2="link_1" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_0" link2="link_2" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_0" link2="link_3" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_0" link2="link_4" reason="Never"/>
@@ -140,7 +180,6 @@
     <disable_collisions link1="3f_finger_middle_link_1" link2="3f_finger_middle_link_2" reason="Adjacent"/>
     <disable_collisions link1="3f_finger_middle_link_1" link2="3f_finger_middle_link_3" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_1" link2="3f_palm" reason="Never"/>
-    <disable_collisions link1="3f_finger_middle_link_1" link2="link_2" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_1" link2="link_3" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_1" link2="link_4" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_1" link2="link_5" reason="Never"/>
@@ -148,7 +187,6 @@
     <disable_collisions link1="3f_finger_middle_link_1" link2="link_7" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_2" link2="3f_finger_middle_link_3" reason="Adjacent"/>
     <disable_collisions link1="3f_finger_middle_link_2" link2="3f_palm" reason="Never"/>
-    <disable_collisions link1="3f_finger_middle_link_2" link2="link_2" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_2" link2="link_3" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_2" link2="link_4" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_2" link2="link_5" reason="Never"/>
@@ -159,17 +197,12 @@
     <disable_collisions link1="3f_finger_middle_link_3" link2="link_5" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_3" link2="link_6" reason="Never"/>
     <disable_collisions link1="3f_finger_middle_link_3" link2="link_7" reason="Never"/>
-    <disable_collisions link1="3f_palm" link2="link_1" reason="Never"/>
     <disable_collisions link1="3f_palm" link2="link_2" reason="Never"/>
     <disable_collisions link1="3f_palm" link2="link_3" reason="Never"/>
     <disable_collisions link1="3f_palm" link2="link_4" reason="Never"/>
     <disable_collisions link1="3f_palm" link2="link_5" reason="Never"/>
     <disable_collisions link1="3f_palm" link2="link_6" reason="Never"/>
     <disable_collisions link1="3f_palm" link2="link_7" reason="Adjacent"/>
-    <disable_collisions link1="cam_mount" link2="link_0" reason="Never"/>
-    <disable_collisions link1="cam_mount" link2="link_1" reason="Never"/>
-    <disable_collisions link1="cam_mount" link2="link_2" reason="Never"/>
-    <disable_collisions link1="cam_mount" link2="table" reason="Adjacent"/>
     <disable_collisions link1="link_0" link2="link_1" reason="Adjacent"/>
     <disable_collisions link1="link_0" link2="link_2" reason="Never"/>
     <disable_collisions link1="link_0" link2="link_3" reason="Never"/>
