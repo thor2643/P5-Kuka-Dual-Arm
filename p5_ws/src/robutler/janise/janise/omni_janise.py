@@ -260,7 +260,7 @@ class LLMNode(Node):
                     'grasp_width': response.grasp_widths[i]
                 }
 
-            return response
+            return self.objects_on_table
         else:
             self.get_logger().error('Service call failed')
             return GetObjectInfo.Response()
@@ -294,14 +294,15 @@ class LLMNode(Node):
         """
         # Found in CAD model
         T_world_moveit = np.array([
-                        [1, 0, 0, -0.35],  # Example values, replace with actual transformation values
-                        [0, 1, 0, -0.34],
-                        [0, 0, 1, 0.809],
+                        [1, 0, 0, -0.035],  # Example values, replace with actual transformation values
+                        [0, 1, 0, -0.034],
+                        [0, 0, 1, 1.109], #Before gripper correction: 0.809
                         [0, 0, 0, 1]
                     ])
         
         # Extract the position from the pose and append 1 to make it a 4D vector
-        pos_world = pose[:3].append(1)
+        pos_world = pose[:3]
+        pos_world.append(1)
 
         # Transform the position from camera to world coordinates
         #pos_world = np.dot(T_world_cam, pos_cam)
@@ -318,6 +319,9 @@ class LLMNode(Node):
         self.robot_req.orientation.y = float(quat_moveit[2])
         self.robot_req.orientation.z = float(quat_moveit[3])
         self.robot_req.orientation.w = float(quat_moveit[0])
+
+        print(f"\nPosition: {self.robot_req.position}")
+        print(f"Orientation: {self.robot_req.orientation}\n")
  
         self.future = self.robot_client.call_async(self.robot_req)
         try:
@@ -442,7 +446,7 @@ class LLMNode(Node):
                     messages.append({
                         'role': 'function',
                         'name': func_name, 
-                        'content': f"Found {function_response.object_count} objects."
+                        'content': f"Found {function_response}."
                     })
 
                     break
