@@ -51,8 +51,8 @@ class RealSenseCamera:
         color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
 
         # Enable auto-exposure and auto-white-balance
-        color_sensor.set_option(rs.option.enable_auto_exposure, 1)
-        color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
+        #color_sensor.set_option(rs.option.enable_auto_exposure, 1)
+        #color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
 
         # Allow time for auto-exposure and auto-white-balance to stabilize
         for _ in range(30):
@@ -76,16 +76,19 @@ class RealSenseCamera:
 
         color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
 
+        """
          # If calibrated values exist, apply them
         if self.calibrated_exposure and self.calibrated_white_balance:
             color_sensor.set_option(rs.option.enable_auto_exposure, 0)
             color_sensor.set_option(rs.option.enable_auto_white_balance, 0)
             color_sensor.set_option(rs.option.exposure, self.calibrated_exposure)
             color_sensor.set_option(rs.option.white_balance, self.calibrated_white_balance)
-        else:
-            # If no calibrated values are present, enable auto settings
-            color_sensor.set_option(rs.option.enable_auto_exposure, 1)
-            color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
+        
+        #else:
+        # If no calibrated values are present, enable auto settings
+        color_sensor.set_option(rs.option.enable_auto_exposure, 1)
+        color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
+        """
 
         return self.pipeline
 
