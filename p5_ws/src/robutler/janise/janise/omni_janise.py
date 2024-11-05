@@ -294,9 +294,9 @@ class LLMNode(Node):
         """
         # Found in CAD model
         T_world_moveit = np.array([
-                        [1, 0, 0, -0.35],  # Example values, replace with actual transformation values
-                        [0, 1, 0, -0.34],
-                        [0, 0, 1, 0.809],
+                        [1, 0, 0, -0.035],  # Example values, replace with actual transformation values
+                        [0, 1, 0, -0.034],
+                        [0, 0, 1, 1.109], #Before gripper correction: 0.809
                         [0, 0, 0, 1]
                     ])
         
@@ -319,6 +319,9 @@ class LLMNode(Node):
         self.robot_req.orientation.y = float(quat_moveit[2])
         self.robot_req.orientation.z = float(quat_moveit[3])
         self.robot_req.orientation.w = float(quat_moveit[0])
+
+        print(f"\nPosition: {self.robot_req.position}")
+        print(f"Orientation: {self.robot_req.orientation}\n")
  
         self.future = self.robot_client.call_async(self.robot_req)
         try:
