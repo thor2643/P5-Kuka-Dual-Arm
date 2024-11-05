@@ -401,7 +401,7 @@ class ObjectDetector(Node):
 
             # Show the resulting image
             cv2.imshow('Image with Bounding Boxes', cv2.rotate(result_with_boxes, cv2.ROTATE_180))
-            cv2.imshow('The Masked Image', cv2.ROTATE_180(result, cv2.ROTATE_180))  
+            cv2.imshow('The Masked Image', cv2.rotate(result, cv2.ROTATE_180))  
 
             # Break the loop when 'q' is pressed
             if cv2.waitKey(1) & 0xFF == ord('q') or self.close_windows:
