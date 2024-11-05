@@ -26,13 +26,11 @@ endif()
 find_package(geometry_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
+
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "action/JointValues.action"
   "srv/GetObjectInfo.srv"
   "srv/MoveCommand.srv"
-  "srv/RobotIQ2FOutput.srv"
-  "msg/RobotIQ2FOutputReg.msg"
-  "msg/RobotIQ2FInputReg.msg"
+  DEPENDENCIES geometry_msgs
 )
 
 ament_package()
