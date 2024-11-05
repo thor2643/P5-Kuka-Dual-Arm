@@ -26,10 +26,13 @@ int main(int argc, char **argv) {
   // Create a plan to that target pose
   moveit::planning_interface::MoveGroupInterface::Plan plan;
   auto error_code = move_group_interface.plan(plan);
+  // RCLCPP_INFO(node_ptr->get_logger(), "\nThe plan is now executed\n");
 
   if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
-    // Execute the plan
+    // Execute the plannode_ptr->get_logger()->info("The plan is now executed");
+    RCLCPP_INFO(node_ptr->get_logger(), "\nThe plan is now executed\n");
     move_group_interface.execute(plan);
+    RCLCPP_INFO(node_ptr->get_logger(), "\nThe plan has been executed\n");
   } else {
     RCLCPP_ERROR(node_ptr->get_logger(), "Failed to plan to target pose");
   }

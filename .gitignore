@@ -430,3 +430,5 @@ FodyWeavers.xsd
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+API_KEY.json
