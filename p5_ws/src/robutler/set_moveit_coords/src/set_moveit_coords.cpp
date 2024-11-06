@@ -14,6 +14,8 @@ int main(int argc, char **argv) {
   auto move_group_interface = moveit::planning_interface::MoveGroupInterface(
       node_ptr, moveit::planning_interface::MoveGroupInterface::Options("right_arm", "robot_description",
                                                                         robot_name));
+
+  //move_group_interface.setEndEffectorLink("3f_palm_finger_2_joint");
                                                                         
   // Set a target pose
   geometry_msgs::msg::Pose target_pose;

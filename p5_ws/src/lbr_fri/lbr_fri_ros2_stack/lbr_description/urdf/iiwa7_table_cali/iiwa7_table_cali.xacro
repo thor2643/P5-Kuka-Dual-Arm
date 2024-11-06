@@ -62,7 +62,7 @@
             </geometry>
             <material name="wood"/>
         </visual>    
-        <!-- Might want to add collision, tho the table takes care of it-->    
+        <!-- no need for collision, this is added in the table collision-->    
     </link>
     
     <link name="tip">
