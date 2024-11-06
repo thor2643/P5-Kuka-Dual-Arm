@@ -9,6 +9,7 @@ import time
 
 #ROS stuff
 from project_interfaces.srv import GetObjectInfo
+from project_interfaces.srv import DefineObjectInfo
 from geometry_msgs.msg import Point
 
 
@@ -96,7 +97,8 @@ class RealSenseCamera:
 class ObjectDetector(Node):
     def __init__(self):
         super().__init__('object_detector')
-        self.srv = self.create_service(GetObjectInfo, 'get_object_info', self.get_object_information)
+        self.detector_srv = self.create_service(GetObjectInfo, 'get_object_info', self.get_object_information)
+        self.threshold_adjust_srv = self.create_service(DefineObjectInfo, 'define_object_info', self.define_object_thresholds)
 
         # Instantiate the RealSenseCamera object
         self.realsense_camera = RealSenseCamera()
@@ -115,7 +117,7 @@ class ObjectDetector(Node):
         self.color_frame = None
 
     
-    #The callback function for the service
+    #The callback function for the detector service
     def get_object_information(self, request, response):
         object = request.object_name
         self.get_logger().info(f'Requested to find {object}\n')
@@ -143,6 +145,31 @@ class ObjectDetector(Node):
         else:
             self.get_logger().info('Object thresholds not available. Consider adding the object by running the adjust_hsv option at startup.\n')
             response.object_count = 0
+
+        return response
+    
+    # The callback function for the threshold adjust service    
+    def define_object_thresholds(self, request, response):
+        object = request.object_name
+        self.get_logger().info(f'Requested to define {object}\n')
+
+        # Get Image
+        self.capture_aligned_frames()
+        image = self.get_color_image()
+
+        if image is None:
+            self.get_logger().info("Failed to capture image from camera.")
+            response.success = False
+            return response
+            
+        #Manually adjust the HSV thresholds and size range
+        lower_bound, upper_bound, min_size, max_size = self.adjust_hsv_and_size_thresholds(image, object)
+        self.get_logger().info(f"Lower Bound: {lower_bound}")
+        self.get_logger().info(f"Upper Bound: {upper_bound}")
+        self.get_logger().info(f"Min Size: {min_size}")
+        self.get_logger().info(f"Max Size: {max_size}")
+
+        response.success = True
 
         return response
 
@@ -322,7 +349,7 @@ class ObjectDetector(Node):
         return image
     
     # Function to create trackbars for adjusting HSV thresholds and size range
-    def adjust_hsv_and_size_thresholds(self, image):
+    def adjust_hsv_and_size_thresholds(self, image, object_name=None):
         def nothing(x):
             pass
 
@@ -334,8 +361,9 @@ class ObjectDetector(Node):
 
         self.close_windows = False
 
-        # Ask user for object name
-        object_name = input("Enter the name of the object you want to adjust: ")
+        if object_name is None:
+            # Ask user for object name
+            object_name = input("Enter the name of the object you want to adjust: ")
         
         if object_name not in self.lego_bricks:
             # If the object is not already in the dictionary, initialize it with default values

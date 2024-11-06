@@ -30,6 +30,7 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/GetObjectInfo.srv"
   "srv/MoveCommand.srv"
+  "srv/DefineObjectInfo.srv"
   DEPENDENCIES geometry_msgs
 )
 
