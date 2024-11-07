@@ -1,0 +1,14 @@
+To launch the camera node paste the following in a terminal:
+ros2 launch realsense2_camera rs_launch.py
+
+Then the following topics are active:
+/camera/camera/color/camera_info
+/camera/camera/color/image_raw
+/camera/camera/color/metadata #gives RGB data
+/camera/camera/depth/camera_info
+/camera/camera/depth/image_rect_raw #Gives depth data
+/camera/camera/depth/metadata
+/camera/camera/extrinsics/depth_to_color
+/parameter_events
+/rosout
+/tf_static
