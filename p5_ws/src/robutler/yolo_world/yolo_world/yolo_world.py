@@ -33,6 +33,7 @@ class MySubscriber(Node):
         
         self.subscription  # Prevent unused variable warning
         self.bridge = CvBridge()  # Initialize CvBridge here
+        self.count = 0
         
 
     def listener_callback_depth(self, msg):
@@ -74,10 +75,15 @@ class MySubscriber(Node):
             # Convert RGB to BGR for OpenCV display (OpenCV uses BGR by default)
             color_img_bgr = cv2.cvtColor(color_img, cv2.COLOR_RGB2BGR)
 
-            self.apply_yolo_world(color_img_bgr)
+            #Only apply yolo world for each 5th frame
+            if self.count % 5 ==0:
+                self.apply_yolo_world(color_img_bgr)
+                self.count = 0
 
         except CvBridgeError as e:
             self.get_logger().error(f'Error converting color image: {e}')
+
+        self.count +=1
 
         return color_img  # Return the actual color image data if needed elsewhere in the program
 
