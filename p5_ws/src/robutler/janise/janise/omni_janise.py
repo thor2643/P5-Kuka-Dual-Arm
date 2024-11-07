@@ -16,7 +16,8 @@ from rclpy.node import Node
 
 # ROS 2 messages
 from project_interfaces.srv import GetObjectInfo
-from project_interfaces.srv import MoveCommand
+from project_interfaces.srv import PlanMoveCommand
+from project_interfaces.srv import ExecuteMoveCommand
 
 class LLMNode(Node):
     def __init__(self):
@@ -28,8 +29,11 @@ class LLMNode(Node):
         self.objects_on_table = {}
 
         # Robot service client
-        self.robot_client = self.create_client(MoveCommand, 'move_command')
-        self.robot_req = MoveCommand.Request()
+        self.robot_plan_client = self.create_client(PlanMoveCommand, 'plan_move_command')
+        self.robot_plan_req = PlanMoveCommand.Request()
+
+        self.robot_execute_client = self.create_client(ExecuteMoveCommand, 'execute_move_command')
+        self.robot_execute_req = ExecuteMoveCommand.Request()
 
         # Specify a specific microphone if needed
         self.microphone_index = 8
@@ -108,7 +112,34 @@ class LLMNode(Node):
                                 'required': ['pose'],
                             },
                         },
+                    },
+                    {
+                        'type': 'function',
+                        'function': {
+                            'name': 'plan_robot_trajectory',
+                            'description': 'Plan a robot trajectory to a given pose. The planned trajectory will be simulated and visualised for the user. If allowed by the user the trajectory can be executed by running the execute_planned_trajectory.',
+                            'parameters': {
+                                'type': 'object',
+                                'properties': {
+                                    'pose': {
+                                        "type": "array",
+                                        "items": {"type": "number"},
+                                        "description": "A list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees."
+                                    }
+                                },
+                                'required': ['pose'],
+                            },
+                        },
+                    },
+                    {
+                        'type': 'function',
+                        'function': {
+                            'name': 'execute_planned_trajectory',
+                            'description': 'This function executes the trajectory on the physical robot planned by the plan_robot_trajectory function. Note that the plan_robot_trajectory function must have been called before this function can be run',
+                            'parameters': {},
+                        },
                     }
+
                 ]
 
         # Initialize OpenAI client with API key and optional project ID
@@ -312,18 +343,18 @@ class LLMNode(Node):
         quat_moveit = self.euler_to_quat(rpy_world)
 
         print(f"\nMoving robot to pose: {pose}\n")
-        self.robot_req.position.x = float(pos_moveit[0])
-        self.robot_req.position.y = float(pos_moveit[1])
-        self.robot_req.position.z = float(pos_moveit[2])
-        self.robot_req.orientation.x = float(quat_moveit[1])
-        self.robot_req.orientation.y = float(quat_moveit[2])
-        self.robot_req.orientation.z = float(quat_moveit[3])
-        self.robot_req.orientation.w = float(quat_moveit[0])
+        self.robot_plan_req.position.x = float(pos_moveit[0])
+        self.robot_plan_req.position.y = float(pos_moveit[1])
+        self.robot_plan_req.position.z = float(pos_moveit[2])
+        self.robot_plan_req.orientation.x = float(quat_moveit[1])
+        self.robot_plan_req.orientation.y = float(quat_moveit[2])
+        self.robot_plan_req.orientation.z = float(quat_moveit[3])
+        self.robot_plan_req.orientation.w = float(quat_moveit[0])
 
-        print(f"\nPosition: {self.robot_req.position}")
-        print(f"Orientation: {self.robot_req.orientation}\n")
+        print(f"\nPosition: {self.robot_plan_req.position}")
+        print(f"Orientation: {self.robot_plan_req.orientation}\n")
  
-        self.future = self.robot_client.call_async(self.robot_req)
+        self.future = self.robot_plan_client.call_async(self.robot_plan_req)
         try:
             rclpy.spin_until_future_complete(self, self.future, timeout_sec=15.0)
             if self.future.result() is not None:
@@ -334,6 +365,64 @@ class LLMNode(Node):
         except Exception as e:
             self.get_logger().error(f'Service call failed: {e}')
             return None
+
+    def plan_robot_trajectory(self, pose):
+        # Found in CAD model
+        T_world_moveit = np.array([
+                        [1, 0, 0, -0.035],  # Example values, replace with actual transformation values
+                        [0, 1, 0, -0.034],
+                        [0, 0, 1, 1.109], #Before gripper correction: 0.809
+                        [0, 0, 0, 1]
+                    ])
+        
+        # Extract the position from the pose and append 1 to make it a 4D vector
+        pos_world = pose[:3]
+        pos_world.append(1)
+
+        # Transform the position from camera to world coordinates
+        #pos_world = np.dot(T_world_cam, pos_cam)
+        pos_moveit = np.dot(T_world_moveit, pos_world)
+
+        rpy_world = pose[3:]
+        quat_moveit = self.euler_to_quat(rpy_world)
+
+        print(f"\nMoving robot to pose: {pose}\n")
+        self.robot_plan_req.position.x = float(pos_moveit[0])
+        self.robot_plan_req.position.y = float(pos_moveit[1])
+        self.robot_plan_req.position.z = float(pos_moveit[2])
+        self.robot_plan_req.orientation.x = float(quat_moveit[1])
+        self.robot_plan_req.orientation.y = float(quat_moveit[2])
+        self.robot_plan_req.orientation.z = float(quat_moveit[3])
+        self.robot_plan_req.orientation.w = float(quat_moveit[0])
+
+        print(f"\nPosition: {self.robot_plan_req.position}")
+        print(f"Orientation: {self.robot_plan_req.orientation}\n")
+ 
+        self.future = self.robot_plan_client.call_async(self.robot_plan_req)
+        try:
+            rclpy.spin_until_future_complete(self, self.future, timeout_sec=15.0)
+            if self.future.result() is not None:
+                return self.future.result()
+            else:
+                self.get_logger().error('Service call timed out')
+                return None
+        except Exception as e:
+            self.get_logger().error(f'Service call failed: {e}')
+            return None
+        
+    def execute_planned_trajectory(self):
+        self.future = self.robot_execute_client.call_async(self.robot_execute_req)
+        try:
+            rclpy.spin_until_future_complete(self, self.future, timeout_sec=15.0)
+            if self.future.result() is not None:
+                return self.future.result()
+            else:
+                self.get_logger().error('Service call timed out')
+                return None
+        except Exception as e:
+            self.get_logger().error(f'Service call failed: {e}')
+            return None
+
 
     ################################################################################################
     # -------------------------- INTERACTION WITH LARGE LANGUAGE MODELS -------------------------- #
@@ -390,7 +479,9 @@ class LLMNode(Node):
                 'get_pose_values_from_location': self.get_pose_values_from_location,
                 'move_to_location': self.move_to_location,
                 'find_object': self.find_object,
-                'move_robot_to_pose': self.move_robot_to_pose
+                'move_robot_to_pose': self.move_robot_to_pose,
+                'plan_robot_trajectory': self.plan_robot_trajectory,
+                'execute_planned_trajectory': self.execute_planned_trajectory
             }
 
             # Iterate through every function in tool_calls list
@@ -462,6 +553,35 @@ class LLMNode(Node):
                         'role': 'function',
                         'name': func_name, 
                         'content': f"Found {function_response.result}."
+                    })
+
+                    break
+
+                elif func_name == 'plan_robot_trajectory':
+                    print("Arguments sent to plan_robot_trajectory: ", func_args['pose'])
+                    # Call the find_object function
+                    function_response = available_functions[func_name](func_args['pose'])
+                    print("function response for plan_robot_trajectory: ", function_response)
+
+                    # Add the object detection response to the conversation
+                    messages.append({
+                        'role': 'function',
+                        'name': func_name, 
+                        'content': f"Found {function_response}."
+                    })
+
+                    break
+
+                elif func_name == 'execute_planned_trajectory':
+                    # Call the find_object function
+                    function_response = available_functions[func_name]()
+                    print("function response for execute_planned_trajectory: ", function_response)
+
+                    # Add the object detection response to the conversation
+                    messages.append({
+                        'role': 'function',
+                        'name': func_name, 
+                        'content': f"Found {function_response}."
                     })
 
                     break
