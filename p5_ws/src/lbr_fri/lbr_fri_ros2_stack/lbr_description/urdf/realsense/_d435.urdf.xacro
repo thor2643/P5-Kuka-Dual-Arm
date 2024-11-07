@@ -23,10 +23,10 @@ aluminum peripherial evaluation case.
 
 <robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- Includes -->
-  <xacro:include filename="$(find lbr_description)/urdf/left_arm/_materials.urdf.xacro" />
-  <xacro:include filename="$(find lbr_description)/urdf/left_arm/_usb_plug.urdf.xacro" />
+  <xacro:include filename="$(find lbr_description)/urdf/realsense/_materials.urdf.xacro" />
+  <xacro:include filename="$(find lbr_description)/urdf/realsense/_usb_plug.urdf.xacro" />
 
-  <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true">
+  <xacro:macro name="sensor_d435" params="parent origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true">
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
     <!-- The following values are approximate, and the camera node
@@ -47,7 +47,7 @@ aluminum peripherial evaluation case.
     <!-- see datasheet Revision 007, Fig. 4-4 page 65 -->
     <xacro:property name="d435_zero_depth_to_glass" value="4.2e-3"/>
     <!-- convenience precomputation to avoid clutter-->
-    <xacro:property name="d435_mesh_x_offset" value="${d435_cam_mount_from_center_offset-d435_glass_to_front-d435_zero_depth_to_glass}"/>
+    <xacro:property name="d435_mesh_x_offset" value="${d435_cam_mount_f rom_center_offset-d435_glass_to_front-d435_zero_depth_to_glass}"/>
 
     <!-- The following offset is relative the the physical D435 camera peripherial
   	camera tripod mount -->
