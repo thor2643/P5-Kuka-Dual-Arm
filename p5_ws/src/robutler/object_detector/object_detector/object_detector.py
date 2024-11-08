@@ -1,97 +1,77 @@
-import rclpy
-from rclpy.node import Node
-import pyrealsense2 as rs
-import cv2
+#Yolo World
+from ultralytics import YOLOWorld    #pip install ultralytics
+
+#Image processing
 import numpy as np
+import cv2
+from cv_bridge import CvBridge, CvBridgeError
 import json
 import os
-import time
+import pyrealsense2 as rs
+
 
 #ROS stuff
 from project_interfaces.srv import GetObjectInfo
 from geometry_msgs.msg import Point
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image   #, CameraInfo
 
 
-class RealSenseCamera:
+class RealSenseCamera(Node):
     def __init__(self):
-        # Configure depth and color streams
-        self.pipeline = rs.pipeline()
-        self.config = rs.config()
-
-        # Enable color stream
-        self.config.enable_stream(
-            rs.stream.color, 1280, 720, rs.format.bgr8, 30
-        )
-
-        # Enable depth stream
-        self.config.enable_stream(
-            rs.stream.depth, 1280, 720, rs.format.z16, 30
-        )
-
-        # Reset the camera to default settings (avoids an error when starting the pipeline)
-        ctx = rs.context()
-        devices = ctx.query_devices()
-        for dev in devices:
-            dev.hardware_reset()
-        print("reset done")
-
-        # Placeholder for calibrated values
-        self.calibrated_exposure = 166
-        self.calibrated_white_balance = 4600
-
-    def calibrate_camera(self):
-        # Start the pipeline temporarily for calibration
-        self.pipeline.start(self.config)
-
-        # Alignment setup
-        self.align_to = rs.stream.color
-        self.align = rs.align(self.align_to)
-
-        # Access the color sensor
-        color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
-
-        # Enable auto-exposure and auto-white-balance
-        color_sensor.set_option(rs.option.enable_auto_exposure, 1)
-        color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
-
-        # Allow time for auto-exposure and auto-white-balance to stabilize
-        for _ in range(30):
-            frames = self.pipeline.wait_for_frames()
-
-        # Retrieve and store the settled values
-        self.calibrated_exposure = color_sensor.get_option(rs.option.exposure)
-        self.calibrated_white_balance = color_sensor.get_option(rs.option.white_balance)
+        super().__init__('my_subscriber_node')
         
-        print(f"Calibrated exposure: {self.calibrated_exposure}")
-        print(f"Calibrated white balance: {self.calibrated_white_balance}")
-
-        # Stop the pipeline after calibration
-        self.pipeline.stop()
+        # Create a subscriber to the topic you want to read from
+        self.subscription = self.create_subscription(
+            Image,  # Message type
+            '/camera/camera/aligned_depth_to_color/image_raw',  # Topic name
+            self.callback_depth,  # Callback function
+            10  # Queue size
+        )
         
-    def __enter__(self):
-        self.pipeline.start(self.config)
+         # Create a subscriber to the topic you want to read from
+        self.subscription = self.create_subscription(
+            Image,  # Message type
+            '/camera/camera/color/image_raw',  # Topic name
+            self.callback_color,  # Callback function
+            10  # Queue size
+        )
+        
+        self.subscription  # Prevent unused variable warning
+        self.bridge = CvBridge()  # Initialize CvBridge here
 
-        self.align_to = rs.stream.color
-        self.align = rs.align(self.align_to)
+        #Image frames for depth and color
+        self.color_img = None
+        self.depth_img = None
 
-        color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
+    def callback_depth(self, msg):
+        # Store the latest message but don't process it right away
+        self.latest_msg_depth = msg
 
-         # If calibrated values exist, apply them
-        if self.calibrated_exposure and self.calibrated_white_balance:
-            color_sensor.set_option(rs.option.enable_auto_exposure, 0)
-            color_sensor.set_option(rs.option.enable_auto_white_balance, 0)
-            color_sensor.set_option(rs.option.exposure, self.calibrated_exposure)
-            color_sensor.set_option(rs.option.white_balance, self.calibrated_white_balance)
-        else:
-            # If no calibrated values are present, enable auto settings
-            color_sensor.set_option(rs.option.enable_auto_exposure, 1)
-            color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
+    def callback_color(self, msg):
+        # Store the latest message but don't process it right away
+        self.latest_msg_color = msg
+        
+    def convert_to_depth_img(self):
+        try:
+            # Convert the ROS Image message to OpenCV image (16-bit single-channel)
+            self.depth_img = self.bridge.imgmsg_to_cv2(self.latest_msg_depth, desired_encoding="16UC1")
 
-        return self.pipeline
+        except CvBridgeError as e:
+            self.get_logger().error(f'Error converting image: {e}')
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.pipeline.stop()
-      
+    def convert_to_color_img(self):
+        try:
+            # Convert the ROS Image message to an OpenCV image
+            color_img_rgb = self.bridge.imgmsg_to_cv2(self.latest_msg_color, desired_encoding="rgb8")
+            
+            # Convert RGB to BGR for OpenCV display (OpenCV uses BGR by default)
+            self.color_img = cv2.cvtColor(color_img_rgb, cv2.COLOR_RGB2BGR)
+
+        except CvBridgeError as e:
+            self.get_logger().error(f'Error converting color image: {e}')
+
 
 class ObjectDetector(Node):
     def __init__(self):
@@ -111,8 +91,18 @@ class ObjectDetector(Node):
         self.found_objects = {}
 
         #Frames for depth and color
-        self.depth_frame = None
+        self.depth_frame = None   # lav en function som retriever.
         self.color_frame = None
+
+
+    def retrieve_aligned_frames(self):
+        self.realsense_camera.convert_to_depth_img()
+        self.realsense_camera.convert_to_color_img()
+        self.depth_frame = self.realsense_camera.depth_img
+        self.color_frame = self.realsense_camera.color_img
+        
+        if not self.depth_frame or not self.color_frame:
+            print("No depth or color frame captured.")
 
     
     #The callback function for the service
@@ -121,7 +111,7 @@ class ObjectDetector(Node):
         self.get_logger().info(f'Requested to find {object}\n')
 
         if object in self.lego_bricks:
-            self.capture_aligned_frames()
+            self.retrieve_aligned_frames()
             self.find_object(self.get_color_image(), object)
 
             response.object_count = len(self.found_objects)
@@ -146,30 +136,27 @@ class ObjectDetector(Node):
 
         return response
 
-
-    def capture_aligned_frames(self):
-        with self.realsense_camera as cam:
-            frames = cam.wait_for_frames()
-            aligned_frames = self.realsense_camera.align.process(frames)
-
-            # Retrieve the depth frame
-            self.depth_frame = aligned_frames.get_depth_frame()
-            self.color_frame = aligned_frames.get_color_frame()
-            
-            if not self.depth_frame or not self.color_frame:
-                print("No depth or color frame captured.")
                 
 
     def show_depth_map(self):
         cv2.namedWindow("Depth Map", cv2.WINDOW_AUTOSIZE)
 
         while True:
-            self.capture_aligned_frames()
+            self.retrieve_aligned_frames()
 
             # Convert the depth frame to a NumPy array
             depth_image = np.asanyarray(self.depth_frame.get_data())
 
             #depth_image = cv2.rotate(depth_image, cv2.ROTATE_180)
+
+            if True: #True: gets a tresholded colormap. False all depth data are used in normalisation
+                # Define the depth range (in millimeters) to display
+                min_depth = 0  # Minimum depth to display (e.g., 500 mm)
+                max_depth = 6000  # Maximum depth to display (e.g., 2000 mm)
+
+                # 1. Threshold the depth image to the specified range
+                # Set values outside the range to zero (or another placeholder value)
+                depth_img = np.where((depth_img >= min_depth) & (depth_img <= max_depth),depth_img, 0)
 
             # Normalize the depth image for display
             depth_image = cv2.normalize(depth_image, None, 0, 255, cv2.NORM_MINMAX)
@@ -191,7 +178,7 @@ class ObjectDetector(Node):
         cv2.namedWindow("Image", cv2.WINDOW_AUTOSIZE)
         cv2.namedWindow("Image", cv2.WINDOW_AUTOSIZE)
         while True:
-            self.capture_aligned_frames()
+            self.retrieve_aligned_frames()
 
             # Convert the frame to a NumPy array for OpenCV
             color_frame = self.get_color_image()
@@ -213,6 +200,23 @@ class ObjectDetector(Node):
         cv2.imshow("Image", cv2.rotate(image, cv2.ROTATE_180))
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
+    def apply_yolo_world(self, img):
+        model = YOLOWorld("yolov8l-world.pt")  # or select yolov8{s/m/l}-world.pt for different sizes
+
+        # Define custom classes
+        if False: 
+            model.set_classes(["brick", "lego", "laptop"])
+
+        # Execute inference with the YOLOv8s-world model on the specified image
+        results = model.predict(img)
+
+        # Convert the result to an OpenCV-compatible format and display it
+        result_image = results[0].plot()  # plot() returns an image array with annotations
+
+        # Display the image in a single window
+        cv2.imshow("YOLO Detection", result_image)  # Window name "YOLO Detection" remains consistent
+        cv2.waitKey(1)  # Small delay to allow window to refresh
 
     def find_object(self, image, object_name):
         # Get features from dictionary
@@ -465,7 +469,7 @@ class ObjectDetector(Node):
         cv2.namedWindow("Image with Coordinates")
         cv2.setMouseCallback("Image with Coordinates", mouse_callback)
 
-        self.capture_aligned_frames()
+        self.retrieve_aligned_frames()
         color_image = self.get_color_image()
 
         while True:
@@ -520,7 +524,7 @@ def main(args=None):
 
         elif choice == '2':
             #Find an object in the image
-            detector.capture_aligned_frames()
+            detector.retrieve_aligned_frames()
             image = detector.get_color_image()
 
             if image is None:
@@ -540,7 +544,7 @@ def main(args=None):
                 print(f"{object_name} not found in the image.")
 
         elif choice == '3':
-            detector.capture_aligned_frames()
+            detector.retrieve_aligned_frames()
             image = detector.get_color_image()
 
             if image is None:

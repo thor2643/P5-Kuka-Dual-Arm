@@ -18,10 +18,11 @@ class MySubscriber(Node):
         # Create a subscriber to the topic you want to read from
         self.subscription = self.create_subscription(
             Image,  # Message type
-            '/camera/camera/depth/image_rect_raw',  # Topic name
+            '/camera/camera/aligned_depth_to_color/image_raw',  # Topic name
             self.listener_callback_depth,  # Callback function
             10  # Queue size
         )
+        
         
          # Create a subscriber to the topic you want to read from
         self.subscription = self.create_subscription(
@@ -30,6 +31,7 @@ class MySubscriber(Node):
             self.listener_callback_color,  # Callback function
             10  # Queue size
         )
+        
         
         self.subscription  # Prevent unused variable warning
         self.bridge = CvBridge()  # Initialize CvBridge here
@@ -75,7 +77,7 @@ class MySubscriber(Node):
             # Convert RGB to BGR for OpenCV display (OpenCV uses BGR by default)
             color_img_bgr = cv2.cvtColor(color_img, cv2.COLOR_RGB2BGR)
 
-            #Only apply yolo world for each 5th frame
+            #Apply yolo world
             self.apply_yolo_world(color_img_bgr)
 
         except CvBridgeError as e:
@@ -113,3 +115,85 @@ if __name__ == '__main__':
     main()
 
 
+####################################slet herefter når færdig
+"""
+class RealSenseCamera:
+    def __init__(self):
+        # Configure depth and color streams
+        self.pipeline = rs.pipeline()
+        self.config = rs.config()
+
+        # Enable color stream
+        self.config.enable_stream(
+            rs.stream.color, 1280, 720, rs.format.bgr8, 30
+        )
+
+        # Enable depth stream
+        self.config.enable_stream(
+            rs.stream.depth, 1280, 720, rs.format.z16, 30
+        )
+
+        # Reset the camera to default settings (avoids an error when starting the pipeline)
+        ctx = rs.context()
+        devices = ctx.query_devices()
+        for dev in devices:
+            dev.hardware_reset()
+        print("reset done")
+
+        # Placeholder for calibrated values
+        self.calibrated_exposure = 166
+        self.calibrated_white_balance = 4600
+
+    def calibrate_camera(self):
+        # Start the pipeline temporarily for calibration
+        self.pipeline.start(self.config)
+
+        # Alignment setup
+        self.align_to = rs.stream.color
+        self.align = rs.align(self.align_to)
+
+        # Access the color sensor
+        color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
+
+        # Enable auto-exposure and auto-white-balance
+        color_sensor.set_option(rs.option.enable_auto_exposure, 1)
+        color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
+
+        # Allow time for auto-exposure and auto-white-balance to stabilize
+        for _ in range(30):
+            frames = self.pipeline.wait_for_frames()
+
+        # Retrieve and store the settled values
+        self.calibrated_exposure = color_sensor.get_option(rs.option.exposure)
+        self.calibrated_white_balance = color_sensor.get_option(rs.option.white_balance)
+        
+        print(f"Calibrated exposure: {self.calibrated_exposure}")
+        print(f"Calibrated white balance: {self.calibrated_white_balance}")
+
+        # Stop the pipeline after calibration
+        self.pipeline.stop()
+        
+    def __enter__(self):
+        self.pipeline.start(self.config)
+
+        self.align_to = rs.stream.color
+        self.align = rs.align(self.align_to)
+
+        color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
+
+         # If calibrated values exist, apply them
+        if self.calibrated_exposure and self.calibrated_white_balance:
+            color_sensor.set_option(rs.option.enable_auto_exposure, 0)
+            color_sensor.set_option(rs.option.enable_auto_white_balance, 0)
+            color_sensor.set_option(rs.option.exposure, self.calibrated_exposure)
+            color_sensor.set_option(rs.option.white_balance, self.calibrated_white_balance)
+        else:
+            # If no calibrated values are present, enable auto settings
+            color_sensor.set_option(rs.option.enable_auto_exposure, 1)
+            color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
+
+        return self.pipeline
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.pipeline.stop()
+"""

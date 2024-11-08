@@ -1,5 +1,14 @@
 To launch the camera node paste the following in a terminal:
-ros2 launch realsense2_camera rs_launch.py
+ros2 launch realsense2_camera rs_launch.py  #dette giver uden camera allignment
+ros2 launch realsense2_camera rs_align_depth_launch.py #Dette er med alignment.
+
+#DETTE ER DEN I SKAL BRUGE DA DEN ÅBNER LAUNCH FILEN MEN TILFØJER AT DEN ALIGNER FRAMES OG HAR DEN RIGTIGE RESULUTION
+ros2 launch realsense2_camera rs_launch.py \
+    depth_module.depth_profile:=1280,720,30 \
+    rgb_camera.color_profile:=1280,720,30 \
+    align_depth.enable:=true \
+    enable_pointcloud:=true \
+	
 
 Then the following topics are active:
 /camera/camera/color/camera_info
