@@ -33,6 +33,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/RobotIQ2FOutput.srv"
   "msg/RobotIQ2FOutputReg.msg"
   "msg/RobotIQ2FInputReg.msg"
+  DEPENDENCIES geometry_msgs
 )
 
 ament_package()

@@ -18,6 +18,12 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image   #, CameraInfo
 
 
+#the following is the ros2 launch command for the realsense camera with user settings
+"""
+ros2 launch realsense2_camera rs_launch.py     depth_module.depth_profile:=1280,720,30     rgb_camera.color_profile:=1280,720,30     align_depth.enable:=true     enable_pointcloud:=true
+
+"""
+
 class RealSenseCamera(Node):
     def __init__(self):
         super().__init__('my_subscriber_node')
@@ -26,7 +32,7 @@ class RealSenseCamera(Node):
         self.subscription = self.create_subscription(
             Image,  # Message type
             '/camera/camera/aligned_depth_to_color/image_raw',  # Topic name
-            self.callback_depth,  # Callback function
+            self.convert_to_depth_img,  # Callback function
             10  # Queue size
         )
         
@@ -34,37 +40,30 @@ class RealSenseCamera(Node):
         self.subscription = self.create_subscription(
             Image,  # Message type
             '/camera/camera/color/image_raw',  # Topic name
-            self.callback_color,  # Callback function
+            self.convert_to_color_img,  # Callback function
             10  # Queue size
         )
         
         self.subscription  # Prevent unused variable warning
-        self.bridge = CvBridge()  # Initialize CvBridge here
+        self.bridge = CvBridge()  
 
         #Image frames for depth and color
         self.color_img = None
         self.depth_img = None
 
-    def callback_depth(self, msg):
-        # Store the latest message but don't process it right away
-        self.latest_msg_depth = msg
-
-    def callback_color(self, msg):
-        # Store the latest message but don't process it right away
-        self.latest_msg_color = msg
         
-    def convert_to_depth_img(self):
+    def convert_to_depth_img(self, msg):
         try:
             # Convert the ROS Image message to OpenCV image (16-bit single-channel)
-            self.depth_img = self.bridge.imgmsg_to_cv2(self.latest_msg_depth, desired_encoding="16UC1")
+            self.depth_img = self.bridge.imgmsg_to_cv2(msg, desired_encoding="16UC1")
 
         except CvBridgeError as e:
             self.get_logger().error(f'Error converting image: {e}')
 
-    def convert_to_color_img(self):
+    def convert_to_color_img(self, msg):
         try:
             # Convert the ROS Image message to an OpenCV image
-            color_img_rgb = self.bridge.imgmsg_to_cv2(self.latest_msg_color, desired_encoding="rgb8")
+            color_img_rgb = self.bridge.imgmsg_to_cv2(msg, desired_encoding="rgb8")
             
             # Convert RGB to BGR for OpenCV display (OpenCV uses BGR by default)
             self.color_img = cv2.cvtColor(color_img_rgb, cv2.COLOR_RGB2BGR)
@@ -91,18 +90,24 @@ class ObjectDetector(Node):
         self.found_objects = {}
 
         #Frames for depth and color
-        self.depth_frame = None   # lav en function som retriever.
+        self.depth_frame = None   
         self.color_frame = None
 
 
-    def retrieve_aligned_frames(self):
-        self.realsense_camera.convert_to_depth_img()
-        self.realsense_camera.convert_to_color_img()
+    def retrieve_aligned_frames(self):      
+        # Retrieve aligned frames from the RealSense camera by spinning the node untill new frames are available
+
+        while self.realsense_camera.depth_img is None or self.realsense_camera.color_img is None:
+                rclpy.spin_once(self.realsense_camera)
+
+        while np.array_equal(self.realsense_camera.depth_img, self.depth_frame) or np.array_equal(self.realsense_camera.color_img, self.color_frame):
+                rclpy.spin_once(self.realsense_camera)
+        
         self.depth_frame = self.realsense_camera.depth_img
         self.color_frame = self.realsense_camera.color_img
         
-        if not self.depth_frame or not self.color_frame:
-            print("No depth or color frame captured.")
+
+        
 
     
     #The callback function for the service
@@ -145,18 +150,18 @@ class ObjectDetector(Node):
             self.retrieve_aligned_frames()
 
             # Convert the depth frame to a NumPy array
-            depth_image = np.asanyarray(self.depth_frame.get_data())
+            depth_image = np.asanyarray(self.depth_frame)
 
             #depth_image = cv2.rotate(depth_image, cv2.ROTATE_180)
 
             if True: #True: gets a tresholded colormap. False all depth data are used in normalisation
                 # Define the depth range (in millimeters) to display
-                min_depth = 0  # Minimum depth to display (e.g., 500 mm)
-                max_depth = 6000  # Maximum depth to display (e.g., 2000 mm)
+                min_depth = 0  # Minimum depth to display  0 m
+                max_depth = 3000  # Maximum depth to display 3m
 
                 # 1. Threshold the depth image to the specified range
-                # Set values outside the range to zero (or another placeholder value)
-                depth_img = np.where((depth_img >= min_depth) & (depth_img <= max_depth),depth_img, 0)
+                # Set values outside the range to 0 (this can be chanced if needed).
+                depth_image = np.where((depth_image >= min_depth) & (depth_image <= max_depth),depth_image, 0)
 
             # Normalize the depth image for display
             depth_image = cv2.normalize(depth_image, None, 0, 255, cv2.NORM_MINMAX)
@@ -194,7 +199,7 @@ class ObjectDetector(Node):
 
     def get_color_image(self):
         #return cv2.rotate(np.asanyarray(self.color_frame.get_data()), cv2.ROTATE_180)
-        return np.asanyarray(self.color_frame.get_data())
+        return np.asanyarray(self.color_frame)
 
     def show_image(self, image):
         cv2.imshow("Image", cv2.rotate(image, cv2.ROTATE_180))
@@ -417,7 +422,7 @@ class ObjectDetector(Node):
         # Return the final selected thresholds and size range
         return lower_bound, upper_bound, min_size, max_size
 
-    def get_cartesian_coordinates(self, pixel_x, pixel_y):
+    def get_cartesian_coordinates(self, pixel_x, pixel_y):  #OBSSSSS Signe Pointcloud skal findes!!
 
         # Create a point cloud
         pc = rs.pointcloud()
@@ -497,10 +502,7 @@ class ObjectDetector(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    # Load the image you provided
-    image_path = 'src/object_detector/Cell_Image_Example.jpg'
-    image_example = cv2.imread(image_path)
-
+    # Create an ObjectDetector instance
     detector = ObjectDetector()
 
     while True:
@@ -581,5 +583,3 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-
-    # TODO: Integrate to ROS2
