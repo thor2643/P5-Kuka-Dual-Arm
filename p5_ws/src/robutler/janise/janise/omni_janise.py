@@ -8,6 +8,7 @@ from gtts import gTTS
 from playsound import playsound
 import os
 import numpy as np
+import readline
 
 # ROS 2 libraries and Node structure
 import rclpy
@@ -16,6 +17,7 @@ from rclpy.node import Node
 
 # ROS 2 messages
 from project_interfaces.srv import GetObjectInfo
+from project_interfaces.srv import DefineObjectInfo
 from project_interfaces.srv import PlanMoveCommand
 from project_interfaces.srv import ExecuteMoveCommand
 
@@ -27,6 +29,9 @@ class LLMNode(Node):
         self.detector_client = self.create_client(GetObjectInfo, 'get_object_info')
         self.detector_req = GetObjectInfo.Request()
         self.objects_on_table = {}
+
+        self.define_objects_client = self.create_client(DefineObjectInfo, 'define_object_info')
+        self.define_objects_req = DefineObjectInfo.Request()
 
         # Robot service client
         self.robot_plan_client = self.create_client(PlanMoveCommand, 'plan_move_command')
@@ -42,8 +47,21 @@ class LLMNode(Node):
         # Decide whether to use Ollama API or OpenAI API
         self.use_ollama = False
 
+        # Define the locations in the environment
+        self.coordinates = { # Predefined poses for different locations
+            'HOME': {'x': '0.5', 'y': '0.3', 'z': "0.2", 'roll': '0', 'pitch': '90', 'yaw': '0'}
+        }
+
         # Define all function available to models
         self.tools = [ 
+                    {
+                        "type": "function",
+                        "function": {
+                            'name': 'get_available_locations',
+                            'description': 'Used only to retrieve a list of locations that have predefined poses. It can be called before move_to_location to make ensure that the location parameter is indeed a valid parameter.',
+                            'parameters': {},
+                        }
+                    },
                     {
                         "type": "function",
                         "function": {
@@ -98,8 +116,25 @@ class LLMNode(Node):
                     {
                         'type': 'function',
                         'function': {
+                            'name': 'define_object_thresholds',
+                            'description': 'Lets the user define the object thresholds for the object detector service. An image will pop up with trackbars to the side, where the user can adhust the thresholds and se the resulting image. The object to define thresholds for should be provided as an argument. Use underscore _ (underscore) as spaces. The thresholds will be saved and used for the object detector service.',
+                            'parameters': {
+                                'type': 'object',
+                                'properties': {
+                                    'object_name': {
+                                        'type': 'string',
+                                        'description': 'The name of the object for which new thresholds must be defined. Only one name can be provided. Must use _ (underscore) instead of spaces.',
+                                    }
+                                },
+                                'required': ['object_name'],
+                            },
+                        },
+                    },
+                    {
+                        'type': 'function',
+                        'function': {
                             'name': 'move_robot_to_pose',
-                            'description': 'Move the robot to a specific pose in the environment. The pose should be provided as an argument to this function. The robot will move to the specified pose.',
+                            'description': 'Move the robot to a specific pose in the environment. The pose should be provided as an argument to this function. The robot will move to the specified pose. Notice, the trajectory is executed on the physical robot, so use this function with caution. Otherwise use a combination of plan_robot_trajectory and execute_planned_trajectory.',
                             'parameters': {
                                 'type': 'object',
                                 'properties': {
@@ -224,15 +259,13 @@ class LLMNode(Node):
     # -------------------------- FUNCTIONS AVAILABLE TO THE LLM -------------------------- #
     ########################################################################################
 
-
+    def get_available_locations(self):
+        return list(self.coordinates.keys())
+    
     async def get_pose_values_from_location(self, location: str) -> list:
-        coordinates = { # Predefined poses for different locations
-            'HOME-STATION': {'x': '0.5', 'y': '0.3', 'z': "0.9", 'roll': '180', 'pitch': '0', 'yaw': '0'}
-        }
-
         self.get_logger().info(f"Received location to find pose for: location={location}")
 
-        pose_dict = coordinates.get(location.upper() + '-STATION', {})
+        pose_dict = self.coordinates.get(location.upper(), {})
     
         # Convert dictionary values to a list of floats
         pose_values = [float(value) for value in pose_dict.values()]
@@ -241,7 +274,9 @@ class LLMNode(Node):
     
     async def move_to_location(self, location):
         pose = await self.get_pose_values_from_location(location)
+
         self.move_robot_to_pose(pose)
+
         return f"Moving to {location} station with pose: {pose}"
 
     def find_object(self, object: str) -> GetObjectInfo.Response:
@@ -253,6 +288,12 @@ class LLMNode(Node):
         rclpy.spin_until_future_complete(self, self.future)
 
         if self.future.result() is not None:
+            response = self.future.result()
+        else:
+            self.get_logger().error('Service call failed')
+            return GetObjectInfo.Response()
+
+        if response.object_count != 0:
             response = self.future.result()
             self.get_logger().info(f"\nObjects found: {response.object_count}")
             self.get_logger().info(f"Center points: {response.centers}")
@@ -293,9 +334,21 @@ class LLMNode(Node):
 
             return self.objects_on_table
         else:
-            self.get_logger().error('Service call failed')
+            self.get_logger().error('No objects found')
             return GetObjectInfo.Response()
     
+    def define_object_thresholds(self, object_name: str) -> DefineObjectInfo.Response:
+        self.define_objects_req.object_name = object_name
+        self.future = self.define_objects_client.call_async(self.define_objects_req)
+        rclpy.spin_until_future_complete(self, self.future)
+
+        if self.future.result() is not None:
+            response = self.future.result()
+            return response
+        else:
+            self.get_logger().error('Service call failed')
+            return DefineObjectInfo.Response()
+        
     def euler_to_quat(self, euler_angles):
         cr = np.cos(np.deg2rad(euler_angles[0]) * 0.5)
         sr = np.sin(np.deg2rad(euler_angles[0]) * 0.5)
@@ -314,56 +367,12 @@ class LLMNode(Node):
     def move_robot_to_pose(self, pose):
         # Define the transformation matrix from camera coordinates to world coordinates
         # Found by CAD model and modified to using print_cartesian in detect_objects.py
-        """
-        angle_around_x = 180-33
-        T_world_cam = np.array([
-                        [1, 0, 0, 0.487],  # Example values, replace with actual transformation values
-                        [0, np.cos(np.pi/180*angle_around_x), -np.sin(np.pi/180*angle_around_x), 0.77],
-                        [0, np.sin(np.pi/180*angle_around_x), np.cos(np.pi/180*angle_around_x), 0.62],
-                        [0, 0, 0, 1]
-                    ])
-        """
-        # Found in CAD model
-        T_world_moveit = np.array([
-                        [1, 0, 0, -0.035],  # Example values, replace with actual transformation values
-                        [0, 1, 0, -0.034],
-                        [0, 0, 1, 1.109], #Before gripper correction: 0.809
-                        [0, 0, 0, 1]
-                    ])
-        
-        # Extract the position from the pose and append 1 to make it a 4D vector
-        pos_world = pose[:3]
-        pos_world.append(1)
+        response = self.plan_robot_trajectory(pose)
 
-        # Transform the position from camera to world coordinates
-        #pos_world = np.dot(T_world_cam, pos_cam)
-        pos_moveit = np.dot(T_world_moveit, pos_world)
-
-        rpy_world = pose[3:]
-        quat_moveit = self.euler_to_quat(rpy_world)
-
-        print(f"\nMoving robot to pose: {pose}\n")
-        self.robot_plan_req.position.x = float(pos_moveit[0])
-        self.robot_plan_req.position.y = float(pos_moveit[1])
-        self.robot_plan_req.position.z = float(pos_moveit[2])
-        self.robot_plan_req.orientation.x = float(quat_moveit[1])
-        self.robot_plan_req.orientation.y = float(quat_moveit[2])
-        self.robot_plan_req.orientation.z = float(quat_moveit[3])
-        self.robot_plan_req.orientation.w = float(quat_moveit[0])
-
-        print(f"\nPosition: {self.robot_plan_req.position}")
-        print(f"Orientation: {self.robot_plan_req.orientation}\n")
- 
-        self.future = self.robot_plan_client.call_async(self.robot_plan_req)
-        try:
-            rclpy.spin_until_future_complete(self, self.future, timeout_sec=15.0)
-            if self.future.result() is not None:
-                return self.future.result()
-            else:
-                self.get_logger().error('Service call timed out')
-                return None
-        except Exception as e:
-            self.get_logger().error(f'Service call failed: {e}')
+        if response.result:
+            self.execute_planned_trajectory()
+        else:
+            self.get_logger().error("Failed to plan trajectory. Cannot move robot to pose.")
             return None
 
     def plan_robot_trajectory(self, pose):
@@ -371,7 +380,7 @@ class LLMNode(Node):
         T_world_moveit = np.array([
                         [1, 0, 0, -0.035],  # Example values, replace with actual transformation values
                         [0, 1, 0, -0.034],
-                        [0, 0, 1, 1.109], #Before gripper correction: 0.809
+                        [0, 0, 1, 0.95], #Before gripper correction: 0.809
                         [0, 0, 0, 1]
                     ])
         
@@ -476,9 +485,11 @@ class LLMNode(Node):
 
             # Process functions calls from the model
             available_functions = {
+                'get_available_locations': self.get_available_locations,
                 'get_pose_values_from_location': self.get_pose_values_from_location,
                 'move_to_location': self.move_to_location,
                 'find_object': self.find_object,
+                'define_object_thresholds': self.define_object_thresholds,
                 'move_robot_to_pose': self.move_robot_to_pose,
                 'plan_robot_trajectory': self.plan_robot_trajectory,
                 'execute_planned_trajectory': self.execute_planned_trajectory
@@ -511,7 +522,7 @@ class LLMNode(Node):
                         'content': json.dumps(function_response)
                     })
                     
-                    break
+                    continue
 
                 elif func_name == 'move_to_location':
                     # Call move_to_location function asynchronously
@@ -525,7 +536,7 @@ class LLMNode(Node):
                         'content': function_response
                     })
 
-                    break
+                    continue
                 
                 elif func_name == 'find_object':
                     print("Arguments sent to find_object: ", func_args['object_name'])
@@ -540,7 +551,21 @@ class LLMNode(Node):
                         'content': f"Found {function_response}."
                     })
 
-                    break
+                    continue
+
+                elif func_name == 'define_object_thresholds':
+                    # Call the find_object function
+                    function_response = available_functions[func_name](func_args['object_name'])
+                    print("Response from service: ", function_response)
+
+                    # Add the object detection response to the conversation
+                    messages.append({
+                        'role': 'function',
+                        'name': func_name, 
+                        'content': f"Function response: {function_response}."
+                    })
+
+                    continue
 
                 elif func_name == 'move_robot_to_pose':
                     print("Arguments sent to move_robot_to_pose: ", func_args['pose'])
@@ -548,14 +573,14 @@ class LLMNode(Node):
                     function_response = available_functions[func_name](func_args['pose'])
                     print("function response for move_robot_to_pose: ", function_response)
 
-                    # Add the object detection response to the conversation
+                    # Add the response to the conversation
                     messages.append({
                         'role': 'function',
                         'name': func_name, 
-                        'content': f"Found {function_response.result}."
+                        'content': f"Function response: {function_response}."
                     })
 
-                    break
+                    continue
 
                 elif func_name == 'plan_robot_trajectory':
                     print("Arguments sent to plan_robot_trajectory: ", func_args['pose'])
@@ -567,10 +592,10 @@ class LLMNode(Node):
                     messages.append({
                         'role': 'function',
                         'name': func_name, 
-                        'content': f"Found {function_response}."
+                        'content': f"Function response: {function_response}."
                     })
 
-                    break
+                    continue
 
                 elif func_name == 'execute_planned_trajectory':
                     # Call the find_object function
@@ -581,10 +606,11 @@ class LLMNode(Node):
                     messages.append({
                         'role': 'function',
                         'name': func_name, 
-                        'content': f"Found {function_response}."
+                        'content': f"Function response: {function_response}."
                     })
 
-                    break
+                    continue
+
 
             # Get final response from model
             final_response = await self.client.chat.completions.create(
