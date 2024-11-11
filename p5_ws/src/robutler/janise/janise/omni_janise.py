@@ -21,6 +21,7 @@ from project_interfaces.srv import DefineObjectInfo
 from project_interfaces.srv import PlanMoveCommand
 from project_interfaces.srv import ExecuteMoveCommand
 from robotiq_3f_gripper_ros2_interfaces.srv import Robotiq3FGripperOutputService
+from robotiq_2f_85_interfaces.srv import Robotiq2F85GripperCommand
 
 class LLMNode(Node):
     def __init__(self):
@@ -29,6 +30,9 @@ class LLMNode(Node):
         # Gripper service client
         self._3f_controller = Robotiq3FGripperOutputService.Request()
         self._3f_controller_cli = self.create_client(Robotiq3FGripperOutputService, "Robotiq3FGripper/OutputRegistersService") 
+
+        self._2f_client = self.create_client(Robotiq2F85GripperCommand, 'gripper_2f_service')
+        self._2f_req = Robotiq2F85GripperCommand.Request()
 
         #Object detector service client
         self.detector_client = self.create_client(GetObjectInfo, 'get_object_info')
@@ -182,19 +186,37 @@ class LLMNode(Node):
                     {
                         'type': 'function',
                         'function': {
-                            'name': 'open_gripper',
-                            'description': 'This function executes the trajectory on the physical robot planned by the plan_robot_trajectory function. Note that the plan_robot_trajectory function must have been called before this function can be run',
-                            'parameters': {},
+                            'name': 'manipulate_right_gripper',
+                            'description': 'Open the right gripper. The width of the gripper can be specified as an argument. The default width is 125.',
+                            'parameters': {
+                                'type': 'object',
+                                'properties': {
+                                    'width': {
+                                        "type": "number",
+                                        "description": "An integer representing the width of the gripper. The default width is 125." #TODO: Describe value range
+                                    }
+                                },
+                                'required': ['width'],
+                            },
                         },
                     },
                     {
                         'type': 'function',
                         'function': {
-                            'name': 'close_gripper',
-                            'description': 'This function executes the trajectory on the physical robot planned by the plan_robot_trajectory function. Note that the plan_robot_trajectory function must have been called before this function can be run',
-                            'parameters': {},
+                            'name': 'manipulate_left_gripper',
+                            'description': 'Open the left gripper. The width of the gripper can be specified as an argument. The range is from 0 (closed) to 85 (open). The default width is 50.',
+                            'parameters': {
+                                'type': 'object',
+                                'properties': {
+                                    'width': {
+                                        "type": "number",
+                                        "description": "An integer representing the width of the gripper. The range is 0-85 with 0 being fully closed and 85 being fully open. The default width is 50."
+                                    }
+                                },
+                                'required': ['width'],
+                            },
                         },
-                    }
+                    },
                 ]
 
         # Initialize OpenAI client with API key and optional project ID
@@ -451,12 +473,12 @@ class LLMNode(Node):
             self.get_logger().error(f'Service call failed: {e}')
             return None
 
-    def open_gripper(self):  # Open Gripper
+    def manipulate_right_gripper(self, width=125):  # Open Gripper
         self._3f_controller.output_registers.r_act = 1  # Active Gripper
         self._3f_controller.output_registers.r_mod = 1  # Basic Gripper Mode
         self._3f_controller.output_registers.r_gto = 1  # Go To Position
         self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
-        self._3f_controller.output_registers.r_pra = 0  # Open Gripper
+        self._3f_controller.output_registers.r_pra = width  # Open Gripper
         self._3f_controller.output_registers.r_spa = 255  # Max Speed
         self._3f_controller.output_registers.r_fra = 0  # Minimum Force
 
@@ -474,17 +496,11 @@ class LLMNode(Node):
             self.get_logger().error(f'Service call failed: {e}')
             return None
 
-    def close_gripper(self):  # Close Gripper in Basic Mode
-        self._3f_controller.output_registers.r_act = 1  # Active Gripper
-        self._3f_controller.output_registers.r_mod = 1  # Basic Gripper Mode
-        self._3f_controller.output_registers.r_gto = 1  # Go To Position
-        self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
-        self._3f_controller.output_registers.r_pra = 255  # Close Gripper
-        self._3f_controller.output_registers.r_spa = 255  # Max Speed
-        self._3f_controller.output_registers.r_fra = 0  # Minimum Force
-
-        # Publish command to gripper
-        self.future = self._3f_controller_cli.call_async(self._3f_controller)
+    def manipulate_left_gripper(self, width=50, speed=100, force=200):
+        self._2f_req.width = float(width)
+        self._2f_req.speed = float(speed)
+        self._2f_req.force = float(force)
+        self.future = self._2f_client.call_async(self._2f_req)
 
         try:
             rclpy.spin_until_future_complete(self, self.future, timeout_sec=10.0)
@@ -496,7 +512,6 @@ class LLMNode(Node):
         except Exception as e:
             self.get_logger().error(f'Service call failed: {e}')
             return None
-        
 
 
     ################################################################################################
@@ -559,8 +574,8 @@ class LLMNode(Node):
                 'move_robot_to_pose': self.move_robot_to_pose,
                 'plan_robot_trajectory': self.plan_robot_trajectory,
                 'execute_planned_trajectory': self.execute_planned_trajectory,
-                'open_gripper': self.open_gripper,
-                'close_gripper': self.close_gripper
+                'manipulate_right_gripper': self.manipulate_right_gripper,
+                'manipulate_left_gripper': self.manipulate_left_gripper
             }
 
             # Iterate through every function in tool_calls list
@@ -679,10 +694,10 @@ class LLMNode(Node):
 
                     continue
                 
-                elif func_name == 'open_gripper':
+                elif func_name == 'manipulate_right_gripper':
                     # Call the open_gripper function
-                    function_response = available_functions[func_name]()
-                    print("function response for open_gripper: ", function_response)
+                    function_response = available_functions[func_name](func_args['width'])
+                    print("function response from right gripper: ", function_response)
 
                     # Add the object detection response to the conversation
                     messages.append({
@@ -693,10 +708,10 @@ class LLMNode(Node):
 
                     continue
 
-                elif func_name == 'close_gripper':
+                elif func_name == 'manipulate_left_gripper':
                     # Call the close_gripper function
-                    function_response = available_functions[func_name]()
-                    print("function response for close_gripper: ", function_response)
+                    function_response = available_functions[func_name](func_args['width'])
+                    print("function response from left gripper: ", function_response)
 
                     # Add the object detection response to the conversation
                     messages.append({
