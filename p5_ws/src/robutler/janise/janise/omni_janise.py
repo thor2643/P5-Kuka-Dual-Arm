@@ -20,10 +20,19 @@ from project_interfaces.srv import GetObjectInfo
 from project_interfaces.srv import DefineObjectInfo
 from project_interfaces.srv import PlanMoveCommand
 from project_interfaces.srv import ExecuteMoveCommand
+from project_interfaces.srv import Robotiq3FGripperOutputService
 
 class LLMNode(Node):
     def __init__(self):
         super().__init__('minimal_client_async')
+
+        self._3f_controller = Robotiq3FGripperOutputService.Request()
+
+        self._3f_controller_cli = self.create_client(Robotiq3FGripperOutputService, "Robotiq3FGripper/OutputRegistersService") 
+
+        # Wait for the service to be available
+        while not self._3f_controller_cli.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('Waiting for service...')
 
         #Object detector service client
         self.detector_client = self.create_client(GetObjectInfo, 'get_object_info')
@@ -173,8 +182,23 @@ class LLMNode(Node):
                             'description': 'This function executes the trajectory on the physical robot planned by the plan_robot_trajectory function. Note that the plan_robot_trajectory function must have been called before this function can be run',
                             'parameters': {},
                         },
+                    },
+                    {
+                        'type': 'function',
+                        'function': {
+                            'name': 'open_gripper',
+                            'description': 'This function executes the trajectory on the physical robot planned by the plan_robot_trajectory function. Note that the plan_robot_trajectory function must have been called before this function can be run',
+                            'parameters': {},
+                        },
+                    },
+                    {
+                        'type': 'function',
+                        'function': {
+                            'name': 'close_gripper',
+                            'description': 'This function executes the trajectory on the physical robot planned by the plan_robot_trajectory function. Note that the plan_robot_trajectory function must have been called before this function can be run',
+                            'parameters': {},
+                        },
                     }
-
                 ]
 
         # Initialize OpenAI client with API key and optional project ID
@@ -272,9 +296,8 @@ class LLMNode(Node):
 
         return pose_values
     
-    async def move_to_location(self, location):
-        pose = await self.get_pose_values_from_location(location)
-
+    def move_to_location(self, location):
+        pose = self.get_pose_values_from_location(location)
         self.move_robot_to_pose(pose)
 
         return f"Moving to {location} station with pose: {pose}"
@@ -432,6 +455,32 @@ class LLMNode(Node):
             self.get_logger().error(f'Service call failed: {e}')
             return None
 
+    def open_gripper(self):  # Open Gripper
+        self._3f_controller.output_registers.r_act = 1  # Active Gripper
+        self._3f_controller.output_registers.r_mod = 0  # Basic Gripper Mode
+        self._3f_controller.output_registers.r_gto = 1  # Go To Position
+        self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
+        self._3f_controller.output_registers.r_pra = 0  # Open Gripper
+        self._3f_controller.output_registers.r_spa = 255  # Max Speed
+        self._3f_controller.output_registers.r_fra = 0  # Minimum Force
+
+        # Publish command to gripper
+        self.future = self._3f_controller_cli.call_async(self._3f_controller)
+        rclpy.spin_until_future_complete(self, self.future)
+
+    def close_gripper(self):  # Close Gripper in Basic Mode
+        self._3f_controller.output_registers.r_act = 1  # Active Gripper
+        self._3f_controller.output_registers.r_mod = 0  # Basic Gripper Mode
+        self._3f_controller.output_registers.r_gto = 1  # Go To Position
+        self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
+        self._3f_controller.output_registers.r_pra = 255  # Close Gripper
+        self._3f_controller.output_registers.r_spa = 255  # Max Speed
+        self._3f_controller.output_registers.r_fra = 0  # Minimum Force
+
+        # Publish command to gripper
+        self.future = self._3f_controller_cli.call_async(self._3f_controller)
+        rclpy.spin_until_future_complete(self, self.future)
+
 
     ################################################################################################
     # -------------------------- INTERACTION WITH LARGE LANGUAGE MODELS -------------------------- #
@@ -492,7 +541,9 @@ class LLMNode(Node):
                 'define_object_thresholds': self.define_object_thresholds,
                 'move_robot_to_pose': self.move_robot_to_pose,
                 'plan_robot_trajectory': self.plan_robot_trajectory,
-                'execute_planned_trajectory': self.execute_planned_trajectory
+                'execute_planned_trajectory': self.execute_planned_trajectory,
+                'open_gripper': self.open_gripper,
+                'close_gripper': self.close_gripper
             }
 
             # Iterate through every function in tool_calls list
@@ -569,7 +620,7 @@ class LLMNode(Node):
 
                 elif func_name == 'move_robot_to_pose':
                     print("Arguments sent to move_robot_to_pose: ", func_args['pose'])
-                    # Call the find_object function
+                    # Call the move_robot_to_pose function
                     function_response = available_functions[func_name](func_args['pose'])
                     print("function response for move_robot_to_pose: ", function_response)
 
@@ -584,7 +635,7 @@ class LLMNode(Node):
 
                 elif func_name == 'plan_robot_trajectory':
                     print("Arguments sent to plan_robot_trajectory: ", func_args['pose'])
-                    # Call the find_object function
+                    # Call the plan_robot_trajectory function
                     function_response = available_functions[func_name](func_args['pose'])
                     print("function response for plan_robot_trajectory: ", function_response)
 
@@ -598,9 +649,37 @@ class LLMNode(Node):
                     continue
 
                 elif func_name == 'execute_planned_trajectory':
-                    # Call the find_object function
+                    # Call the execute_planned_trajectory function
                     function_response = available_functions[func_name]()
                     print("function response for execute_planned_trajectory: ", function_response)
+
+                    # Add the object detection response to the conversation
+                    messages.append({
+                        'role': 'function',
+                        'name': func_name, 
+                        'content': f"Funtion response: {function_response}."
+                    })
+
+                    continue
+                
+                elif func_name == 'open_gripper':
+                    # Call the open_gripper function
+                    function_response = available_functions[func_name]()
+                    print("function response for open_gripper: ", function_response)
+
+                    # Add the object detection response to the conversation
+                    messages.append({
+                        'role': 'function',
+                        'name': func_name, 
+                        'content': f"Function response: {function_response}."
+                    })
+
+                    continue
+
+                elif func_name == 'close_gripper':
+                    # Call the close_gripper function
+                    function_response = available_functions[func_name]()
+                    print("function response for close_gripper: ", function_response)
 
                     # Add the object detection response to the conversation
                     messages.append({
