@@ -20,19 +20,15 @@ from project_interfaces.srv import GetObjectInfo
 from project_interfaces.srv import DefineObjectInfo
 from project_interfaces.srv import PlanMoveCommand
 from project_interfaces.srv import ExecuteMoveCommand
-from project_interfaces.srv import Robotiq3FGripperOutputService
+from robotiq_3f_gripper_ros2_interfaces.srv import Robotiq3FGripperOutputService
 
 class LLMNode(Node):
     def __init__(self):
         super().__init__('minimal_client_async')
 
+        # Gripper service client
         self._3f_controller = Robotiq3FGripperOutputService.Request()
-
         self._3f_controller_cli = self.create_client(Robotiq3FGripperOutputService, "Robotiq3FGripper/OutputRegistersService") 
-
-        # Wait for the service to be available
-        while not self._3f_controller_cli.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info('Waiting for service...')
 
         #Object detector service client
         self.detector_client = self.create_client(GetObjectInfo, 'get_object_info')
@@ -457,7 +453,7 @@ class LLMNode(Node):
 
     def open_gripper(self):  # Open Gripper
         self._3f_controller.output_registers.r_act = 1  # Active Gripper
-        self._3f_controller.output_registers.r_mod = 0  # Basic Gripper Mode
+        self._3f_controller.output_registers.r_mod = 1  # Basic Gripper Mode
         self._3f_controller.output_registers.r_gto = 1  # Go To Position
         self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
         self._3f_controller.output_registers.r_pra = 0  # Open Gripper
@@ -466,11 +462,21 @@ class LLMNode(Node):
 
         # Publish command to gripper
         self.future = self._3f_controller_cli.call_async(self._3f_controller)
-        rclpy.spin_until_future_complete(self, self.future)
+
+        try:
+            rclpy.spin_until_future_complete(self, self.future, timeout_sec=10.0)
+            if self.future.result() is not None:
+                return self.future.result()
+            else:
+                self.get_logger().error('Service call timed out')
+                return None
+        except Exception as e:
+            self.get_logger().error(f'Service call failed: {e}')
+            return None
 
     def close_gripper(self):  # Close Gripper in Basic Mode
         self._3f_controller.output_registers.r_act = 1  # Active Gripper
-        self._3f_controller.output_registers.r_mod = 0  # Basic Gripper Mode
+        self._3f_controller.output_registers.r_mod = 1  # Basic Gripper Mode
         self._3f_controller.output_registers.r_gto = 1  # Go To Position
         self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
         self._3f_controller.output_registers.r_pra = 255  # Close Gripper
@@ -479,7 +485,18 @@ class LLMNode(Node):
 
         # Publish command to gripper
         self.future = self._3f_controller_cli.call_async(self._3f_controller)
-        rclpy.spin_until_future_complete(self, self.future)
+
+        try:
+            rclpy.spin_until_future_complete(self, self.future, timeout_sec=10.0)
+            if self.future.result() is not None:
+                return self.future.result()
+            else:
+                self.get_logger().error('Service call timed out')
+                return None
+        except Exception as e:
+            self.get_logger().error(f'Service call failed: {e}')
+            return None
+        
 
 
     ################################################################################################
