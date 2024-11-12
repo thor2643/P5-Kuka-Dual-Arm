@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>robutler_bringup</name>
+  <version>0.0.0</version>
+  <description>Robutler launch files.</description>
+  <maintainer email="kkla22@student.aau.dk">kasper</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+
+  <exec_depend>lbr_bringup</exec_depend>
+  <exec_depend>object_detector</exec_depend>
+  <exec_depend>janise</exec_depend>
+  <exec_depend>gripper_control</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>ros2launch</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
