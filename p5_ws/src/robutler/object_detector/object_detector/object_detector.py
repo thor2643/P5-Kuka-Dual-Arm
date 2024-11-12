@@ -1,101 +1,106 @@
-import rclpy
-from rclpy.node import Node
-import pyrealsense2 as rs
-import cv2
+#Yolo World
+from ultralytics import YOLOWorld    #pip install ultralytics
+
+#Image processing
 import numpy as np
+import cv2
+from cv_bridge import CvBridge, CvBridgeError
 import json
 import os
-import time
+
+
 
 #ROS stuff
 from project_interfaces.srv import GetObjectInfo
 from project_interfaces.srv import DefineObjectInfo
 from geometry_msgs.msg import Point
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image   #, CameraInfo
+from sensor_msgs.msg import PointCloud2
+import sensor_msgs_py.point_cloud2 as pc2
 
 
-class RealSenseCamera:
+#the following is the ros2 launch command for the realsense camera with user settings
+"""
+ros2 launch realsense2_camera rs_launch.py depth_module.depth_profile:=1280,720,30 rgb_camera.color_profile:=1280,720,30 align_depth.enable:=true pointcloud.enable:=true hole_filling_filter.enable:=true   pointcloud.ordered_pc:=true
+
+pointcloud.ordered_pc:=true is used to get the pointcloud in the same order as the color image pixels
+
+IF you want to chance any configaration settings you can do so by finding the parameter you want to change in the realsense2_camera package and then add it to the launch command
+
+"""
+
+
+
+class RealSenseCamera(Node):
     def __init__(self):
-        # Configure depth and color streams
-        self.pipeline = rs.pipeline()
-        self.config = rs.config()
-
-        # Enable color stream
-        self.config.enable_stream(
-            rs.stream.color, 640, 480, rs.format.bgr8, 30
+        super().__init__('my_subscriber_node')
+        
+        # Create a subscriber to the topic 
+        self.subscription = self.create_subscription(
+            Image,  # Message type
+            '/camera/camera/aligned_depth_to_color/image_raw',  # Topic name
+            self.convert_to_depth_img,  # Callback function
+            10  # Queue size
+        )
+        
+         # Create a subscriber to the topic 
+        self.subscription = self.create_subscription(
+            Image,  # Message type
+            '/camera/camera/color/image_raw',  # Topic name
+            self.convert_to_color_img,  # Callback function
+            10  # Queue size
         )
 
-        # Enable depth stream
-        self.config.enable_stream(
-            rs.stream.depth, 640, 480, rs.format.z16, 30
+         # Create a subscriber to the topic 
+        self.subscription = self.create_subscription(
+            PointCloud2,  # Message type
+            '/camera/camera/depth/color/points',  # Topic name
+            self.pointcloud_callback,  # Callback function
+            10  # Queue size
         )
-
-        # Reset the camera to default settings (avoids an error when starting the pipeline)
-        ctx = rs.context()
-        devices = ctx.query_devices()
-        for dev in devices:
-            dev.hardware_reset()
-        print("reset done")
-
-        # Placeholder for calibrated values
-        self.calibrated_exposure = 166
-        self.calibrated_white_balance = 4600
-
-    def calibrate_camera(self):
-        # Start the pipeline temporarily for calibration
-        self.pipeline.start(self.config)
-
-        # Alignment setup
-        self.align_to = rs.stream.color
-        self.align = rs.align(self.align_to)
-
-        # Access the color sensor
-        color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
-
-        # Enable auto-exposure and auto-white-balance
-        #color_sensor.set_option(rs.option.enable_auto_exposure, 1)
-        #color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
-
-        # Allow time for auto-exposure and auto-white-balance to stabilize
-        for _ in range(30):
-            frames = self.pipeline.wait_for_frames()
-
-        # Retrieve and store the settled values
-        self.calibrated_exposure = color_sensor.get_option(rs.option.exposure)
-        self.calibrated_white_balance = color_sensor.get_option(rs.option.white_balance)
         
-        print(f"Calibrated exposure: {self.calibrated_exposure}")
-        print(f"Calibrated white balance: {self.calibrated_white_balance}")
+        self.subscription  # Prevent unused variable warning
+        self.bridge = CvBridge()  
 
-        # Stop the pipeline after calibration
-        self.pipeline.stop()
+        #Image frames for depth and color
+        self.color_img = None
+        self.depth_img = None
+        self.pointcloud_msg = PointCloud2
+
         
-    def __enter__(self):
-        self.pipeline.start(self.config)
+    def convert_to_depth_img(self, msg):
+        try:
+            # Convert the ROS Image message to OpenCV image (16-bit single-channel)
+            self.depth_img = self.bridge.imgmsg_to_cv2(msg, desired_encoding="16UC1")
 
-        self.align_to = rs.stream.color
-        self.align = rs.align(self.align_to)
+        except CvBridgeError as e:
+            self.get_logger().error(f'Error converting image: {e}')
 
-        color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
+    def convert_to_color_img(self, msg):
+        try:
+            # Convert the ROS Image message to an OpenCV image
+            color_img_rgb = self.bridge.imgmsg_to_cv2(msg, desired_encoding="rgb8")
+            
+            # Convert RGB to BGR for OpenCV display (OpenCV uses BGR by default)
+            self.color_img = cv2.cvtColor(color_img_rgb, cv2.COLOR_RGB2BGR)
 
-        """
-         # If calibrated values exist, apply them
-        if self.calibrated_exposure and self.calibrated_white_balance:
-            color_sensor.set_option(rs.option.enable_auto_exposure, 0)
-            color_sensor.set_option(rs.option.enable_auto_white_balance, 0)
-            color_sensor.set_option(rs.option.exposure, self.calibrated_exposure)
-            color_sensor.set_option(rs.option.white_balance, self.calibrated_white_balance)
-        
-        #else:
-        # If no calibrated values are present, enable auto settings
-        color_sensor.set_option(rs.option.enable_auto_exposure, 1)
-        color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
-        """
+        except CvBridgeError as e:
+            self.get_logger().error(f'Error converting color image: {e}')
 
-        return self.pipeline
+    def pointcloud_callback(self, msg):
+        self.pointcloud_msg = msg
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.pipeline.stop()
-      
+
+    def calibrate_camera(self): 
+        # Get the intrinsic parameters of the camera
+        camera_info = self.get_camera_info()
+
+        # Print the intrinsic parameters
+        print(f"Intrinsic parameters: {camera_info}")
+
+
 
 class ObjectDetector(Node):
     def __init__(self):
@@ -116,9 +121,27 @@ class ObjectDetector(Node):
         self.found_objects = {}
 
         #Frames for depth and color
-        self.depth_frame = None
+        self.depth_frame = None   
         self.color_frame = None
+        self.points = PointCloud2
+        self.point_list = None
+        self.yolo_results = None
 
+
+    def retrieve_aligned_frames(self):      
+        # Retrieve aligned frames from the RealSense camera by spinning the node untill new frames are available
+
+        while self.realsense_camera.depth_img is None or self.realsense_camera.color_img is None or self.realsense_camera.pointcloud_msg is None:
+                rclpy.spin_once(self.realsense_camera)
+
+        while np.array_equal(self.realsense_camera.depth_img, self.depth_frame) or np.array_equal(self.realsense_camera.color_img, self.color_frame) or np.array_equal(self.realsense_camera.pointcloud_msg, self.points):
+                rclpy.spin_once(self.realsense_camera)
+        
+        self.depth_frame = self.realsense_camera.depth_img
+        self.color_frame = self.realsense_camera.color_img
+        self.points = self.realsense_camera.pointcloud_msg
+        
+        
     
     #The callback function for the detector service
     def get_object_information(self, request, response):
@@ -126,7 +149,7 @@ class ObjectDetector(Node):
         self.get_logger().info(f'Requested to find {object}\n')
 
         if object in self.lego_bricks:
-            self.capture_aligned_frames()
+            self.retrieve_aligned_frames()
             self.find_object(self.get_color_image(), object)
 
             response.object_count = len(self.found_objects)
@@ -175,31 +198,27 @@ class ObjectDetector(Node):
         response.success = True
 
         return response
-
-
-    def capture_aligned_frames(self):
-        with self.realsense_camera as cam:
-            frames = cam.wait_for_frames()
-            aligned_frames = self.realsense_camera.align.process(frames)
-
-            # Retrieve the depth frame
-            self.depth_frame = aligned_frames.get_depth_frame()
-            self.color_frame = aligned_frames.get_color_frame()
-            
-            if not self.depth_frame or not self.color_frame:
-                print("No depth or color frame captured.")
-                
-
+    
+   
     def show_depth_map(self):
         cv2.namedWindow("Depth Map", cv2.WINDOW_AUTOSIZE)
 
         while True:
-            self.capture_aligned_frames()
+            self.retrieve_aligned_frames()
 
             # Convert the depth frame to a NumPy array
-            depth_image = np.asanyarray(self.depth_frame.get_data())
+            depth_image = np.asanyarray(self.depth_frame)
 
             #depth_image = cv2.rotate(depth_image, cv2.ROTATE_180)
+
+            if True: #True: gets a tresholded colormap. False all depth data are used in normalisation
+                # Define the depth range (in millimeters) to display
+                min_depth = 0  # Minimum depth to display  0 m
+                max_depth = 3000  # Maximum depth to display 3m
+
+                # 1. Threshold the depth image to the specified range
+                # Set values outside the range to 0 (this can be chanced if needed).
+                depth_image = np.where((depth_image >= min_depth) & (depth_image <= max_depth),depth_image, 0)
 
             # Normalize the depth image for display
             depth_image = cv2.normalize(depth_image, None, 0, 255, cv2.NORM_MINMAX)
@@ -221,7 +240,7 @@ class ObjectDetector(Node):
         cv2.namedWindow("Image", cv2.WINDOW_AUTOSIZE)
         cv2.namedWindow("Image", cv2.WINDOW_AUTOSIZE)
         while True:
-            self.capture_aligned_frames()
+            self.retrieve_aligned_frames()
 
             # Convert the frame to a NumPy array for OpenCV
             color_frame = self.get_color_image()
@@ -236,12 +255,33 @@ class ObjectDetector(Node):
         cv2.destroyAllWindows()
 
     def get_color_image(self):
-        #return cv2.rotate(np.asanyarray(self.color_frame.get_data()), cv2.ROTATE_180)
-        return np.asanyarray(self.color_frame.get_data())
+        return np.asanyarray(self.color_frame)
 
     def show_image(self, image):
         cv2.imshow("Image", cv2.rotate(image, cv2.ROTATE_180))
         cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    def apply_yolo_world(self, img):
+        img =cv2.rotate(img, cv2.ROTATE_180)
+        model = YOLOWorld("yolov8l-world.pt")  # or select yolov8{s/m/l}-world.pt for different sizes
+
+        # Define custom classes
+        if False: 
+            model.set_classes(["brick", "lego", "laptop"])
+
+        # Execute inference with the YOLOv8s-world model on the specified image
+        self.yolo_results = model.predict(img)
+
+        # Convert the result to an OpenCV-compatible format and display it
+        result_image = self.yolo_results[0].plot()  # plot() returns an image array with annotations
+
+        while True:
+            cv2.imshow("YOLOv8s-world", result_image)
+
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        
         cv2.destroyAllWindows()
 
     def find_object(self, image, object_name):
@@ -273,6 +313,9 @@ class ObjectDetector(Node):
         # Lists to store bounding boxes
         rotated_bounding_boxes = []
         bounding_boxes = []
+
+        # Convert the pointcloud to a list. This needs to be done here to make the code faster as it else would be called many times
+        self.convert_pointcloud_to_list()
 
         i=0
         for contour in contours:
@@ -444,44 +487,26 @@ class ObjectDetector(Node):
         # Return the final selected thresholds and size range
         return lower_bound, upper_bound, min_size, max_size
 
+    def convert_pointcloud_to_list(self):
+        # Assuming 'self.points' is a PointCloud2 message
+        point_data = pc2.read_points(self.points, field_names=("x", "y", "z"), skip_nans=True)
+        
+        # Convert point data to a numpy array of (x, y, z) tuples
+        self.point_list = np.array(list(point_data))  # Shape will be (num_points, 3)
+        
     def get_cartesian_coordinates(self, pixel_x, pixel_y):
-
-        # Create a point cloud
-        pc = rs.pointcloud()
-        points = pc.calculate(self.depth_frame)
-        pc.map_to(self.color_frame)
-
-        # Get the vertices of the point cloud
-        vertices = np.asanyarray(points.get_vertices()).view(np.float32).reshape(-1, 3)
-
-        # Get the width and height of the depth image
-        width = self.depth_frame.get_width()
-
-        # Calculate the index in the point cloud corresponding to the 2D pixel
-        index = pixel_y * width + pixel_x
-
-        # Ensure the index is within bounds
-        if 0 <= index < len(vertices):
-            # Access the 3D coordinates corresponding to the pixel
-            cartesian_coordinates = vertices[index]
-
-            #print(f"Cartesian coordinates for pixel ({pixel_x}, {pixel_y}): {cartesian_coordinates}")
-
-            # Rotate the Cartesian coordinates 180 degrees around the z-axis
-            # Because the camera has been flipped 180 degrees
-            #rotation_matrix = np.array([[-1, 0, 0],
-            #                            [0, -1, 0],
-            #                            [0, 0, 1]])
-
-            #rotated_coordinates = np.dot(rotation_matrix, cartesian_coordinates)
-
-            #return rotated_coordinates
-            return cartesian_coordinates
-        else:
-            print(f"Pixel coordinates ({pixel_x}, {pixel_y}) are out of bounds.")
-            return None
-
+        #indexing the point_list
+        idex = pixel_y * self.points.width + pixel_x
+        
+        # Extract the (x, y, z) coordinates for the given pixel (pixel_y, pixel_x)
+        coordinates = self.point_list[idex]
+        return coordinates
+        
     def show_cartesian_coordinates(self):
+        self.retrieve_aligned_frames()
+        self.convert_pointcloud_to_list()
+        color_image = self.get_color_image()
+
         def mouse_callback(event, x, y, flags, param):
             if event == cv2.EVENT_MOUSEMOVE:
                 # Adjust the x, y coordinates to reflect a rotated image
@@ -489,15 +514,13 @@ class ObjectDetector(Node):
                 adjusted_x = width - x
                 adjusted_y = height - y
                 coordinates = self.get_cartesian_coordinates(adjusted_x, adjusted_y)
-                #coordinates = self.get_cartesian_coordinates(x, y)
                 if coordinates is not None:
                     print(f"Cartesian coordinates at ({x}, {y}): {coordinates}")
 
         cv2.namedWindow("Image with Coordinates")
         cv2.setMouseCallback("Image with Coordinates", mouse_callback)
 
-        self.capture_aligned_frames()
-        color_image = self.get_color_image()
+        
 
         while True:
             cv2.imshow("Image with Coordinates", cv2.rotate(color_image, cv2.ROTATE_180))
@@ -507,7 +530,6 @@ class ObjectDetector(Node):
 
         cv2.destroyAllWindows()
 
-    
     def load_object_descriptions(self):
         if os.path.exists(self.object_file):
             with open(self.object_file, 'r') as file:
@@ -524,23 +546,21 @@ class ObjectDetector(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    # Load the image you provided
-    image_path = 'src/object_detector/Cell_Image_Example.jpg'
-    image_example = cv2.imread(image_path)
-
+    # Create an ObjectDetector instance
     detector = ObjectDetector()
 
     while True:
         # Ask use which function to run
         print("\nChoose a function to run:")
         print("1. Show Frame")
-        print("2. Find Object")
-        print("3. Adjust HSV and Size Thresholds")
-        print("4. Show Depth Map")
-        print("5. Print Cartesian Coordinates")
-        print("6. Spin the node")
-        print("7. Calibrate Camera")
-        print("8. Exit\n")
+        print("2. Find Object using traditional vision techniques")
+        print("3. find Object using YOLO")
+        print("4. Adjust HSV and Size Thresholds")
+        print("5. Show Depth Map")
+        print("6. Print Cartesian Coordinates")
+        print("7. Spin the node")
+        print("8. Calibrate Camera")
+        print("9. Exit\n")
 
         choice = input("Enter your choice: ")
 
@@ -551,7 +571,7 @@ def main(args=None):
 
         elif choice == '2':
             #Find an object in the image
-            detector.capture_aligned_frames()
+            detector.retrieve_aligned_frames()
             image = detector.get_color_image()
 
             if image is None:
@@ -570,8 +590,20 @@ def main(args=None):
             else:
                 print(f"{object_name} not found in the image.")
 
-        elif choice == '3':
-            detector.capture_aligned_frames()
+
+        elif choice == '3': #YOLO
+            #Find an object in the image
+            detector.retrieve_aligned_frames()
+            image = detector.get_color_image()
+
+            if image is None:
+                print("Failed to capture image from camera.")
+                continue
+
+            detector.apply_yolo_world(image)
+
+        elif choice == '4':
+            detector.retrieve_aligned_frames()
             image = detector.get_color_image()
 
             if image is None:
@@ -585,19 +617,20 @@ def main(args=None):
             print(f"Min Size: {min_size}")
             print(f"Max Size: {max_size}")
 
-        elif choice == '4':
+        elif choice == '5':
             detector.show_depth_map()
 
-        elif choice == '5':
+        elif choice == '6':
+            
             detector.show_cartesian_coordinates()
 
-        elif choice == '6':
+        elif choice == '7':
             rclpy.spin(detector) 
 
-        elif choice == '7':
+        elif choice == '8':
             detector.realsense_camera.calibrate_camera()               
 
-        elif choice == '8':
+        elif choice == '9':
             break
 
         else:
@@ -608,5 +641,3 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-
-    # TODO: Integrate to ROS2
