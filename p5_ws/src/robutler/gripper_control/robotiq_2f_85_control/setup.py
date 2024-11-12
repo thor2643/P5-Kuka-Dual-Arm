@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'janise'
+package_name = 'robotiq_2f_85_control'
 
 setup(
     name=package_name,
@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'ollama_client = janise.janise_client:main', 
-            'omni_client = janise.omni_janise:main'
+            'gripper_control_service_node = robotiq_2f_85_control.gripper_service:main',
+            'gripper_client_node = robotiq_2f_85_control.gripper_client:main',
         ],
     },
 )
