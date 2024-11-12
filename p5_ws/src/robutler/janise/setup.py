@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'client_ollama = janise.janise_client:main', 
-            'client_omni = janise.omni_janise:main'
+            'ollama_client = janise.janise_client:main', 
+            'omni_client = janise.omni_janise:main'
         ],
     },
 )

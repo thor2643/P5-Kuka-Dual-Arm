@@ -1,0 +1,29 @@
+planning_plugin: ompl_interface/OMPLPlanner
+start_state_max_bounds_error: 0.1
+jiggle_fraction: 0.05
+request_adapters: >-
+    default_planner_request_adapters/AddTimeOptimalParameterization
+    default_planner_request_adapters/ResolveConstraintFrames
+    default_planner_request_adapters/FixWorkspaceBounds
+    default_planner_request_adapters/FixStartStateBounds
+    default_planner_request_adapters/FixStartStateCollision
+    default_planner_request_adapters/FixStartStatePathConstraints
+    
+        
+# Define specific parameters for each planner
+RRTstar:
+  type: geometric::RRTstar
+  range: 0.1
+  goal_bias: 0.05
+  delay_collision_checking: 1
+
+RRTConnect:
+  type: geometric::RRTConnect
+  range: 0.2
+  
+# Eventuelle andre planners kan findes i ompl_planning.yaml (Den har samme navn som denne fil), 
+
+# Define planners for right_arm MoveGroup
+right_arm:
+  default_planner_config: RRTstar  # Set RRTstar as the default planner
+  planner_configs: [RRTstar]   
