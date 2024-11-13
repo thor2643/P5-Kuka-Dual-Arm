@@ -167,7 +167,7 @@ class ObjectDetector(Node):
         self.get_logger().info(f'Requested to define {object}\n')
 
         # Get Image
-        self.capture_aligned_frames()
+        self.retrieve_aligned_frames()
         image = self.get_color_image()
 
         if image is None:
@@ -341,8 +341,8 @@ class ObjectDetector(Node):
                 height_point_1_metric = self.get_cartesian_coordinates(height_point_1[0], height_point_1[1])
                 height_point_2_metric = self.get_cartesian_coordinates(height_point_2[0], height_point_2[1])
 
-
-                if width_point_1_metric is not None and width_point_2_metric is not None:
+                
+                if width_point_1_metric is not None and width_point_2_metric is not None and height_point_1_metric is not None and height_point_2_metric is not None:
                     # Calculate the width of the bounding box
                     width = np.linalg.norm(width_point_1_metric[:2] - width_point_2_metric[:2])
                     height = np.linalg.norm(height_point_1_metric[:2] - height_point_2_metric[:2])
@@ -499,7 +499,7 @@ class ObjectDetector(Node):
         y = ((pixel_y - cy) * z / fy) 
         
 
-        return [x, y, z]
+        return np.array([x, y, z])
         
     def show_cartesian_coordinates(self):
         self.retrieve_aligned_frames()
