@@ -19,9 +19,8 @@ setup(
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': [
-            'ollama_client = janise.janise_client:main', 
-            'omni_client = janise.omni_janise:main'
+        'console_scripts': [ 
+            'omni_client = janise.janise:main'
         ],
     },
 )
