@@ -56,170 +56,33 @@ class LLMNode(Node):
         # Decide whether to use Ollama API or OpenAI API
         self.use_ollama = False
 
+        # Attributes
+        self.future = 0
+
         # Define the locations in the environment
         self.coordinates = { # Predefined poses for different locations
             'HOME': {'x': '0.5', 'y': '0.3', 'z': "0.2", 'roll': '0', 'pitch': '90', 'yaw': '0'}
         }
 
-        # Define all function available to models
-        self.tools = [ 
-                    {
-                        "type": "function",
-                        "function": {
-                            'name': 'get_available_locations',
-                            'description': 'Used only to retrieve a list of locations that have predefined poses. It can be called before move_to_location to make ensure that the location parameter is indeed a valid parameter.',
-                            'parameters': {},
-                        }
-                    },
-                    {
-                        "type": "function",
-                        "function": {
-                            'name': 'get_pose_values_from_location',
-                            'description': 'Used only to retrieve the robot world coordinates based on the user-specified location. It does not move the robot',
-                            'parameters': {
-                                'type': 'object',
-                                'properties': {
-                                    'location': {
-                                        'type': 'string',
-                                        'description': 'The name of the target location, e.g., "home", "cooling", or "painting".',
-                                    }
-                                },
-                                'required': ['location'],
-                            },
-                        }
-                    },
-                    {
-                        "type": "function",
-                        "function": {
-                            'name': 'move_to_location',
-                            'description': 'Retrieves the robot pose based on the user-specified location and sends them to the robot to make it move to said location.',
-                            'parameters': {
-                                'type': 'object',
-                                'properties': {
-                                    'location': {
-                                        'type': 'string',
-                                        'description': 'The name of the target location, e.g., "home".',
-                                    }
-                                },
-                                'required': ['location'],
-                            },
-                        }
-                    },
-                    {
-                        'type': 'function',
-                        'function': {
-                            'name': 'find_object',
-                            'description': 'Find the object in the environment using the object detector service. The object name should be provided as an argument to this function. The object detector service will return the number of objects found as well as the Cartesian center point, width, height and orientation of each object.',
-                            'parameters': {
-                                'type': 'object',
-                                'properties': {
-                                    'object_name': {
-                                        'type': 'string',
-                                        'description': 'The name of the object that must be found. Only one name can be provided. Must use _ (underscore) instead of spaces.',
-                                    }
-                                },
-                                'required': ['object_name'],
-                            },
-                        },
-                    },
-                    {
-                        'type': 'function',
-                        'function': {
-                            'name': 'define_object_thresholds',
-                            'description': 'Lets the user define the object thresholds for the object detector service. An image will pop up with trackbars to the side, where the user can adhust the thresholds and se the resulting image. The object to define thresholds for should be provided as an argument. Use underscore _ (underscore) as spaces. The thresholds will be saved and used for the object detector service.',
-                            'parameters': {
-                                'type': 'object',
-                                'properties': {
-                                    'object_name': {
-                                        'type': 'string',
-                                        'description': 'The name of the object for which new thresholds must be defined. Only one name can be provided. Must use _ (underscore) instead of spaces.',
-                                    }
-                                },
-                                'required': ['object_name'],
-                            },
-                        },
-                    },
-                    {
-                        'type': 'function',
-                        'function': {
-                            'name': 'move_robot_to_pose',
-                            'description': 'Move the robot to a specific pose in the environment. The pose should be provided as an argument to this function. The robot will move to the specified pose. Notice, the trajectory is executed on the physical robot, so use this function with caution. Otherwise use a combination of plan_robot_trajectory and execute_planned_trajectory.',
-                            'parameters': {
-                                'type': 'object',
-                                'properties': {
-                                    'pose': {
-                                        "type": "array",
-                                        "items": {"type": "number"},
-                                        "description": "A list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees."
-                                    }
-                                },
-                                'required': ['pose'],
-                            },
-                        },
-                    },
-                    {
-                        'type': 'function',
-                        'function': {
-                            'name': 'plan_robot_trajectory',
-                            'description': 'Plan a robot trajectory to a given pose. The planned trajectory will be simulated and visualised for the user. If allowed by the user the trajectory can be executed by running the execute_planned_trajectory.',
-                            'parameters': {
-                                'type': 'object',
-                                'properties': {
-                                    'pose': {
-                                        "type": "array",
-                                        "items": {"type": "number"},
-                                        "description": "A list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees."
-                                    }
-                                },
-                                'required': ['pose'],
-                            },
-                        },
-                    },
-                    {
-                        'type': 'function',
-                        'function': {
-                            'name': 'execute_planned_trajectory',
-                            'description': 'This function executes the trajectory on the physical robot planned by the plan_robot_trajectory function. Note that the plan_robot_trajectory function must have been called before this function can be run',
-                            'parameters': {},
-                        },
-                    },
-                    {
-                        'type': 'function',
-                        'function': {
-                            'name': 'manipulate_right_gripper',
-                            'description': 'Open the right gripper. The width of the gripper can be specified as an argument. The default width is 125.',
-                            'parameters': {
-                                'type': 'object',
-                                'properties': {
-                                    'width': {
-                                        "type": "number",
-                                        "description": "An integer representing the width of the gripper. The default width is 125." #TODO: Describe value range
-                                    }
-                                },
-                                'required': ['width'],
-                            },
-                        },
-                    },
-                    {
-                        'type': 'function',
-                        'function': {
-                            'name': 'manipulate_left_gripper',
-                            'description': 'Open the left gripper. The width of the gripper can be specified as an argument. The range is from 0 (closed) to 85 (open). The default width is 50.',
-                            'parameters': {
-                                'type': 'object',
-                                'properties': {
-                                    'width': {
-                                        "type": "number",
-                                        "description": "An integer representing the width of the gripper. The range is 0-85 with 0 being fully closed and 85 being fully open. The default width is 50."
-                                    }
-                                },
-                                'required': ['width'],
-                            },
-                        },
-                    },
-                ]
+        # Load and define all functions available to models
+        with open('src/robutler/janise/llm_functions_config.json') as f:
+            function_definitions = json.load(f)
+        self.tools = function_definitions
 
-        # Initialize OpenAI client with API key and optional project ID
+        self.available_functions = {
+            'get_available_locations': self.get_available_locations,
+            'get_pose_values_from_location': self.get_pose_values_from_location,
+            'move_to_location': self.move_to_location,
+            'find_object': self.find_object,
+            'define_object_thresholds': self.define_object_thresholds,
+            'move_robot_to_pose': self.move_robot_to_pose,
+            'plan_robot_trajectory': self.plan_robot_trajectory,
+            'execute_planned_trajectory': self.execute_planned_trajectory,
+            'manipulate_right_gripper': self.manipulate_right_gripper,
+            'manipulate_left_gripper': self.manipulate_left_gripper
+        }
+
+        # Initialize Ollama client or OpenAI client with API key and optional project ID
         if self.use_ollama:
             self.client = ollama.AsyncClient()
         else:
@@ -269,42 +132,50 @@ class LLMNode(Node):
             os.remove(unique_filename)
         except Exception as e:
             self.get_logger().error(f"Failed to convert text to speech: {e}")
+
     
+    #######################################################################################
+    # --------------------------------- EXTRA FUNCTIONS --------------------------------- #
+    #######################################################################################
 
-    #########################################################################################
-    # -------------------------- ROS2 COMMUNICATION AND FEEDBACK -------------------------- #
-    #########################################################################################
-    
 
-    def goal_response_callback(self, future):
-        goal_handle = future.result()
+    def run_service_request(self, timeout=10):
+        try:
+            rclpy.spin_until_future_complete(self, self.future, timeout_sec=timeout)
+            if self.future.result() is not None:
+                return self.future.result()
+            else:
+                self.get_logger().error('Service call timed out')
+                return "Service call time out"
+        except Exception as e:
+            self.get_logger().error(f'Service call failed: {e}')
+            return f"Service call failed: {e}"
 
-        if not goal_handle.accepted:
-            self.get_logger().info('Goal rejected :(')
-            return
+    def euler_to_quat(self, euler_angles):
+        cr = np.cos(np.deg2rad(euler_angles[0]) * 0.5)
+        sr = np.sin(np.deg2rad(euler_angles[0]) * 0.5)
+        cp = np.cos(np.deg2rad(euler_angles[1]) * 0.5)
+        sp = np.sin(np.deg2rad(euler_angles[1]) * 0.5)
+        cy = np.cos(np.deg2rad(euler_angles[2]) * 0.5)
+        sy = np.sin(np.deg2rad(euler_angles[2]) * 0.5)
 
-        self.get_logger().info('Goal accepted :)')
-        self._get_result_future = goal_handle.get_result_async()
-        self._get_result_future.add_done_callback(self.get_result_callback)
-
-    def get_result_callback(self, future):
-        result = future.result().result
-        self.get_logger().info('Result: {0}'.format(result.success))
-        rclpy.shutdown()
-
-    def feedback_callback(self, feedback_msg):
-        feedback = feedback_msg.feedback
-        self.get_logger().info('Received feedback: {0}'.format(feedback.progress))
+        q_w = cr * cp * cy + sr * sp * sy
+        q_x = sr * cp * cy - cr * sp * sy
+        q_y = cr * sp * cy + sr * cp * sy
+        q_z = cr * cp * sy - sr * sp * cy
+        
+        return [q_w, q_x, q_y, q_z]
 
 
     ########################################################################################
     # -------------------------- FUNCTIONS AVAILABLE TO THE LLM -------------------------- #
     ########################################################################################
 
+
     def get_available_locations(self):
         return list(self.coordinates.keys())
     
-    async def get_pose_values_from_location(self, location: str) -> list:
+    def get_pose_values_from_location(self, location: str) -> list:
         self.get_logger().info(f"Received location to find pose for: location={location}")
 
         pose_dict = self.coordinates.get(location.upper(), {})
@@ -389,21 +260,6 @@ class LLMNode(Node):
         else:
             self.get_logger().error('Service call failed')
             return DefineObjectInfo.Response()
-        
-    def euler_to_quat(self, euler_angles):
-        cr = np.cos(np.deg2rad(euler_angles[0]) * 0.5)
-        sr = np.sin(np.deg2rad(euler_angles[0]) * 0.5)
-        cp = np.cos(np.deg2rad(euler_angles[1]) * 0.5)
-        sp = np.sin(np.deg2rad(euler_angles[1]) * 0.5)
-        cy = np.cos(np.deg2rad(euler_angles[2]) * 0.5)
-        sy = np.sin(np.deg2rad(euler_angles[2]) * 0.5)
-
-        q_w = cr * cp * cy + sr * sp * sy
-        q_x = sr * cp * cy - cr * sp * sy
-        q_y = cr * sp * cy + sr * cp * sy
-        q_z = cr * cp * sy - sr * sp * cy
-        
-        return [q_w, q_x, q_y, q_z]
 
     def move_robot_to_pose(self, pose):
         # Define the transformation matrix from camera coordinates to world coordinates
@@ -449,69 +305,55 @@ class LLMNode(Node):
         print(f"Orientation: {self.robot_plan_req.orientation}\n")
  
         self.future = self.robot_plan_client.call_async(self.robot_plan_req)
-        try:
-            rclpy.spin_until_future_complete(self, self.future, timeout_sec=15.0)
-            if self.future.result() is not None:
-                return self.future.result()
-            else:
-                self.get_logger().error('Service call timed out')
-                return None
-        except Exception as e:
-            self.get_logger().error(f'Service call failed: {e}')
-            return None
+        return self.run_service_request()
         
     def execute_planned_trajectory(self):
         self.future = self.robot_execute_client.call_async(self.robot_execute_req)
-        try:
-            rclpy.spin_until_future_complete(self, self.future, timeout_sec=15.0)
-            if self.future.result() is not None:
-                return self.future.result()
-            else:
-                self.get_logger().error('Service call timed out')
-                return None
-        except Exception as e:
-            self.get_logger().error(f'Service call failed: {e}')
-            return None
+        return self.run_service_request(timeout=15)
 
-    def manipulate_right_gripper(self, width=125):  # Open Gripper
+    def manipulate_right_gripper(self, width=167, speed=110, force=15):  # Defaults to open gripper with max speed and minimum force
+        if width < 0 or width > 167:
+            self.get_logger().error('Requested right gripper width exceeds gripper capabilities')
+            return 'Requested gripper width exceeds gripper capabilities'
+        if speed < 22 or speed > 110:
+            self.get_logger().error('Requested right gripper speed exceeds gripper capabilities')
+            return 'Requested right gripper speed exceeds gripper capabilities'
+        if force < 15 or force > 60:
+            self.get_logger().error('Requested right gripper force exceeds gripper capabilities')
+            return 'Requested right gripper force exceeds gripper capabilities'
+
         self._3f_controller.output_registers.r_act = 1  # Active Gripper
         self._3f_controller.output_registers.r_mod = 1  # Basic Gripper Mode
         self._3f_controller.output_registers.r_gto = 1  # Go To Position
         self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
-        self._3f_controller.output_registers.r_pra = width  # Open Gripper
-        self._3f_controller.output_registers.r_spa = 255  # Max Speed
-        self._3f_controller.output_registers.r_fra = 0  # Minimum Force
+        self._3f_controller.output_registers.r_pra = int(round((167 - width) / 167 * 255))          # Gripper limitations [0 - 167mm]
+        self._3f_controller.output_registers.r_spa = int(round((speed - 22) / (110 - 22) * 255))    # Speed limitations [22 - 110mm/sec]
+        self._3f_controller.output_registers.r_fra = int(round((force - 15) / (60 - 15) * 255))     # Force limitations [15 - 60N]
 
-        # Publish command to gripper
+        # Publish command to right gripper
         self.future = self._3f_controller_cli.call_async(self._3f_controller)
 
-        try:
-            rclpy.spin_until_future_complete(self, self.future, timeout_sec=10.0)
-            if self.future.result() is not None:
-                return self.future.result()
-            else:
-                self.get_logger().error('Service call timed out')
-                return None
-        except Exception as e:
-            self.get_logger().error(f'Service call failed: {e}')
-            return None
+        return self.run_service_request()
 
-    def manipulate_left_gripper(self, width=50, speed=100, force=200):
-        self._2f_req.width = float(width)
-        self._2f_req.speed = float(speed)
-        self._2f_req.force = float(force)
+    def manipulate_left_gripper(self, width=85, speed=110, force=20):   # Defaults to open gripper with fast speed and minimum force
+        if width < 0 or width > 85:
+            self.get_logger().error('Requested right gripper width exceeds gripper capabilities')
+            return 'Requested gripper width exceeds gripper capabilities'
+        if speed < 20 or speed > 150:
+            self.get_logger().error('Requested right gripper speed exceeds gripper capabilities')
+            return 'Requested right gripper speed exceeds gripper capabilities'
+        if force < 20 or force > 235:
+            self.get_logger().error('Requested right gripper force exceeds gripper capabilities')
+            return 'Requested right gripper force exceeds gripper capabilities'
+        
+        self._2f_req.width = float(width)   # Opening in millimeters. Must be between 0 and 85 mm.
+        self._2f_req.speed = float(speed)   # Speed in mm/s. Must be between 20 and 150 mm/s.
+        self._2f_req.force = float(force)   # Force in N. Must be between 20 and 235 N.
+
+        # Publish command to left gripper
         self.future = self._2f_client.call_async(self._2f_req)
 
-        try:
-            rclpy.spin_until_future_complete(self, self.future, timeout_sec=10.0)
-            if self.future.result() is not None:
-                return self.future.result()
-            else:
-                self.get_logger().error('Service call timed out')
-                return None
-        except Exception as e:
-            self.get_logger().error(f'Service call failed: {e}')
-            return None
+        return self.run_service_request()
 
 
     ################################################################################################
@@ -520,6 +362,7 @@ class LLMNode(Node):
 
 
     async def send_openai_request(self, model: str = 'gpt-4o', use_speech: bool = False):
+        
         messages = [{"role": "system", "content": f"""
                     Your name is Janise. You are an AI robotic arm assistant using the LLM {model} for task reasoning and manipulation tasks. You are to assume the persona of a butler.
 
@@ -535,12 +378,14 @@ class LLMNode(Node):
                         - *X-axis* extends horizontally across the table from the right edge to the left edge.
                         - *Y-axis* extends from the right edge towards the back, moving inward toward the robot.
                         - *Z-axis* points upward, perpendicular to the tabletop.
+                    - The workbench is 100 millimetres wide and 67.5 millimetres long, and the grippers must never go below 0 in height as they will then collide with the workbench.
                     - When objects are detected by the camera, they are initially located in the camera's coordinate system. However, the coordinates are automatically transformed into the world coordinate system using a transformation matrix. This means that all coordinate interactions with you will be in regard to the world coordinate system that has been specified.
 
                     Operational instructions:
                     - Always be aware of the distinction between the left and right sides and the unique tools on each arm when executing tasks.
                     - Avoid stating specific coordinates when acknowledging movement commands; only acknowledge the destination to maintain efficiency.
                     - When receiving instructions to move to predefined poses or locations, you may access these using your built-in functions.
+                    - If you receive any errors during operation, notify the operator. You may come with suggestions as to what to do next, but you should not try to do anything on your own afterwards with the operators permission.
 
                     Interaction Style:
                     - You must always reply to the user in a manner fitting a butler persona, using the following styles when executing movement tasks:
@@ -549,8 +394,6 @@ class LLMNode(Node):
 
                     Your primary task is to execute movements and manipulations as requested, utilizing precise understanding of your left and right sides, grippers, and the overview provided by the RealSense camera.
                 """}]
-
-
 
         while True:
             if use_speech:
@@ -581,168 +424,35 @@ class LLMNode(Node):
             if not tool_calls:
                 # If no function is called, return model's answer directly
                 response_text = response.choices[0].message.content
-                print("The model didn't use a function.")
+                self.get_logger().info("The model didn't use a function.")
                 self.text_to_speech(response_text)
                 continue
-
-            # Process functions calls from the model
-            available_functions = {
-                'get_available_locations': self.get_available_locations,
-                'get_pose_values_from_location': self.get_pose_values_from_location,
-                'move_to_location': self.move_to_location,
-                'find_object': self.find_object,
-                'define_object_thresholds': self.define_object_thresholds,
-                'move_robot_to_pose': self.move_robot_to_pose,
-                'plan_robot_trajectory': self.plan_robot_trajectory,
-                'execute_planned_trajectory': self.execute_planned_trajectory,
-                'manipulate_right_gripper': self.manipulate_right_gripper,
-                'manipulate_left_gripper': self.manipulate_left_gripper
-            }
 
             # Iterate through every function in tool_calls list
             print("Tool calls: ", tool_calls)
             for tool_call in tool_calls:
-                func_name = tool_call.function.name
-                func_args = json.loads(tool_call.function.arguments)
+                tool_call_id = tool_calls[0].id
+                tool_func_name = tool_call.function.name
+                tool_func_args = json.loads(tool_call.function.arguments)
 
                 # Debugging information
-                print(f"\nFunction called by model: {func_name}")
-                print(f"Arguments received: {func_args}")
+                print(f"\nFunction called by model: {tool_func_name}")
+                print(f"Arguments received: {tool_func_args}")
 
-                # Call a fitting function and add the result to message history
-                if func_name == 'get_pose_values_from_location':
-                    # Call function and verify if poses are valid
-                    function_response = await available_functions[func_name](func_args['location'])
-                    print("The function response for get_pose_values_from_location: ", function_response)
-                    if not function_response:  
-                        messages.append({'role': 'assistant', 'content': 'No valid pose found for this location.'})
-                        self.text_to_speech("No valid pose was found for the specified location, sir.")
-                        break  
+                # Call the function dynamically and handle response
+                function_call = self.available_functions.get(tool_func_name)
+                if function_call:
+                    # Use **func_args to unpack arguments dynamically
+                    function_response = function_call(**tool_func_args)
+                    print(f"Function response for {tool_func_name}: ", function_response)
                     
-                    # Add found pose to message history
+                    # Append function response to message history
                     messages.append({
                         'role': 'function',
-                        'name': func_name,
+                        "tool_call_id":tool_call_id,
+                        'name': tool_func_name,
                         'content': json.dumps(function_response)
                     })
-                    
-                    continue
-
-                elif func_name == 'move_to_location':
-                    # Call move_to_location function asynchronously
-                    function_response = await available_functions[func_name](func_args['location'])
-                    print("Function response for move_to_location:", function_response)
-
-                    # Add move_to_location response to message history
-                    messages.append({
-                        'role': 'function',
-                        'name': func_name,
-                        'content': function_response
-                    })
-
-                    continue
-                
-                elif func_name == 'find_object':
-                    print("Arguments sent to find_object: ", func_args['object_name'])
-                    # Call the find_object function
-                    function_response = available_functions[func_name](func_args['object_name'])
-                    print("function response for find_object: ", function_response)
-
-                    # Add the object detection response to the conversation
-                    messages.append({
-                        'role': 'function',
-                        'name': func_name, 
-                        'content': f"Found {function_response}."
-                    })
-
-                    continue
-
-                elif func_name == 'define_object_thresholds':
-                    # Call the find_object function
-                    function_response = available_functions[func_name](func_args['object_name'])
-                    print("Response from service: ", function_response)
-
-                    # Add the object detection response to the conversation
-                    messages.append({
-                        'role': 'function',
-                        'name': func_name, 
-                        'content': f"Function response: {function_response}."
-                    })
-
-                    continue
-
-                elif func_name == 'move_robot_to_pose':
-                    print("Arguments sent to move_robot_to_pose: ", func_args['pose'])
-                    # Call the move_robot_to_pose function
-                    function_response = available_functions[func_name](func_args['pose'])
-                    print("function response for move_robot_to_pose: ", function_response)
-
-                    # Add the response to the conversation
-                    messages.append({
-                        'role': 'function',
-                        'name': func_name, 
-                        'content': f"Function response: {function_response}."
-                    })
-
-                    continue
-
-                elif func_name == 'plan_robot_trajectory':
-                    print("Arguments sent to plan_robot_trajectory: ", func_args['pose'])
-                    # Call the plan_robot_trajectory function
-                    function_response = available_functions[func_name](func_args['pose'])
-                    print("function response for plan_robot_trajectory: ", function_response)
-
-                    # Add the object detection response to the conversation
-                    messages.append({
-                        'role': 'function',
-                        'name': func_name, 
-                        'content': f"Function response: {function_response}."
-                    })
-
-                    continue
-
-                elif func_name == 'execute_planned_trajectory':
-                    # Call the execute_planned_trajectory function
-                    function_response = available_functions[func_name]()
-                    print("function response for execute_planned_trajectory: ", function_response)
-
-                    # Add the object detection response to the conversation
-                    messages.append({
-                        'role': 'function',
-                        'name': func_name, 
-                        'content': f"Funtion response: {function_response}."
-                    })
-
-                    continue
-                
-                elif func_name == 'manipulate_right_gripper':
-                    # Call the open_gripper function
-                    function_response = available_functions[func_name](func_args['width'])
-                    print("function response from right gripper: ", function_response)
-
-                    # Add the object detection response to the conversation
-                    messages.append({
-                        'role': 'function',
-                        'name': func_name, 
-                        'content': f"Function response: {function_response}."
-                    })
-
-                    continue
-
-                elif func_name == 'manipulate_left_gripper':
-                    # Call the close_gripper function
-                    function_response = available_functions[func_name](func_args['width'])
-                    print("function response from left gripper: ", function_response)
-
-                    # Add the object detection response to the conversation
-                    messages.append({
-                        'role': 'function',
-                        'name': func_name, 
-                        'content': f"Function response: {function_response}."
-                    })
-
-                    continue
-
 
             # Get final response from model
             final_response = await self.client.chat.completions.create(
@@ -817,18 +527,12 @@ class LLMNode(Node):
 
             # Process function calls made by the model
             if 'tool_calls' in response['message']:
-                available_functions = {
-                    'get_pose_values_from_location': self.get_pose_values_from_location,
-                    'move_to_location': self.move_to_location,
-                    'move_robot_to_pose': self.move_robot_to_pose,
-                    'find_object': self.find_object
-                }
                 print("\nTool calls received from model: ", response['message']['tool_calls'])  # Debugging
                 print("Clean response from model: ", response) # Debugging
 
                 for tool in response['message']['tool_calls']:
                     print("\nFunction name called by model: ", tool['function']['name'])  # Debugging
-                    function_to_call = available_functions[tool['function']['name']]
+                    function_to_call = self.available_functions[tool['function']['name']]
 
                     if tool['function']['name'] == 'get_pose_values_from_location':
                         # Call get_pose_values_from_location and check if pose is valid

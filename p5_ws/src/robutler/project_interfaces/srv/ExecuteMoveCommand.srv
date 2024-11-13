@@ -4,3 +4,4 @@ bool execute  # Name of the object to adjust the value for
 ---
 # Response
 bool success
+string log

@@ -61,6 +61,7 @@ private:
     } else {
       RCLCPP_ERROR(this->get_logger(), "Failed to plan to target pose");
       response->result = false;
+      response->log = "Failed to plan to target pose";
     }
   }
 
@@ -77,9 +78,11 @@ private:
       RCLCPP_INFO(this->get_logger(), "The plan has been executed");
       plan_available_ = false;
       response->success = true;
+      response->log = "The plan has been executed";
     } else {
       RCLCPP_ERROR(this->get_logger(), "No plan available to execute");
       response->success = false;
+      response->log = "No plan available to execute";
     }
 
   }
