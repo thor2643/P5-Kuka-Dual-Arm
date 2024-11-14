@@ -30,8 +30,8 @@
     <group_state name="transport" group="right_arm">
         <joint name="A1" value="0"/>
         <joint name="A2" value="1.5876"/>
-        <joint name="A3" value="0"/>
-        <joint name="A4" value="0"/>
+        <joint name="A3" value="1"/>
+        <joint name="A4" value="1"/>
         <joint name="A5" value="0"/>
         <joint name="A6" value="0"/>
         <joint name="A7" value="0"/>
@@ -71,12 +71,6 @@
         <joint name="3f_palm_finger_1_joint" value="0"/>
         <joint name="3f_palm_finger_2_joint" value="0"/>
     </group_state>
-    <!--END EFFECTOR: Purpose: Represent information about an end effector.
-    <end_effector name="3f-gripper" parent_link="3f_palm" group="3f-gripper"/>
-
-    Comment back in if you want the center of movement to be round the end effector
-    -->
-
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="3f_finger_1_link_0" link2="3f_finger_1_link_1" reason="Adjacent"/>
     <disable_collisions link1="3f_finger_1_link_0" link2="3f_finger_1_link_2" reason="Never"/>

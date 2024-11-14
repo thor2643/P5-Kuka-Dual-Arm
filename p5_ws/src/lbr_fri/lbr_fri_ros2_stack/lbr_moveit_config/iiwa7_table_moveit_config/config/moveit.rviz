@@ -114,10 +114,6 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          table:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
         Loop Animation: true
         Robot Alpha: 0.5
         Robot Color: 150; 50; 150
@@ -141,7 +137,7 @@ Visualization Manager:
         Goal State Color: 250; 128; 0
         Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
-        Planning Group: arm
+        Planning Group: right_arm
         Query Goal State: true
         Query Start State: false
         Show Workspace: false
@@ -209,10 +205,6 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
           world:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          table:
             Alpha: 1
             Show Axes: false
             Show Trail: false

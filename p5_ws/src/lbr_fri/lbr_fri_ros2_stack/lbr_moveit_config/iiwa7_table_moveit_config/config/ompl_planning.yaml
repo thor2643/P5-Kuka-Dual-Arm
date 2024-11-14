@@ -27,3 +27,5 @@ RRTConnect:
 right_arm:
   default_planner_config: RRTstar  # Set RRTstar as the default planner
   planner_configs: [RRTstar]   
+  enforce_constrained_state_space: true
+  projection_evaluator: joints(A1,A2)
