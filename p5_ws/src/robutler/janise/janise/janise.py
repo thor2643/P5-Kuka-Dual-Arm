@@ -213,6 +213,7 @@ class LLMNode(Node):
             self.get_logger().info(f"Grasping widths: {response.grasp_widths}\n")
 
             # Define the transformation matrix from camera coordinates to world coordinates
+            """
             angle_around_x = 180-33
             T_world_cam = np.array([
                         [1, 0, 0, 0.487],  # Example values, replace with actual transformation values
@@ -220,6 +221,11 @@ class LLMNode(Node):
                         [0, np.sin(np.pi/180*angle_around_x), np.cos(np.pi/180*angle_around_x), 0.62],
                         [0, 0, 0, 1]
                         ])
+            """
+            T_world_cam = np.array([[ 0.9998524,  -0.00382788,  0.01674907,  0.48649258],
+                                    [ 0.00545733, -0.85361904, -0.52086923,  0.78510204],
+                                    [ 0.01629115,  0.52088376, -0.85347215,  0.70742285],
+                                    [ 0.0,          0.0,          0.0,          1.0, ]])
             
             # Extract the position from the pose and append 1 to make it a 4D vector
             center_pts = []
@@ -274,12 +280,19 @@ class LLMNode(Node):
 
     def plan_robot_trajectory(self, pose):
         # Found in CAD model
+        """
         T_world_moveit = np.array([
                         [1, 0, 0, -0.035],  # Example values, replace with actual transformation values
                         [0, 1, 0, -0.034],
                         [0, 0, 1, 0.95], #Before gripper correction: 0.809
                         [0, 0, 0, 1]
                     ])
+        """
+
+        T_world_moveit = np.array([[0.999983  , -0.00554552, -0.0018012 ,  -0.02903434],
+                                    [0.00554922,  0.99998249,  0.00205645,  -0.03177714],
+                                    [0.00178977, -0.00206641,  0.9999962, 0.84],#0.819373], comment back in when gripper is fixed
+                                    [0.0,          0.0,          0.0,          1.0        ]])
         
         # Extract the position from the pose and append 1 to make it a 4D vector
         pos_world = pose[:3]
