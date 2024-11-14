@@ -191,10 +191,10 @@ class LLMNode(Node):
 
         return f"Moving to {location} station with pose: {pose}"
 
-    def find_object(self, object: str) -> GetObjectInfo.Response:
-        print(f"\nRequesting the detector service to find {object}")  # Debugging
-        self.get_logger().info(f"\nLooking for object: {object}\n")
-        self.detector_req.object_name = object
+    def find_object(self, object_name: str) -> GetObjectInfo.Response:
+        print(f"\nRequesting the detector service to find {object_name}")  # Debugging
+        self.get_logger().info(f"\nLooking for object: {object_name}\n")
+        self.detector_req.object_name = object_name
  
         self.future = self.detector_client.call_async(self.detector_req)
         rclpy.spin_until_future_complete(self, self.future)
@@ -232,13 +232,13 @@ class LLMNode(Node):
             # Save the object information in a dictionary
             for i, center in enumerate(center_pts_world):
                 # Make sure the object name is unique
-                object_name = object 
+                object_name_temp = object_name 
                 count = 1
-                while object_name in self.objects_on_table:
-                    object_name = f"{object}_{count}"
+                while object_name_temp in self.objects_on_table:
+                    object_name_temp = f"{object_name}_{count}"
                     count += 1
 
-                self.objects_on_table[object_name] = {
+                self.objects_on_table[object_name_temp] = {
                     'center': center.tolist()[0:3],
                     'orientation': response.orientations[i],
                     'grasp_width': response.grasp_widths[i]
@@ -443,6 +443,7 @@ class LLMNode(Node):
                 function_call = self.available_functions.get(tool_func_name)
                 if function_call:
                     # Use **func_args to unpack arguments dynamically
+                    #function_response = function_call(*tool_func_args.values())
                     function_response = function_call(**tool_func_args)
                     print(f"Function response for {tool_func_name}: ", function_response)
                     
@@ -451,7 +452,7 @@ class LLMNode(Node):
                         'role': 'function',
                         "tool_call_id":tool_call_id,
                         'name': tool_func_name,
-                        'content': json.dumps(function_response)
+                        'content': f"Function response: {function_response}" #json.dumps(function_response)
                     })
 
             # Get final response from model
