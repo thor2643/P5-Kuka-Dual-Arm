@@ -35,16 +35,16 @@ int main(int argc, char **argv) {
   // Create the box and set its dimensions
   shape_msgs::msg::SolidPrimitive box;
   box.type = shape_msgs::msg::SolidPrimitive::BOX;  
-  box.dimensions = { 5, 5.667, 5.5 };
+  box.dimensions = { 1, 0.667, 1.5 };
   box_constraint.constraint_region.primitives.emplace_back(box);
 
   // Set position of the box 
-  geometry_msgs::msg::Pose box_pose;
-  box_pose.position.x = -2; //-0.035;
-  box_pose.position.y = 0; //-0.034;
-  box_pose.position.z = 0; //0.8095;
-  box_pose.orientation.w = 0.5; 
-  box_constraint.constraint_region.primitive_poses.emplace_back(box_pose);
+  geometry_msgs::msg::Pose box_pose; // 
+  box_pose.position.x = 0.465;
+  box_pose.position.y = 0.2995;
+  box_pose.position.z = 1.5595;
+  box_pose.orientation.w = 1; 
+  box_constraint.constraint_region.primitive_poses.emplace_back(box_pose); // The box position is at it's center
   box_constraint.weight = 1.0;
 
   // We create a generic Constraints message and add our box_constraint to the position_constraints.
@@ -52,36 +52,34 @@ int main(int argc, char **argv) {
   box_constraints.position_constraints.emplace_back(box_constraint);
 
    // Visualize the box constraint
-  auto moveit_visual_tools = moveit_visual_tools::MoveItVisualTools{ node_ptr, "A1", rviz_visual_tools::RVIZ_MARKER_TOPIC, move_group_interface.getRobotModel()};
-
+  auto moveit_visual_tools = moveit_visual_tools::MoveItVisualTools{ node_ptr, "world", rviz_visual_tools::RVIZ_MARKER_TOPIC, move_group_interface.getRobotModel()};
   Eigen::Vector3d box_point_1(box_pose.position.x - box.dimensions[0] / 2, box_pose.position.y - box.dimensions[1] / 2,
                               box_pose.position.z - box.dimensions[2] / 2);
   Eigen::Vector3d box_point_2(box_pose.position.x + box.dimensions[0] / 2, box_pose.position.y + box.dimensions[1] / 2,
                               box_pose.position.z + box.dimensions[2] / 2);
 
- 
   moveit_visual_tools.publishCuboid(box_point_1, box_point_2, rviz_visual_tools::TRANSLUCENT_DARK);
   moveit_visual_tools.trigger();
-     
+
   // --- Set a target pose right_arm, placing 3f_tool0 here --- 
   geometry_msgs::msg::Pose target_pose;
   target_pose.orientation.w = 1.0;
-  target_pose.position.x = 0.5;
+  target_pose.position.x = 0;
   target_pose.position.y = 0.5;
-  target_pose.position.z = 1.5;
+  target_pose.position.z = 1.8;
   move_group_interface.setPoseTarget(target_pose);
 
   // -- Create a plan to that target pose -- 
   moveit::planning_interface::MoveGroupInterface::Plan plan;
-  //move_group_interface.setPathConstraints(box_constraints); // Apply the box constraint to the planner
-  //move_group_interface.setPlanningTime(10.0); // The box constraint adds calculation time to the planner
+  move_group_interface.setPathConstraints(box_constraints); // Apply the box constraint to the planner
+  move_group_interface.setPlanningTime(10.0); // The box constraint adds calculation time to the planner
   auto error_code = move_group_interface.plan(plan);
 
 
   if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
     // Execute the plannode_ptr->get_logger()->info("The plan is now executed");
     RCLCPP_INFO(node_ptr->get_logger(), "\nThe plan is now executed\n");
-    move_group_interface.execute(plan);
+    //move_group_interface.execute(plan);
     RCLCPP_INFO(node_ptr->get_logger(), "\nThe plan has been executed\n");
   } else {
     RCLCPP_ERROR(node_ptr->get_logger(), "Failed to plan to target pose");
