@@ -69,6 +69,23 @@
         </visual>        
     </link>
 
+    <link name="gripper_mounting_plate">
+        <visual>
+            <origin xyz="0.045 0.045 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://lbr_description/meshes/gripper_mounting_plate/gripper_mounting_plate.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="steel_satin"/>
+        </visual>
+
+        <collision>
+            <origin xyz="0.045 0.045 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://lbr_description/meshes/gripper_mounting_plate/gripper_mounting_plate.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>    
+
     <!--joint between world and table-->
     <joint name="world_joint" type="fixed">
         <parent link="world" />
@@ -92,10 +109,17 @@
     <!-- joint between right iiwa7 and 3f gripper-->
     <joint name="ee_mount" type="fixed">    
         <parent link="link_ee" />
-        <child link="3f_palm" />
+        <child link="gripper_mounting_plate" />
         <origin xyz="0 0 0.05" rpy="1.57079633 0 0"/>
     </joint>
     
+    <!-- joint between right iiwa7 and 3f gripper-->
+    <joint name="adapter_mount" type="fixed">    
+        <parent link="gripper_mounting_plate" />
+        <child link="3f_palm" />
+        <origin xyz="0 0 0.05" rpy="1.57079633 0 0"/>
+    </joint>
+
     <!-- joint between wooden camera mount and camera, done using d435 xacro macro
     <xacro:sensor_d435 parent="table" name="camera" origin="xyz='0 0 0.1' rpy='0 0 0'" />
     -->
