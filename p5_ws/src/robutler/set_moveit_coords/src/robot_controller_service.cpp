@@ -10,14 +10,16 @@ public:
   RobotControllerService() : Node("robot_controller_service") {
     // Configure node
     //auto node_ptr = this->shared_from_this();
-    this->declare_parameter("robot_name", "iiwa7_table");
+    this->declare_parameter("robot_name", "dual_arm");
     auto robot_name = this->get_parameter("robot_name").as_string();
 
     // Create the options for the MoveGroupInterface
-    moveit::planning_interface::MoveGroupInterface::Options options("right_arm", "robot_description", robot_name);
+    moveit::planning_interface::MoveGroupInterface::Options right_options("right_arm", "robot_description", robot_name);
+    moveit::planning_interface::MoveGroupInterface::Options left_options("left_arm", "robot_description", robot_name);
     
     // Pass the options and the shared pointer of the current node
-    move_group_interface_ = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options);
+    move_group_interface_right = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), right_options);
+    move_group_interface_left = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), left_options);
 
     planner_service_ = this->create_service<project_interfaces::srv::PlanMoveCommand>(
         "plan_move_command", std::bind(&RobotControllerService::handle_planner_service, this, std::placeholders::_1, std::placeholders::_2));
@@ -28,7 +30,8 @@ public:
 
 private:
   std::string robot_name_;
-  std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface_;
+  std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface_right;
+  std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface_left;
   rclcpp::Service<project_interfaces::srv::PlanMoveCommand>::SharedPtr planner_service_;
   rclcpp::Service<project_interfaces::srv::ExecuteMoveCommand>::SharedPtr execute_service_;
   moveit::planning_interface::MoveGroupInterface::Plan plan_;
@@ -50,9 +53,9 @@ private:
     target_pose.position.y = request->position.y;
     target_pose.position.z = request->position.z;
 
-    move_group_interface_->setPoseTarget(target_pose);
+    move_group_interface_right->setPoseTarget(target_pose);
 
-    auto error_code = move_group_interface_->plan(plan_);
+    auto error_code = move_group_interface_right->plan(plan_);
 
     if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
       RCLCPP_INFO(this->get_logger(), "The trajectory has been planned succesfully");
@@ -74,7 +77,7 @@ private:
     if (plan_available_)
     {
       RCLCPP_INFO(this->get_logger(), "The planned trajectory is being executed");
-      move_group_interface_->execute(plan_);
+      move_group_interface_right->execute(plan_);
       RCLCPP_INFO(this->get_logger(), "The plan has been executed");
       plan_available_ = false;
       response->success = true;
