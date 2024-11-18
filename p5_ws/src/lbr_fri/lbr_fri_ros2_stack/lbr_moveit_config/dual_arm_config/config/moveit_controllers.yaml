@@ -5,9 +5,7 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 moveit_simple_controller_manager:
   controller_names:
     - right_arm_controller
-    - right_gripper_controller
     - left_arm_controller
-    - left_gripper_controller
 
   right_arm_controller:
     type: FollowJointTrajectory
@@ -23,24 +21,6 @@ moveit_simple_controller_manager:
       - right_A7
     action_ns: follow_joint_trajectory
     default: true
-  right_gripper_controller:
-    type: FollowJointTrajectory
-    action_ns: follow_joint_trajectory
-    default: true
-    joints:
-      - 3f_palm_finger_1_joint
-      - 3f_finger_1_joint_1
-      - 3f_finger_1_joint_2
-      - 3f_finger_1_joint_3
-      - 3f_palm_finger_2_joint
-      - 3f_finger_2_joint_1
-      - 3f_finger_2_joint_2
-      - 3f_finger_2_joint_3
-      - 3f_finger_middle_joint_1
-      - 3f_finger_middle_joint_2
-      - 3f_finger_middle_joint_3
-    action_ns: follow_joint_trajectory
-    default: true
   left_arm_controller:
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
@@ -53,13 +33,5 @@ moveit_simple_controller_manager:
       - left_A5
       - left_A6
       - left_A7
-    action_ns: follow_joint_trajectory
-    default: true
-  left_gripper_controller:
-    type: FollowJointTrajectory
-    action_ns: follow_joint_trajectory
-    default: true
-    joints:
-      - left_finger_joint
     action_ns: follow_joint_trajectory
     default: true

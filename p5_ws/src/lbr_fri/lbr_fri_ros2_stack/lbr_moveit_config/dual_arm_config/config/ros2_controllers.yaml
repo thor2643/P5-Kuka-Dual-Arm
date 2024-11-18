@@ -7,15 +7,7 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
 
 
-    right_gripper_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-
-
     left_arm_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-
-
-    left_gripper_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
 
@@ -37,25 +29,6 @@ right_arm_controller:
     state_interfaces:
       - position
       - velocity
-right_gripper_controller:
-  ros__parameters:
-    joints:
-      - 3f_palm_finger_1_joint
-      - 3f_finger_1_joint_1
-      - 3f_finger_1_joint_2
-      - 3f_finger_1_joint_3
-      - 3f_palm_finger_2_joint
-      - 3f_finger_2_joint_1
-      - 3f_finger_2_joint_2
-      - 3f_finger_2_joint_3
-      - 3f_finger_middle_joint_1
-      - 3f_finger_middle_joint_2
-      - 3f_finger_middle_joint_3
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
 left_arm_controller:
   ros__parameters:
     joints:
@@ -66,15 +39,6 @@ left_arm_controller:
       - left_A5
       - left_A6
       - left_A7
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-left_gripper_controller:
-  ros__parameters:
-    joints:
-      - left_finger_joint
     command_interfaces:
       - position
     state_interfaces:

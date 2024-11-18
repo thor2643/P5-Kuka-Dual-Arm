@@ -32,7 +32,7 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     model = LaunchConfiguration("model").perform(context)
     moveit_configs_builder = LBRMoveGroupMixin.moveit_configs_builder(
         robot_name=model,
-        package_name=f"{model}_moveit_config",
+        package_name=f"{model}_config",
     )
     move_group_params = LBRMoveGroupMixin.params_move_group()
 
@@ -71,7 +71,7 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     
     # RViz and MoveIt
     rviz_moveit = RVizMixin.node_rviz(
-        rviz_config_pkg=f"{model}_moveit_config",
+        rviz_config_pkg=f"{model}_config",
         rviz_config="config/moveit.rviz",
         parameters=LBRMoveGroupMixin.params_rviz(
             moveit_configs=moveit_configs_builder.to_moveit_configs()

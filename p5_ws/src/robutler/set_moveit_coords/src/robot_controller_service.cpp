@@ -53,9 +53,9 @@ private:
     target_pose.position.y = request->position.y;
     target_pose.position.z = request->position.z;
 
-    move_group_interface_right->setPoseTarget(target_pose);
+    move_group_interface_left->setPoseTarget(target_pose);
 
-    auto error_code = move_group_interface_right->plan(plan_);
+    auto error_code = move_group_interface_left->plan(plan_);
 
     if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
       RCLCPP_INFO(this->get_logger(), "The trajectory has been planned succesfully");
@@ -77,7 +77,7 @@ private:
     if (plan_available_)
     {
       RCLCPP_INFO(this->get_logger(), "The planned trajectory is being executed");
-      move_group_interface_right->execute(plan_);
+      move_group_interface_left->execute(plan_);
       RCLCPP_INFO(this->get_logger(), "The plan has been executed");
       plan_available_ = false;
       response->success = true;

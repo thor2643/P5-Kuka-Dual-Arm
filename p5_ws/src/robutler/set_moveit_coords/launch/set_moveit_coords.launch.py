@@ -16,7 +16,7 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     # generate moveit configs
     moveit_configs = LBRMoveGroupMixin.moveit_configs_builder(
         robot_name=model,
-        package_name=f"{model}_moveit_config",
+        package_name=f"{model}_config", # changed from f"{model}_moveit_config" to f"{model}_config"
     )
 
     # launch demo node
