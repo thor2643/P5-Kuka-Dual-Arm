@@ -33,7 +33,7 @@ C_robot = np.mean(P_robot, axis=0)
 # Center the points
 P_camera_centered = P_camera - C_camera
 P_robot_centered = P_robot - C_robot
-
+ 
 # Compute covariance matrix
 H = np.dot(P_camera_centered.T, P_robot_centered)
 
@@ -51,12 +51,18 @@ if np.linalg.det(R) < 0:
 # Compute translation
 t = C_robot - np.dot(R, C_camera)
 
+ # RMSD
+rmsd = np.sqrt(np.sum(np.square(np.dot(P_camera_centered, R) - P_robot_centered)) / P_camera_centered.shape[0])
+print("RMSD:", rmsd)
+
+
+
+
 # Construct transformation matrix
 T = np.eye(4)
 T[:3, :3] = R
 T[:3, 3] = t
 
-print("Transformation Matrix:\n", T)
 
 #test 
 point = np.array([-0.24237354, 0.23000564, 0.94000006,1])
