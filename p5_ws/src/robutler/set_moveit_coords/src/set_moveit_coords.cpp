@@ -1,13 +1,17 @@
 #include "moveit/move_group_interface/move_group_interface.h"
 #include <moveit_visual_tools/moveit_visual_tools.h>
-//#include <graph_msgs/msg/geometry_graph.hpp>
 #include "rclcpp/rclcpp.hpp"
 #include <thread>
 
-
+// This file is only for testing the planner configuration and the box constraint.
 
 int main(int argc, char **argv) {
   rclcpp::init(argc, argv);
+
+  // Get position from launch
+  int arg1 = std::atoi(argv[4]);
+  int arg2 = std::atoi(argv[5]);
+  int arg3 = std::atoi(argv[6]);
 
   // Configure node
   auto node_ptr = rclcpp::Node::make_shared("set_moveit_coords");
@@ -16,13 +20,11 @@ int main(int argc, char **argv) {
 
   // Create MoveGroupInterface (lives inside robot_name namespace)
   auto move_group_interface = moveit::planning_interface::MoveGroupInterface(
-      node_ptr, moveit::planning_interface::MoveGroupInterface::Options("right_arm", "robot_description",
-                                                                        robot_name));
+      node_ptr, moveit::planning_interface::MoveGroupInterface::Options("right_arm", "robot_description", robot_name));
 
   //move_group_interface.setEndEffectorLink("3f_palm_finger_2_joint");
-  move_group_interface.setPlannerId("RRTstar");
-
-
+  //move_group_interface.setPlannerId("RRTstar");
+  
   // Spin rviz
   rclcpp::executors::SingleThreadedExecutor executor;
   executor.add_node(node_ptr);

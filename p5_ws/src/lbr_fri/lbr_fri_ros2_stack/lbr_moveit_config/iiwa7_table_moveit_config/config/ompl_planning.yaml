@@ -23,10 +23,10 @@ planner_configs:
     maximum_waypoint_distance: 0.01
 
     # Tell the planner that the state space is constrained (The box defined in set_moveit_coords), and which joints the projection should be done on (This projection is used to enforce the constraints)
-    enforce_constrained_state_space: true
-    projection_evaluator: joints(A1,A2)
+    #enforce_constrained_state_space: true
+    #projection_evaluator: joints(A1,A2)
 
-    # Just checking if the planner acccpts any prameters: (It does not)
+    # Just checking if the planner acccpts any prameters: (It does)
     test: 1
 
   RRTConnect:

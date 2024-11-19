@@ -9,7 +9,7 @@ box_constraint:
             orientation:
               w: 1.0
         primitives:
-          - dimensions: [2, 2, 2]  # Box dimensions [x, y, z]
+          - dimensions: [2, 3, 2]  # Box dimensions [x, y, z]
             type: box
       weight: 1.0
       header:
