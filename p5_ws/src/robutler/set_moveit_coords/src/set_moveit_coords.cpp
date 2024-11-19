@@ -20,6 +20,8 @@ int main(int argc, char **argv) {
                                                                         robot_name));
 
   //move_group_interface.setEndEffectorLink("3f_palm_finger_2_joint");
+  move_group_interface.setPlannerId("RRTstar");
+
 
   // Spin rviz
   rclcpp::executors::SingleThreadedExecutor executor;
@@ -58,7 +60,7 @@ int main(int argc, char **argv) {
   Eigen::Vector3d box_point_2(box_pose.position.x + box.dimensions[0] / 2, box_pose.position.y + box.dimensions[1] / 2,
                               box_pose.position.z + box.dimensions[2] / 2);
 
-  moveit_visual_tools.publishCuboid(box_point_1, box_point_2, rviz_visual_tools::TRANSLUCENT_DARK);
+  //moveit_visual_tools.publishCuboid(box_point_1, box_point_2, rviz_visual_tools::TRANSLUCENT_DARK);
   moveit_visual_tools.trigger();
 
   // --- Set a target pose right_arm, placing 3f_tool0 here --- 
@@ -66,15 +68,22 @@ int main(int argc, char **argv) {
   target_pose.orientation.w = 1.0;
   target_pose.position.x = 0;
   target_pose.position.y = 0.5;
-  target_pose.position.z = 1.8;
+  target_pose.position.z = 1.5;
   move_group_interface.setPoseTarget(target_pose);
-
+  
   // -- Create a plan to that target pose -- 
   moveit::planning_interface::MoveGroupInterface::Plan plan;
-  move_group_interface.setPathConstraints(box_constraints); // Apply the box constraint to the planner
-  move_group_interface.setPlanningTime(10.0); // The box constraint adds calculation time to the planner
-  auto error_code = move_group_interface.plan(plan);
+  
+  // Print the planner parameters
+  std::map<std::string, std::string> planer_params = move_group_interface.getPlannerParams("right_arm", "RRTstar");
+  for (const auto &param : planer_params)
+    {
+        RCLCPP_INFO(node_ptr->get_logger(), "Parameter: %s, Value: %s", param.first.c_str(), param.second.c_str());
+    }
 
+  //move_group_interface.setPathConstraints(box_constraints); // Apply the box constraint to the planner
+  //move_group_interface.setPlanningTime(10.0); // The box constraint adds calculation time to the planner
+  auto error_code = move_group_interface.plan(plan);
 
   if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
     // Execute the plannode_ptr->get_logger()->info("The plan is now executed");
