@@ -23,7 +23,7 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     ld.add_action(
         Node(
             package="set_moveit_coords",
-            executable="robot_controller_service", #"set_moveit_coords",
+            executable="robot_controller_service.py", #"set_moveit_coords",
             parameters=[
                 moveit_configs.to_dict(),
                 {"use_sim_time": LaunchConfiguration("sim")},

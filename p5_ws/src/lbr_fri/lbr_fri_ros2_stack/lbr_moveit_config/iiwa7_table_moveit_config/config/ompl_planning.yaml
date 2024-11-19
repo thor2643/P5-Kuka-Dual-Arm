@@ -9,21 +9,38 @@ request_adapters: >-
     default_planner_request_adapters/FixStartStateCollision
     default_planner_request_adapters/FixStartStatePathConstraints
     
-        
+planner_configs: 
 # Define specific parameters for each planner
-RRTstar:
-  type: geometric::RRTstar
-  range: 0.1
-  goal_bias: 0.05
-  delay_collision_checking: 1
+  RRTstar:
+    type: geometric::RRTstar
+    termination_condition: CostConvergence[10,.1]  
+    range: 0.1
+    goal_bias: 0.1
+    delay_collision_checking: 1 #
 
-RRTConnect:
-  type: geometric::RRTConnect
-  range: 0.2
+    # Collision checking parameters
+    longest_valid_segment_fraction: 0.01
+    maximum_waypoint_distance: 0.01
+
+    # Tell the planner that the state space is constrained (The box defined in set_moveit_coords), and which joints the projection should be done on (This projection is used to enforce the constraints)
+    enforce_constrained_state_space: true
+    projection_evaluator: joints(A1,A2)
+
+    # Just checking if the planner acccpts any prameters: (It does not)
+    test: 1
+
+  RRTConnect:
+    type: geometric::RRTConnect
+    range: 0.2
   
-# Eventuelle andre planners kan findes i ompl_planning.yaml (Den har samme navn som denne fil), 
+# Eventuelle andre planners kan findes i ompl_default.yaml. Parameterne til RRTstar var fundet i moveit docs. 
 
-# Define planners for right_arm MoveGroup
+# Definning planners for right_arm MoveGroup
 right_arm:
-  default_planner_config: RRTstar  # Set RRTstar as the default planner
-  planner_configs: [RRTstar]   
+  planner_configs: 
+    - RRTstar       
+  
+
+
+ 
+  

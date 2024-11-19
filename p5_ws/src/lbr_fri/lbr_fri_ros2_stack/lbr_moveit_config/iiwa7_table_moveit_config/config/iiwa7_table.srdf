@@ -30,8 +30,8 @@
     <group_state name="transport" group="right_arm">
         <joint name="A1" value="0"/>
         <joint name="A2" value="1.5876"/>
-        <joint name="A3" value="0"/>
-        <joint name="A4" value="0"/>
+        <joint name="A3" value="1"/>
+        <joint name="A4" value="1"/>
         <joint name="A5" value="0"/>
         <joint name="A6" value="0"/>
         <joint name="A7" value="0"/>
