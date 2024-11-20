@@ -25,9 +25,6 @@ int main(int argc, char **argv) {
   // Create MoveGroupInterface (lives inside robot_name namespace)
   auto move_group_interface = moveit::planning_interface::MoveGroupInterface(
       node_ptr, moveit::planning_interface::MoveGroupInterface::Options("right_arm", "robot_description", robot_name));
-
-  //move_group_interface.setEndEffectorLink("3f_palm_finger_2_joint");
-  move_group_interface.setPlannerId("RRTstar");
   
   // --- Constraint the planner so the end effector link (3f_tool0) is always inside a box ---
   // Link to this code: https://moveit.picknik.ai/main/doc/how_to_guides/using_ompl_constrained_planning/ompl_constrained_planning.html
@@ -51,19 +48,59 @@ int main(int argc, char **argv) {
   box_constraint.constraint_region.primitive_poses.emplace_back(box_pose); // The box position is at it's center
   box_constraint.weight = 1.0;
 
-  // We create a generic Constraints message and add our box_constraint to the position_constraints.
-  moveit_msgs::msg::Constraints box_constraints;
-  box_constraints.position_constraints.emplace_back(box_constraint);
+  // We make a generic constraint, and add box_constraint to the position_constraints.
+  moveit_msgs::msg::Constraints constraints;
+  constraints.position_constraints.emplace_back(box_constraint);
 
-   // Visualize the box constraint
-  auto moveit_visual_tools = moveit_visual_tools::MoveItVisualTools{ node_ptr, "world", rviz_visual_tools::RVIZ_MARKER_TOPIC, move_group_interface.getRobotModel()};
-  Eigen::Vector3d box_point_1(box_pose.position.x - box.dimensions[0] / 2, box_pose.position.y - box.dimensions[1] / 2,
-                              box_pose.position.z - box.dimensions[2] / 2);
-  Eigen::Vector3d box_point_2(box_pose.position.x + box.dimensions[0] / 2, box_pose.position.y + box.dimensions[1] / 2,
-                              box_pose.position.z + box.dimensions[2] / 2);
+  // --- Set joint constraints ---
+  moveit_msgs::msg::JointConstraint joint_constraint1;
+  joint_constraint1.joint_name = "A1"; // The first joint
+  joint_constraint1.position = 0.0;       // Center of the allowed range
+  joint_constraint1.tolerance_above = 2;//1.57;  // +90 degrees in radians
+  joint_constraint1.tolerance_below = 2;//1.57;  // -90 degrees in radians
+  joint_constraint1.weight = 1.0;         // Weight of the constraint
+  // We add joint constraints to the generic constraints
+  constraints.joint_constraints.push_back(joint_constraint1);
 
-  moveit_visual_tools.publishCuboid(box_point_1, box_point_2, rviz_visual_tools::TRANSLUCENT_DARK);
-  moveit_visual_tools.trigger();
+  
+  moveit_msgs::msg::JointConstraint joint_constraint2;
+  joint_constraint2.joint_name = "A2"; // The second joint
+  joint_constraint2.position = 0.0;    // Center of the allowed range
+  joint_constraint2.tolerance_above = 2.0943951;  // +120 degrees in radians
+  joint_constraint2.tolerance_below = 0.174532925; // -10 degrees in radians
+  joint_constraint2.weight = 1.0;         // Weight of the constraint
+  constraints.joint_constraints.push_back(joint_constraint2);
+  
+
+  /*
+  moveit_msgs::msg::JointConstraint joint_constraint4;
+  joint_constraint4.joint_name = "A4"; // The fourth joint
+  joint_constraint4.position = 0.0;       // Center of the allowed range
+  joint_constraint4.tolerance_above = 0.87;  // +50 degrees in radians
+  joint_constraint4.tolerance_below = 0.87;  // -50 degrees in radians
+  joint_constraint4.weight = 1.0;         // Weight of the constraint
+  constraints.joint_constraints.push_back(joint_constraint4);
+  */
+
+  
+  moveit_msgs::msg::JointConstraint joint_constraint5;
+  joint_constraint5.joint_name = "A5"; // The fifth joint
+  joint_constraint5.position = 0.0;       // Center of the allowed range
+  joint_constraint5.tolerance_above = 1.57;  // +90 degrees in radians
+  joint_constraint5.tolerance_below = 1.57;  // -90 degrees in radians
+  joint_constraint5.weight = 1.0;         // Weight of the constraint
+  constraints.joint_constraints.push_back(joint_constraint5);
+  
+
+  /*
+  moveit_msgs::msg::JointConstraint joint_constraint6;
+  joint_constraint6.joint_name = "A6"; // The sixth joint
+  joint_constraint6.position = 0.0;       // Center of the allowed range
+  joint_constraint6.tolerance_above = 1.57;  // +90 degrees in radians
+  joint_constraint6.tolerance_below = 1.57;  // -90 degrees in radians
+  joint_constraint6.weight = 1.0;         // Weight of the constraint
+  constraints.joint_constraints.push_back(joint_constraint6);
+  */
 
   // --- Set a target pose right_arm, placing 3f_tool0 here --- 
   geometry_msgs::msg::Pose target_pose;
@@ -83,9 +120,20 @@ int main(int argc, char **argv) {
         RCLCPP_INFO(node_ptr->get_logger(), "Parameter: %s, Value: %s", param.first.c_str(), param.second.c_str());
     }
 
-  move_group_interface.setPathConstraints(box_constraints); // Apply the box constraint to the planner
-  move_group_interface.setPlanningTime(20.0); // The box constraint adds calculation time to the planner
-  //move_group_interface.setWorkspace(0.0, 0.0, 0.0, 3.0, 3.0, 3.0); // Does not effect revvolute joints
+  // Visualize the box constraint
+  auto moveit_visual_tools = moveit_visual_tools::MoveItVisualTools{ node_ptr, "world", rviz_visual_tools::RVIZ_MARKER_TOPIC, move_group_interface.getRobotModel()};
+  Eigen::Vector3d box_point_1(box_pose.position.x - box.dimensions[0] / 2, box_pose.position.y - box.dimensions[1] / 2,
+                              box_pose.position.z - box.dimensions[2] / 2);
+  Eigen::Vector3d box_point_2(box_pose.position.x + box.dimensions[0] / 2, box_pose.position.y + box.dimensions[1] / 2,
+                              box_pose.position.z + box.dimensions[2] / 2);
+  moveit_visual_tools.publishCuboid(box_point_1, box_point_2, rviz_visual_tools::TRANSLUCENT_DARK);
+  moveit_visual_tools.trigger();
+
+
+  // Apply constraints and changes, and plan to the target pose
+  move_group_interface.setPlannerId("TRRT"); // Can also be set to "RRTConnect"
+  move_group_interface.setPathConstraints(constraints); // Apply the box constraint to the planner
+  move_group_interface.setPlanningTime(120.0); // The box constraint adds calculation time to the planner
   auto error_code = move_group_interface.plan(plan);
 
   if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
