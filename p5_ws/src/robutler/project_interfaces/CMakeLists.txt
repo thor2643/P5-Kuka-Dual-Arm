@@ -29,8 +29,9 @@ find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/GetObjectInfo.srv"
-  "srv/MoveCommand.srv"
+  "srv/PlanMoveCommand.srv"
   "srv/DefineObjectInfo.srv"
+  "srv/ExecuteMoveCommand.srv"
   DEPENDENCIES geometry_msgs
 )
 

@@ -68,6 +68,8 @@ class LBRMoveGroupMixin:
                 ),
             )
             .planning_pipelines(default_planning_pipeline="ompl")
+            #.planning_pipelines["ompl"]["right_arm"]["enforce_constrained_state_space"] = True
+            #.planning_pipelines["ompl"]["right_arm"]["projection_evaluator"] = "joints(3f_tool0)"
         )
 
     @staticmethod

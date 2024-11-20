@@ -1,12 +1,13 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 70
+    Help Height: 138
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /MotionPlanning1
+        - /MarkerArray1
       Splitter Ratio: 0.5
-    Tree Height: 396
+    Tree Height: 358
   - Class: rviz_common/Help
     Name: Help
   - Class: rviz_common/Views
@@ -61,11 +62,85 @@ Visualization Manager:
         Color Enabled: false
         Interrupt Display: false
         Links:
+          3f_finger_1_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_1_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_1_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_1_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_2_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_2_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_2_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_2_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_middle_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_middle_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_middle_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_middle_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           All Links Enabled: true
           Expand Joint Details: false
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          cam_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           link_0:
             Alpha: 1
             Show Axes: false
@@ -110,11 +185,12 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          world:
+          table:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          table:
+            Value: true
+          world:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -141,7 +217,7 @@ Visualization Manager:
         Goal State Color: 250; 128; 0
         Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
-        Planning Group: arm
+        Planning Group: right_arm
         Query Goal State: true
         Query Start State: false
         Show Workspace: false
@@ -159,11 +235,85 @@ Visualization Manager:
       Scene Robot:
         Attached Body Color: 150; 50; 150
         Links:
+          3f_finger_1_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_1_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_1_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_1_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_2_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_2_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_2_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_2_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_middle_link_0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_middle_link_1:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_middle_link_2:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_finger_middle_link_3:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_palm:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          3f_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           All Links Enabled: true
           Expand Joint Details: false
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          cam_mount:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           link_0:
             Alpha: 1
             Show Axes: false
@@ -208,11 +358,12 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          world:
+          table:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          table:
+            Value: true
+          world:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -221,6 +372,18 @@ Visualization Manager:
         Show Robot Visual: true
       Value: true
       Velocity_Scaling_Factor: 0.1
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rviz_visual_tools
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 21; 21; 26
@@ -239,7 +402,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 3
+      Distance: 5.853492259979248
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -262,7 +425,7 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1043
+  Height: 1892
   Help:
     collapsed: false
   Hide Left Dock: false
@@ -271,9 +434,9 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002b4000003b9fc0200000005fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004100fffffffb000000100044006900730070006c006100790073010000003d0000020f000000c900fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000252000001a40000017d00fffffffb0000000800480065006c0070000000029a0000006e0000006e00fffffffb0000000a005600690065007700730000000339000000bd000000a400ffffff000004c6000003b900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000003a3000006c8fc0200000005fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000007a00fffffffb000000100044006900730070006c006100790073010000006e0000025e0000018200fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000002d80000045e000002b800fffffffb0000000800480065006c0070000000029a0000006e000000d400fffffffb0000000a005600690065007700730000000339000000bd0000013200ffffff00000b51000006c800000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 1920
-  X: 1080
-  Y: 435
+  Width: 3840
+  X: 0
+  Y: 54

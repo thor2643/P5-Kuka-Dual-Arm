@@ -1,0 +1,172 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "get_available_locations",
+            "description": "Used only to retrieve a list of locations that have predefined poses. It can be called before move_to_location to make ensure that the location parameter is indeed a valid parameter.",
+            "parameters": {}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_pose_values_from_location",
+            "description": "Used only to retrieve the robot world coordinates based on the user-specified location. It does not move the robot",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "The name of the target location, e.g., 'home', 'cooling', or 'painting'."
+                    }
+                },
+                "required": ["location"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "move_to_location",
+            "description": "Retrieves the robot pose based on the user-specified location and sends them to the robot to make it move to said location.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "The name of the target location, e.g., 'home'."
+                    }
+                },
+                "required": ["location"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "find_object",
+            "description": "Find the object in the environment using the object detector service. The object name should be provided as an argument to this function. The object detector service will return the number of objects found as well as the Cartesian center point, width, height and orientation of each object.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "object_name": {
+                        "type": "string",
+                        "description": "The name of the object that must be found. Only one name can be provided. Must use _ (underscore) instead of spaces."
+                    }
+                },
+                "required": ["object_name"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "define_object_thresholds",
+            "description": "Lets the user define the object thresholds for the object detector service. An image will pop up with trackbars to the side, where the user can adhust the thresholds and se the resulting image. The object to define thresholds for should be provided as an argument. Use underscore _ (underscore) as spaces. The thresholds will be saved and used for the object detector service.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "object_name": {
+                        "type": "string",
+                        "description": "The name of the object for which new thresholds must be defined. Only one name can be provided. Must use _ (underscore) instead of spaces."
+                    }
+                },
+                "required": ["object_name"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "move_robot_to_pose",
+            "description": "Move the robot to a specific pose in the environment. The pose should be provided as an argument to this function. The robot will move to the specified pose. Notice, the trajectory is executed on the physical robot, so use this function with caution. Otherwise use a combination of plan_robot_trajectory and execute_planned_trajectory.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "pose": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "A list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees."
+                    }
+                },
+                "required": ["pose"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "plan_robot_trajectory",
+            "description": "Plan a robot trajectory to a given pose. The planned trajectory will be simulated and visualised for the user. If allowed by the user the trajectory can be executed by running the execute_planned_trajectory.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "pose": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "A list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees."
+                    }
+                },
+                "required": ["pose"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "execute_planned_trajectory",
+            "description": "This function executes the trajectory on the physical robot planned by the plan_robot_trajectory function. Note that the plan_robot_trajectory function must have been called before this function can be run",
+            "parameters": {}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "manipulate_right_gripper",
+            "description": "Adjusts the right gripper, so that it opens or closes or anywhere inbetween depending on the situation. The width, speed, and force of the gripper can be specified as an argument. The default width is 167, default speed is 110, and default force is 15.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "width": {
+                        "type": "number",
+                        "description": "An integer representing the width of the right gripper. The range is 0-167 with 0 being fully closed and 167 being fully open. The default width is 167, and the unit is millimetres [mm]."
+                    },
+                    "speed": {
+                        "type": "number",
+                        "description": "An integer representing the speed of the right gripper. The range is 22-110 with 22 being minimum speed and 110 being maximum speed. The default speed is 110, and the unit is millimetres per second [mm/sec]."
+                    },
+                    "force": {
+                        "type": "number",
+                        "description": "An integer representing the force of the right gripper. The range is 15-60 with 15 being minimum force and 60 being maximum. The default force is 20, and the unit is Newton [N]."
+                    }
+                },
+                "required": ["width"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "manipulate_left_gripper",
+            "description": "Adjusts the left gripper, so that it opens or closes or anywhere inbetween depending on the situation. The width, speed, and force of the gripper can be specified as an argument. The width range is from 0 (closed) to 85 (open). The default width is 85, default speed is 110, and default force is 20.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "width": {
+                        "type": "number",
+                        "description": "An integer representing the width of the left gripper. The range is 0-85 with 0 being fully closed and 85 being fully open. The default width is 85, and the unit is millimetres [mm]."
+                    },
+                    "speed": {
+                        "type": "number",
+                        "description": "An integer representing the speed of the left gripper. The range is 20-150 with 20 being minimum speed and 150 being maximum speed. The default speed is 110, and the unit is millimetres per second [mm/sec]."
+                    },
+                    "force": {
+                        "type": "number",
+                        "description": "An integer representing the force of the left gripper. The range is 20-235 with 20 being minimum force and 235 being maximum. The default force is 20, and the unit is Newton [N]."
+                    }
+                },
+                "required": ["width"]
+            }
+        }
+    }
+]
