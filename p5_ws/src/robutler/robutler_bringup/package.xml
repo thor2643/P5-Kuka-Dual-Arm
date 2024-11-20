@@ -13,9 +13,14 @@
   <exec_depend>lbr_bringup</exec_depend>
   <exec_depend>object_detector</exec_depend>
   <exec_depend>janise</exec_depend>
+  <exec_depend>robotiq_2f_85_control</exec_depend>
+  <exec_depend>robotiq_2f_85_interfaces</exec_depend>
+  <exec_depend>robotiq_3f_gripper_ros2_control</exec_depend>
+  <exec_depend>robotiq_3f_gripper_ros2_interfaces</exec_depend>
   <exec_depend>gripper_control</exec_depend>
   <exec_depend>rclpy</exec_depend>
   <exec_depend>ros2launch</exec_depend>
+  
 
   <export>
     <build_type>ament_cmake</build_type>

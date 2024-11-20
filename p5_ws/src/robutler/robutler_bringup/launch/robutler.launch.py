@@ -11,14 +11,26 @@ def generate_launch_description():
         Node(
             package='object_detector',
             executable='detector_service',
-            prefix=['gnome-terminal --']
+            prefix=['gnome-terminal -- bash -c "ros2 run object_detector detector_service; exec bash"']
+        ),
+        
+        # 3F Gripper - Service
+        Node(
+            package='robotiq_3f_gripper_ros2_control',
+            executable='gripper_control_service_server'
+        ),
+        
+        # 2F Gripper - Service
+        Node(
+            package='robotiq_2f_85_control',
+            executable='gripper_control_service_node'
         ),
 
         # Janise
         Node(
             package='janise',
-            executable='client_omni',
-            prefix=['gnome-terminal --']
+            executable='omni_client',
+            prefix=['gnome-terminal -- bash -c "ros2 run janise omni_client; exec bash"']
         ),
 
         # Moveit Coords - Set_moveit_coords.launch
@@ -31,24 +43,26 @@ def generate_launch_description():
                 )
             )
         ),
-
-        # LBR - Real.launch
+        
+        # Realsense
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(
-                    get_package_share_directory('lbr_bringup'),
+                    get_package_share_directory('realsense2_camera'),
                     'launch',
-                    'real.launch.py'
+                    'rs_launch.py'
                 )
             )
         ),
 
-        # Uncomment the following block if you want to open set_moveit_coords.launch.py in a new terminal
-        # ExecuteProcess(
-        #     cmd=[
-        #         'gnome-terminal', '--', 'bash', '-c', 
-        #         'ros2 launch set_moveit_coords set_moveit_coords.launch.py; exec bash'
-        #     ],
-        #     output='screen'
-        # ),
+        # Dual Arm - Demo Launch
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                os.path.join(
+                    get_package_share_directory('dual_arm_moveit_config'),
+                    'launch',
+                    'demo.launch.py'
+                )
+            )
+        ),
     ])
