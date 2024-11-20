@@ -1,8 +1,7 @@
 # Import libraries
-from openai import AsyncOpenAI
+from openai import OpenAI
 import ollama
 import json
-import asyncio
 import speech_recognition as sr
 from gtts import gTTS
 from playsound import playsound
@@ -20,16 +19,22 @@ from project_interfaces.srv import GetObjectInfo
 from project_interfaces.srv import DefineObjectInfo
 from project_interfaces.srv import PlanMoveCommand
 from project_interfaces.srv import ExecuteMoveCommand
+from project_interfaces.srv import PromptJanice
 from robotiq_3f_gripper_ros2_interfaces.srv import Robotiq3FGripperOutputService
 from robotiq_2f_85_interfaces.srv import Robotiq2F85GripperCommand
 
 class LLMNode(Node):
     def __init__(self):
-        super().__init__('minimal_client_async')
+        super().__init__('minimal_client')
+
+        self.srv = self.create_service(
+            PromptJanice, 'send_prompt', self.gui_handle_service
+        )
+        self.get_logger().info('Service Server is ready.')
 
         # Gripper service client
         self._3f_controller = Robotiq3FGripperOutputService.Request()
-        self._3f_controller_cli = self.create_client(Robotiq3FGripperOutputService, "Robotiq3FGripper/OutputRegistersService") 
+        self._3f_controller_cli = self.create_client(Robotiq3FGripperOutputService, "Robotiq3FGripper/OutputRegistersService")
 
         self._2f_client = self.create_client(Robotiq2F85GripperCommand, 'gripper_2f_service')
         self._2f_req = Robotiq2F85GripperCommand.Request()
@@ -84,14 +89,45 @@ class LLMNode(Node):
 
         # Initialize Ollama client or OpenAI client with API key and optional project ID
         if self.use_ollama:
-            self.client = ollama.AsyncClient()
+            self.client = ollama.Client()
         else:
             # load the project id and key from json file
             with open('src/robutler/janise/API_KEY.json') as f:
                 api_data = json.load(f)
             API_KEY = api_data['API_KEY']
-            self.client = AsyncOpenAI(api_key=API_KEY)
+            self.client = OpenAI(api_key=API_KEY)
 
+        self.message_buffer = [{"role": "system", "content": """
+            Your name is Janise. You are an AI robotic arm assistant using the LLM gpt-4o for task reasoning and manipulation tasks. You are to assume the persona of a butler.
+
+            Context for your workspace:
+            - You operate in a dual-arm robotic cell consisting of two collaborative KUKA iiwa 7 robots, each with 7 degrees of freedom (DoF). Both robots are mounted on a fixed frame positioned on top of a workbench, which provides a stable working surface.
+            - The setup includes a left and right side, each equipped with its respective robot arm:
+                - The left arm is equipped with a RobotIQ 2F-85 gripper for precise, standard gripping tasks.
+                - The right arm is equipped with a RobotIQ 3F gripper, offering more versatile grasping options.
+            - An Intel RealSense D435i depth camera is mounted to view the workspace from an overhead perspective, allowing for accurate depth perception and object detection on the table.
+
+            Spatial and Coordinate Understanding:
+            - Your workspace operates within a "world" coordinate system with its origin (0,0,0) located at the outermost right edge of the table (from the camera's viewpoint). The axes are defined as follows:
+                - *X-axis* extends horizontally across the table from the right edge to the left edge.
+                - *Y-axis* extends from the right edge towards the back, moving inward toward the robot.
+                - *Z-axis* points upward, perpendicular to the tabletop.
+            - The workbench is 100 millimetres wide and 67.5 millimetres long, and the grippers must never go below 0 in height as they will then collide with the workbench.
+            - When objects are detected by the camera, they are initially located in the camera's coordinate system. However, the coordinates are automatically transformed into the world coordinate system using a transformation matrix. This means that all coordinate interactions with you will be in regard to the world coordinate system that has been specified.
+
+            Operational instructions:
+            - Always be aware of the distinction between the left and right sides and the unique tools on each arm when executing tasks.
+            - Avoid stating specific coordinates when acknowledging movement commands; only acknowledge the destination to maintain efficiency.
+            - When receiving instructions to move to predefined poses or locations, you may access these using your built-in functions.
+            - If you receive any errors during operation, notify the operator. You may come with suggestions as to what to do next, but you should not try to do anything on your own afterwards with the operators permission.
+
+            Interaction Style:
+            - You must always reply to the user in a manner fitting a butler persona, using the following styles when executing movement tasks:
+                - "Yes, sir. Moving the gripper to cooling station."
+                - "Right away, sir. The gripper will be moved to home position."
+
+            Your primary task is to execute movements and manipulations as requested, utilizing precise understanding of your left and right sides, grippers, and the overview provided by the RealSense camera.
+        """}]
 
     ##############################################################################
     # -------------------------- SPEECH FUNCTIONALITY -------------------------- #
@@ -133,7 +169,7 @@ class LLMNode(Node):
         except Exception as e:
             self.get_logger().error(f"Failed to convert text to speech: {e}")
 
-    
+
     #######################################################################################
     # --------------------------------- EXTRA FUNCTIONS --------------------------------- #
     #######################################################################################
@@ -163,7 +199,7 @@ class LLMNode(Node):
         q_x = sr * cp * cy - cr * sp * sy
         q_y = cr * sp * cy + sr * cp * sy
         q_z = cr * cp * sy - sr * sp * cy
-        
+
         return [q_w, q_x, q_y, q_z]
 
 
@@ -174,17 +210,17 @@ class LLMNode(Node):
 
     def get_available_locations(self):
         return list(self.coordinates.keys())
-    
+
     def get_pose_values_from_location(self, location: str) -> list:
         self.get_logger().info(f"Received location to find pose for: location={location}")
 
         pose_dict = self.coordinates.get(location.upper(), {})
-    
+
         # Convert dictionary values to a list of floats
         pose_values = [float(value) for value in pose_dict.values()]
 
         return pose_values
-    
+
     def move_to_location(self, location):
         pose = self.get_pose_values_from_location(location)
         self.move_robot_to_pose(pose)
@@ -195,7 +231,7 @@ class LLMNode(Node):
         print(f"\nRequesting the detector service to find {object_name}")  # Debugging
         self.get_logger().info(f"\nLooking for object: {object_name}\n")
         self.detector_req.object_name = object_name
- 
+
         self.future = self.detector_client.call_async(self.detector_req)
         rclpy.spin_until_future_complete(self, self.future)
 
@@ -220,7 +256,7 @@ class LLMNode(Node):
                         [0, np.sin(np.pi/180*angle_around_x), np.cos(np.pi/180*angle_around_x), 0.62],
                         [0, 0, 0, 1]
                         ])
-            
+
             # Extract the position from the pose and append 1 to make it a 4D vector
             center_pts = []
             for point in response.centers:
@@ -232,7 +268,7 @@ class LLMNode(Node):
             # Save the object information in a dictionary
             for i, center in enumerate(center_pts_world):
                 # Make sure the object name is unique
-                object_name_temp = object_name 
+                object_name_temp = object_name
                 count = 1
                 while object_name_temp in self.objects_on_table:
                     object_name_temp = f"{object_name}_{count}"
@@ -248,7 +284,7 @@ class LLMNode(Node):
         else:
             self.get_logger().error('No objects found')
             return GetObjectInfo.Response()
-    
+
     def define_object_thresholds(self, object_name: str) -> DefineObjectInfo.Response:
         self.define_objects_req.object_name = object_name
         self.future = self.define_objects_client.call_async(self.define_objects_req)
@@ -280,7 +316,7 @@ class LLMNode(Node):
                         [0, 0, 1, 0.95], #Before gripper correction: 0.809
                         [0, 0, 0, 1]
                     ])
-        
+
         # Extract the position from the pose and append 1 to make it a 4D vector
         pos_world = pose[:3]
         pos_world.append(1)
@@ -303,10 +339,10 @@ class LLMNode(Node):
 
         print(f"\nPosition: {self.robot_plan_req.position}")
         print(f"Orientation: {self.robot_plan_req.orientation}\n")
- 
+
         self.future = self.robot_plan_client.call_async(self.robot_plan_req)
         return self.run_service_request()
-        
+
     def execute_planned_trajectory(self):
         self.future = self.robot_execute_client.call_async(self.robot_execute_req)
         return self.run_service_request(timeout=15)
@@ -345,7 +381,7 @@ class LLMNode(Node):
         if force < 20 or force > 235:
             self.get_logger().error('Requested right gripper force exceeds gripper capabilities')
             return 'Requested right gripper force exceeds gripper capabilities'
-        
+
         self._2f_req.width = float(width)   # Opening in millimeters. Must be between 0 and 85 mm.
         self._2f_req.speed = float(speed)   # Speed in mm/s. Must be between 20 and 150 mm/s.
         self._2f_req.force = float(force)   # Force in N. Must be between 20 and 235 N.
@@ -355,14 +391,69 @@ class LLMNode(Node):
 
         return self.run_service_request()
 
-
     ################################################################################################
     # -------------------------- INTERACTION WITH LARGE LANGUAGE MODELS -------------------------- #
     ################################################################################################
 
+    def gui_handle_service(self, request, response):
+        prompt = request.prompt  # prompt is a string
+        self.message_buffer.append({'role': 'user', 'content': prompt})
+
+        # API Request to chat with model with user-defined functions
+        llm_response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=self.message_buffer,
+            tools=self.tools,
+            max_completion_tokens=200,
+            tool_choice='auto'
+        )
+
+        # Check if tool calls exist in response
+        tool_calls = llm_response.choices[0].message.tool_calls
+        if not tool_calls:
+            self.get_logger().info("The model didn't use a function.")
+            final_response = self.client.chat.completions.create(
+                model="gpt-4o",
+                messages=self.message_buffer
+            )
+            response.message = final_response.choices[0].message.content
+            return response
+
+        print("Tool calls: ", tool_calls)
+        for tool_call in tool_calls:
+            tool_call_id = tool_calls[0].id
+            tool_func_name = tool_call.function.name
+            tool_func_args = json.loads(tool_call.function.arguments)
+
+            # Debugging information
+            print(f"\nFunction called by model: {tool_func_name}")
+            print(f"Arguments received: {tool_func_args}")
+
+            # Call the function dynamically and handle response
+            function_call = self.available_functions.get(tool_func_name)
+            if function_call:
+                function_response = function_call(**tool_func_args)
+                print(f"Function response for {tool_func_name}: ", function_response)
+
+                # Append function response to message history
+                self.message_buffer.append({
+                    'role': 'function',
+                    "tool_call_id": tool_call_id,
+                    'name': tool_func_name,
+                    'content': f"Function response: {function_response}" #json.dumps(function_response)
+                })
+
+        # Get final response from model
+        final_response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=self.message_buffer
+        )
+        response.message = final_response.choices[0].message.content
+        return response
+
 
     async def send_openai_request(self, model: str = 'gpt-4o', use_speech: bool = False):
-        
+
         messages = [{"role": "system", "content": f"""
                     Your name is Janise. You are an AI robotic arm assistant using the LLM {model} for task reasoning and manipulation tasks. You are to assume the persona of a butler.
 
@@ -409,9 +500,9 @@ class LLMNode(Node):
 
             # Add user input to messages
             messages.append({'role': 'user', 'content': prompt})
-            
+
             # API Request to chat with model with user-defined functions
-            response = await self.client.chat.completions.create(
+            response = self.client.chat.completions.create(
                 model=model,
                 messages=messages,
                 tools=self.tools,
@@ -446,7 +537,7 @@ class LLMNode(Node):
                     #function_response = function_call(*tool_func_args.values())
                     function_response = function_call(**tool_func_args)
                     print(f"Function response for {tool_func_name}: ", function_response)
-                    
+
                     # Append function response to message history
                     messages.append({
                         'role': 'function',
@@ -456,7 +547,7 @@ class LLMNode(Node):
                     })
 
             # Get final response from model
-            final_response = await self.client.chat.completions.create(
+            final_response = self.client.chat.completions.create(
                 model=model,
                 messages=messages
             )
@@ -465,24 +556,24 @@ class LLMNode(Node):
 
 
 
-    async def send_ollama_request(self, model: str = 'llama3.1:8b', use_speech: bool = False):
+    def send_ollama_request(self, model: str = 'llama3.1:8b', use_speech: bool = False):
         # Initialize conversation with a user query
         messages = [{'role': 'system', 'content': f'''
-                Your name is Janise. You are an AI robotic dual arm assistant which can perform relevant robotics tasks based on user commands. 
-                You are to assume the persona of a butler and address me with "sir". 
-                     
+                Your name is Janise. You are an AI robotic dual arm assistant which can perform relevant robotics tasks based on user commands.
+                You are to assume the persona of a butler and address me with "sir".
+
                 Your job is to call functions that will result in the users command to be succesfully achieved.
                 Successfully performing a task will require you to call the correct functions in the correct order.
                 Notice that you sometimes must call multiple functions to achieve specific tasks.
-                     
-                You are only allowed to use the specified function. 
+
+                You are only allowed to use the specified function.
                 Do not call any other functions than the ones specified in the task.
 
-                If you are in doubt of which functions to call, you can ask the user for help. 
+                If you are in doubt of which functions to call, you can ask the user for help.
                 Also if you don't think you can solve the task with the given functions you can suggest the user to create a new function.
                 If you request the use for a new function, you must also provide a description of the function and the parameters it requires.
-            '''}] 
-        
+            '''}]
+
 
         while True:
             if use_speech:
@@ -504,7 +595,7 @@ class LLMNode(Node):
             print(json.dumps(messages, indent=2))  # Pretty-print the prompt for easier readability
 
             # Perform the POST request with data
-            response = await self.client.chat(
+            response = self.client.chat(
                 model=model,
                 messages=messages,
                 tools=self.tools
@@ -537,8 +628,8 @@ class LLMNode(Node):
 
                     if tool['function']['name'] == 'get_pose_values_from_location':
                         # Call get_pose_values_from_location and check if pose is valid
-                        function_response = function_to_call(tool['function']['arguments']['location']) 
-                        
+                        function_response = function_to_call(tool['function']['arguments']['location'])
+
                         if not function_response:  # If no valid pose is found
                             messages.append({'role': 'tool', 'content': 'No valid pose was found for this location.'})
                             break  # Stop the process here
@@ -557,12 +648,12 @@ class LLMNode(Node):
                         messages.append({'role': 'tool', 'content': f"Found {function_response.object_count} objects."})
 
             # Second API call: Get final response from the model
-            final_response = await self.client.chat(model=model, messages=messages)
+            final_response = self.client.chat(model=model, messages=messages)
             final_response_text = final_response['message']['content']
 
             # Add the model's response to the conversation history
             messages.append(response['message'])
-            
+
             # Convert final response to speech
             self.text_to_speech(final_response_text)
 
@@ -571,22 +662,26 @@ def main(args=None):
     rclpy.init(args=args)
     node = LLMNode()
 
-    if node.use_ollama:
-        try:
-            asyncio.run(node.send_ollama_request())
-        except KeyboardInterrupt:
-            pass
-        finally:
-            node.destroy_node()
-            rclpy.shutdown()
-    else:
-        try:
-            asyncio.run(node.send_openai_request())
-        except KeyboardInterrupt:
-            pass    
-        finally:
-            node.destroy_node()
-            rclpy.shutdown()
+    # Create the service node
+
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+    # if node.use_ollama:
+    #     try:
+    #     except KeyboardInterrupt:
+    #         pass
+    #     finally:
+    #         node.destroy_node()
+    #         rclpy.shutdown()
+    # else:
+    #     try:
+    #     except KeyboardInterrupt:
+    #         pass
+    #     finally:
+    #         node.destroy_node()
+    #         rclpy.shutdown()
 
 
 if __name__ == '__main__':
