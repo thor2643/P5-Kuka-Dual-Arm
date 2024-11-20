@@ -7,7 +7,6 @@
             value="${xacro.load_yaml(system_parameters_path)}" />
 
         <ros2_control name="lbr_system_interface" type="system">
-            <!-- define hardware including parameters, also gazebo -->
             <xacro:if value="${sim}">
                 <hardware>
                     <plugin>gazebo_ros2_control/GazeboSystem</plugin>

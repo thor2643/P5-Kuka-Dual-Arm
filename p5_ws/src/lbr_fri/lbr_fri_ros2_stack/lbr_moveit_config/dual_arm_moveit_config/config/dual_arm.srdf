@@ -12,6 +12,7 @@
     <group name="right_arm">
         <chain base_link="right_link_0" tip_link="3f_tool0"/>
     </group>
+    <!--
     <group name="right_gripper">
         <joint name="3f_palm_finger_1_joint"/>
         <joint name="3f_finger_1_joint_1"/>
@@ -25,10 +26,11 @@
         <joint name="3f_finger_middle_joint_1"/>
         <joint name="3f_finger_middle_joint_2"/>
         <joint name="3f_finger_middle_joint_3"/>
-    </group>
+    </group>-->
     <group name="left_arm">
         <chain base_link="left_link_0" tip_link="left_link_ee"/>
     </group>
+    <!--
     <group name="left_gripper">
         <joint name="left_ee_mount"/>
         <joint name="left_finger_joint"/>
@@ -41,10 +43,11 @@
         <joint name="left_right_outer_finger_joint"/>
         <joint name="left_right_inner_finger_joint"/>
         <joint name="left_right_inner_finger_pad_joint"/>
-    </group>
-    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    </group>--><!--
+    <!-END EFFECTOR: Purpose: Represent information about an end effector.->
     <end_effector name="right_gripper" parent_link="right_link_ee" group="right_gripper"/>
     <end_effector name="left_gripper" parent_link="left_link_ee" group="left_gripper"/>
+    -->
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="3f_finger_1_link_0" link2="3f_finger_1_link_1" reason="Adjacent"/>
     <disable_collisions link1="3f_finger_1_link_0" link2="3f_finger_1_link_2" reason="Never"/>

@@ -13,6 +13,9 @@ from launch.substitutions import (
 from launch_mixins.lbr_bringup import LBRMoveGroupMixin
 from launch_mixins.lbr_description import LBRDescriptionMixin, RVizMixin
 from launch_mixins.lbr_ros2_control import LBRROS2ControlMixin
+from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
+
 
 
 def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
@@ -32,7 +35,7 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     model = LaunchConfiguration("model").perform(context)
     moveit_configs_builder = LBRMoveGroupMixin.moveit_configs_builder(
         robot_name=model,
-        package_name=f"{model}_config",
+        package_name=f"{model}_moveit_config",
     )
     move_group_params = LBRMoveGroupMixin.params_move_group()
 
@@ -71,7 +74,7 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     
     # RViz and MoveIt
     rviz_moveit = RVizMixin.node_rviz(
-        rviz_config_pkg=f"{model}_config",
+        rviz_config_pkg=f"{model}_moveit_config",
         rviz_config="config/moveit.rviz",
         parameters=LBRMoveGroupMixin.params_rviz(
             moveit_configs=moveit_configs_builder.to_moveit_configs()
@@ -100,8 +103,58 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     ld.add_action(robot_state_publisher)
 
     # ros2 control node
+    ros2_control_node_right = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[
+            {"use_sim_time": False},
+            PathJoinSubstitution(
+                [
+                    FindPackageShare(
+                        LaunchConfiguration(
+                            "ctrl_cfg_pkg", default="lbr_ros2_control_right"
+                        )
+                    ),
+                    LaunchConfiguration(
+                        "ctrl_cfg", default="config/lbr_controllers_right.yaml"
+                    ),
+                ]
+            ),
+        ],
+        namespace=robot_name,
+        remappings=[
+            ("~/robot_description", "robot_description"),
+        ],
+    )
+
+    ros2_control_node_left = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[
+            {"use_sim_time": False},
+            PathJoinSubstitution(
+                [
+                    FindPackageShare(
+                        LaunchConfiguration(
+                            "ctrl_cfg_pkg", default="lbr_ros2_control_left"
+                        )
+                    ),
+                    LaunchConfiguration(
+                        "ctrl_cfg", default="config/lbr_controllers_left.yaml"
+                    ),
+                ]
+            ),
+        ],
+        namespace=robot_name,
+        remappings=[
+            ("~/robot_description", "robot_description"),
+        ],
+    )
+
+    ld.add_action(ros2_control_node_right)
+    ld.add_action(ros2_control_node_left)
     ros2_control_node = LBRROS2ControlMixin.node_ros2_control()
-    ld.add_action(ros2_control_node)
+    #ld.add_action(ros2_control_node_right)
 
     # joint state broad caster and controller on ros2 control node start
     joint_state_broadcaster = LBRROS2ControlMixin.node_controller_spawner(
@@ -119,7 +172,7 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
 
     controller_event_handler = RegisterEventHandler(
         OnProcessStart(
-            target_action=ros2_control_node,
+            target_action=ros2_control_node_right,
             on_start=[
                 joint_state_broadcaster,
                 force_torque_broadcaster,

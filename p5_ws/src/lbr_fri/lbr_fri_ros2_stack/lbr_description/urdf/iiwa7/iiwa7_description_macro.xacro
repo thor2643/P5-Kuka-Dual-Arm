@@ -20,8 +20,8 @@
         <xacro:property name="joint_friction" value="0.1" />
 
         <!-- parameters -->
-        <xacro:property name="system_parameters_path" value="$(find lbr_ros2_control)/config/lbr_system_parameters${suffix}.yaml"/>
-        <xacro:property name="robot_name" value="lbr${suffix}"/>
+        <xacro:property name="system_parameters_path" value="$(find lbr_ros2_control${suffix})/config/lbr_system_parameters${suffix}.yaml"/>
+        <xacro:property name="robot_name" value="lbr"/> <!--${suffix}-->
         <xacro:property name="sim" value="true"/>
 
         <!-- macros for simulation and real hardware -->

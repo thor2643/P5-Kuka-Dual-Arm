@@ -18,7 +18,7 @@ hardware:
   measured_torque_cutoff_frequency: 10 # low-pass filter for the joint torque measurements [Hz]
   open_loop: true # KUKA works the best in open_loop control mode
 
-right_estimated_ft_sensor: # estimates the external force-torque from the external joint torque values
+estimated_ft_sensor: # estimates the external force-torque from the external joint torque values
   chain_root: right_link_0
   chain_tip: right_link_ee
   damping: 0.2 # damping factor for the pseudo-inverse of the Jacobian
