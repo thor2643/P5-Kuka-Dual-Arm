@@ -5,35 +5,44 @@
 #include "project_interfaces/srv/execute_move_command.hpp"
 
 
+
 class RobotControllerService : public rclcpp::Node{
 public:
   RobotControllerService() : Node("robot_controller_service") {
-    // Configure node
-    //auto node_ptr = this->shared_from_this();
-    this->declare_parameter("robot_name", "iiwa7_table");
-    auto robot_name = this->get_parameter("robot_name").as_string();
+    this->declare_parameter<std::string>("model", "default_model");
+    std::string model;
+    this->get_parameter("model", model);
 
-    // Create the options for the MoveGroupInterface
-    moveit::planning_interface::MoveGroupInterface::Options options("right_arm", "robot_description", robot_name);
-    
+    if (false) //"model == iiwa7_table")
+    {
+      RCLCPP_INFO(this->get_logger(), "Creating MoveGroupInterface for right arm");
+      // Create options for the MoveGroupInterface for both arms
+      moveit::planning_interface::MoveGroupInterface::Options options("right_arm", "robot_description", "");   
+      move_group_interface = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options);  
+    }
+    else if (true)
+    {
+      RCLCPP_INFO(this->get_logger(), "Creating MoveGroupInterface for left arm");
+      moveit::planning_interface::MoveGroupInterface::Options options("left_arm", "robot_description", "");
+      move_group_interface = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options);
+    }
+
+       
     // Pass the options and the shared pointer of the current node
-    move_group_interface_ = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options);
-
-    planner_service_ = this->create_service<project_interfaces::srv::PlanMoveCommand>(
+    planner_service = this->create_service<project_interfaces::srv::PlanMoveCommand>(
         "plan_move_command", std::bind(&RobotControllerService::handle_planner_service, this, std::placeholders::_1, std::placeholders::_2));
 
-    execute_service_ = this->create_service<project_interfaces::srv::ExecuteMoveCommand>(
+    execute_service = this->create_service<project_interfaces::srv::ExecuteMoveCommand>(
         "execute_move_command", std::bind(&RobotControllerService::handle_execute_service, this, std::placeholders::_1, std::placeholders::_2));
   }
 
 private:
-  std::string robot_name_;
-  std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface_;
-  rclcpp::Service<project_interfaces::srv::PlanMoveCommand>::SharedPtr planner_service_;
-  rclcpp::Service<project_interfaces::srv::ExecuteMoveCommand>::SharedPtr execute_service_;
-  moveit::planning_interface::MoveGroupInterface::Plan plan_;
+  std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface;
+  rclcpp::Service<project_interfaces::srv::PlanMoveCommand>::SharedPtr planner_service;
+  rclcpp::Service<project_interfaces::srv::ExecuteMoveCommand>::SharedPtr execute_service;
+  moveit::planning_interface::MoveGroupInterface::Plan plan;
 
-  bool plan_available_ = false;
+  bool plan_available = false;
 
   // Callback to plan the trajectory to the target pose
   void handle_planner_service(const std::shared_ptr<project_interfaces::srv::PlanMoveCommand::Request> request,
@@ -50,18 +59,19 @@ private:
     target_pose.position.y = request->position.y;
     target_pose.position.z = request->position.z;
 
-    move_group_interface_->setPoseTarget(target_pose);
+    move_group_interface->setPoseTarget(target_pose);
 
-    auto error_code = move_group_interface_->plan(plan_);
+    moveit::core::MoveItErrorCode error_code;
+
+    error_code = move_group_interface->plan(plan);
 
     if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
       RCLCPP_INFO(this->get_logger(), "The trajectory has been planned succesfully");
-      plan_available_ = true;
+      plan_available = true;
       response->result = true;
     } else {
       RCLCPP_ERROR(this->get_logger(), "Failed to plan to target pose");
       response->result = false;
-      response->log = "Failed to plan to target pose";
     }
   }
 
@@ -71,18 +81,19 @@ private:
     
     RCLCPP_INFO(this->get_logger(), "Received request to execute planned trajectory");
 
-    if (plan_available_)
+
+    if (plan_available)
     {
       RCLCPP_INFO(this->get_logger(), "The planned trajectory is being executed");
-      move_group_interface_->execute(plan_);
+
+      move_group_interface->execute(plan);
+
       RCLCPP_INFO(this->get_logger(), "The plan has been executed");
-      plan_available_ = false;
+      plan_available = false;
       response->success = true;
-      response->log = "The plan has been executed";
     } else {
       RCLCPP_ERROR(this->get_logger(), "No plan available to execute");
       response->success = false;
-      response->log = "No plan available to execute";
     }
 
   }
@@ -95,4 +106,3 @@ int main(int argc, char **argv) {
   rclcpp::shutdown();
   return 0;
 }
-
