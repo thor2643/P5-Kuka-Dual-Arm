@@ -147,7 +147,7 @@ class ObjectDetector(Node):
 
             response.object_count = len(self.found_objects)
 
-            for obj in self.found_objects:
+            for i, obj in enumerate(self.found_objects):
                 point = Point()
                 point.x = float(self.found_objects[obj]['center_coords'][0])
                 point.y = float(self.found_objects[obj]['center_coords'][1])
@@ -157,16 +157,22 @@ class ObjectDetector(Node):
                 response.orientations.append(self.found_objects[obj]['rotated_rect'][2])
                 response.grasp_widths.append(self.found_objects[obj]['width'])
 
+                # Extract the x, y couple from rotated_bounding_boxes with the highest y value
+                print(rotated_bounding_boxes)
+
+                point_idx = np.argmax([point[1] for point in rotated_bounding_boxes[i]])
+
                 cv2.putText(
                     image_with_bbx, 
                     obj,                #object name
-                    (rotated_bounding_boxes[0], rotated_bounding_boxes[1]+5), cv2.FONT_HERSHEY_SIMPLEX, 4, (255, 0, 0), 2, cv2.LINE_AA
+                    (rotated_bounding_boxes[i][point_idx][0], rotated_bounding_boxes[i][point_idx][0]+5), cv2.FONT_HERSHEY_SIMPLEX, 4, (255, 0, 0), 2, cv2.LINE_AA
                 )
 
             self.get_logger().info(f'Found {response.object_count} {object}\n')
 
-            
-            self.publisher_.publish(self.bridge.cv2_to_imgmsg(self.image_with_bbx))
+            self.image_publisher.publish(self.realsense_camera.bridge.cv2_to_imgmsg(image_with_bbx))
+
+            print("I have moved on")
 
             # Clear the found objects dictionary
             self.found_objects.clear()
@@ -174,6 +180,7 @@ class ObjectDetector(Node):
             self.get_logger().info('Object thresholds not available. Consider adding the object by running the adjust_hsv option at startup.\n')
             response.object_count = 0
 
+            print("I am now returning")
         return response
     
     # The callback function for the threshold adjust service    
@@ -344,7 +351,7 @@ class ObjectDetector(Node):
 
                 if center_coordinates is not None:
                     # Add center coordinates to the dictionary
-                    self.found_objects[f"{object_name}_{i}"].update({'center_coords': center_coordinates})
+                    self.found_objects[f"{object_name}_{i+1}"].update({'center_coords': center_coordinates})
                 else:
                     print("Failed to calculate center coordinates of the object.")
 
@@ -363,7 +370,7 @@ class ObjectDetector(Node):
                     height = np.linalg.norm(height_point_1_metric[:2] - height_point_2_metric[:2])
 
                     # Add width and height of object to the dictionary
-                    self.found_objects[f"{object_name}_{i}"].update({'width': width, 'height': height})
+                    self.found_objects[f"{object_name}_{i+1}"].update({'width': width, 'height': height})
                 else:
                     print("Failed to calculate width and height of the object.")
 

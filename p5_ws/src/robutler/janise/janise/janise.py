@@ -228,6 +228,8 @@ class LLMNode(Node):
         self.future = self.detector_client.call_async(self.detector_req)
         rclpy.spin_until_future_complete(self, self.future)
 
+        print("The service call has been completed.")  # Debugging
+
         if self.future.result() is not None:
             response = self.future.result()
         else:
@@ -433,12 +435,15 @@ class LLMNode(Node):
                     'content': f"Function response: {function_response}" #json.dumps(function_response)
                 })
 
+        print("Generating response from model...")
         # Get final response from model
         final_response = self.client.chat.completions.create(
             model="gpt-4o",
             messages=self.message_buffer
         )
         response.message = final_response.choices[0].message.content
+
+        print(final_response.choices[0].message.content)
         return response
 
 
