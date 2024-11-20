@@ -547,6 +547,11 @@ def main(args=None):
     # Create an ObjectDetector instance
     detector = ObjectDetector()
 
+    # Comment out for running the node with a menu
+    rclpy.spin(detector)
+
+    # Insert the code snippet below to run the node with a menu
+    """
     while True:
         # Ask use which function to run
         print("\nChoose a function to run:")
@@ -633,6 +638,7 @@ def main(args=None):
 
         else:
             print("Invalid choice. Please try again.")
+    """
 
     rclpy.shutdown()
 
