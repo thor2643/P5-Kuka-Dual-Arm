@@ -27,23 +27,6 @@
     {
         "type": "function",
         "function": {
-            "name": "move_to_location",
-            "description": "Retrieves the robot pose based on the user-specified location and sends them to the robot to make it move to said location.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "The name of the target location, e.g., 'home'."
-                    }
-                },
-                "required": ["location"]
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
             "name": "find_object",
             "description": "Find the object in the environment using the object detector service. The object name should be provided as an argument to this function. The object detector service will return the number of objects found as well as the Cartesian center point, width, height and orientation of each object.",
             "parameters": {
@@ -78,24 +61,6 @@
     {
         "type": "function",
         "function": {
-            "name": "move_robot_to_pose",
-            "description": "Move the robot to a specific pose in the environment. The pose should be provided as an argument to this function. The robot will move to the specified pose. Notice, the trajectory is executed on the physical robot, so use this function with caution. Otherwise use a combination of plan_robot_trajectory and execute_planned_trajectory.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "pose": {
-                        "type": "array",
-                        "items": {"type": "number"},
-                        "description": "A list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees."
-                    }
-                },
-                "required": ["pose"]
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
             "name": "plan_robot_trajectory",
             "description": "Plan a robot trajectory to a given pose. The planned trajectory will be simulated and visualised for the user. If allowed by the user the trajectory can be executed by running the execute_planned_trajectory.",
             "parameters": {
@@ -105,9 +70,13 @@
                         "type": "array",
                         "items": {"type": "number"},
                         "description": "A list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees."
+                    },
+                    "arm": {
+                        "type": "string",
+                        "description": "The arm to plan the trajectory for. Can be either 'left' or 'right'."
                     }
                 },
-                "required": ["pose"]
+                "required": ["pose", "arm"]
             }
         }
     },
@@ -116,7 +85,41 @@
         "function": {
             "name": "execute_planned_trajectory",
             "description": "This function executes the trajectory on the physical robot planned by the plan_robot_trajectory function. Note that the plan_robot_trajectory function must have been called before this function can be run",
-            "parameters": {}
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "arm": {
+                        "type": "string",
+                        "description": "The arm to plan the trajectory for. Can be either 'left' or 'right'."
+                    }
+                },
+                "required": ["arm"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "move_robot_to_pose",
+            "description": "Plan and execute a robot trajectory to a given pose. The robot will move to the specified pose in one go. The pose is specified as a list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "pose": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "minItems": 6,
+                        "maxItems": 6,
+                        "description": "A list of 6 floating-point numbers representing the pose of the robot arm e.g. the first 3 numbers representing the x,y,z position and the last 3 numbers representing the roll, pitch and yaw in degrees."
+                    },
+                    "arm": {
+                        "type": "string",
+                        "enum": ["left", "right"],
+                        "description": "The arm to plan the trajectory for. Can be either 'left' or 'right'."
+                    }
+                },
+                "required": ["pose", "arm"]
+            }
         }
     },
     {

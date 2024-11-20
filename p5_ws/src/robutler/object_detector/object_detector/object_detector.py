@@ -96,6 +96,8 @@ class ObjectDetector(Node):
         self.detector_srv = self.create_service(GetObjectInfo, 'get_object_info', self.get_object_information)
         self.threshold_adjust_srv = self.create_service(DefineObjectInfo, 'define_object_info', self.define_object_thresholds)
 
+        self.image_publisher = self.create_publisher(Image, 'video_frames', 10)
+
         # Instantiate the RealSenseCamera object
         self.realsense_camera = RealSenseCamera()
 
@@ -137,7 +139,11 @@ class ObjectDetector(Node):
 
         if object in self.lego_bricks:
             self.retrieve_aligned_frames()
-            self.find_object(self.get_color_image(), object)
+
+            image = self.get_color_image()
+            _, rotated_bounding_boxes, _ = self.find_object(image, object)
+
+            image_with_bbx = self.draw_rotated_boxes(image.copy(), rotated_bounding_boxes)
 
             response.object_count = len(self.found_objects)
 
@@ -151,7 +157,16 @@ class ObjectDetector(Node):
                 response.orientations.append(self.found_objects[obj]['rotated_rect'][2])
                 response.grasp_widths.append(self.found_objects[obj]['width'])
 
+                cv2.putText(
+                    image_with_bbx, 
+                    obj,                #object name
+                    (rotated_bounding_boxes[0], rotated_bounding_boxes[1]+5), cv2.FONT_HERSHEY_SIMPLEX, 4, (255, 0, 0), 2, cv2.LINE_AA
+                )
+
             self.get_logger().info(f'Found {response.object_count} {object}\n')
+
+            
+            self.publisher_.publish(self.bridge.cv2_to_imgmsg(self.image_with_bbx))
 
             # Clear the found objects dictionary
             self.found_objects.clear()
@@ -317,7 +332,7 @@ class ObjectDetector(Node):
                 box = np.int0(box)
                 rotated_bounding_boxes.append(box)
 
-                self.found_objects[f"{object_name}_{i}"] = {'bounding_box': (x, y, x + w, y + h), 
+                self.found_objects[f"{object_name}_{i+1}"] = {'bounding_box': (x, y, x + w, y + h), 
                                                             'rotated_bounding_box': box, 
                                                             'rotated_rect': rect}
 
@@ -518,8 +533,7 @@ class ObjectDetector(Node):
         cv2.namedWindow("Image with Coordinates")
         cv2.setMouseCallback("Image with Coordinates", mouse_callback)
 
-        
-
+    
         while True:
             cv2.imshow("Image with Coordinates", cv2.rotate(color_image, cv2.ROTATE_180))
 
@@ -547,6 +561,11 @@ def main(args=None):
     # Create an ObjectDetector instance
     detector = ObjectDetector()
 
+    # Comment out for running the node with a menu
+    rclpy.spin(detector)
+
+    # Insert the code snippet below to run the node with a menu
+    """
     while True:
         # Ask use which function to run
         print("\nChoose a function to run:")
@@ -633,6 +652,7 @@ def main(args=None):
 
         else:
             print("Invalid choice. Please try again.")
+    """
 
     rclpy.shutdown()
 

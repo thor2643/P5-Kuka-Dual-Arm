@@ -1,0 +1,29 @@
+# Default initial positions for dual_arm's ros2_control fake system
+
+initial_positions:
+  3f_finger_1_joint_1: 0
+  3f_finger_1_joint_2: 0
+  3f_finger_1_joint_3: 0
+  3f_finger_2_joint_1: 0
+  3f_finger_2_joint_2: 0
+  3f_finger_2_joint_3: 0
+  3f_finger_middle_joint_1: 0
+  3f_finger_middle_joint_2: 0
+  3f_finger_middle_joint_3: 0
+  3f_palm_finger_1_joint: 0
+  3f_palm_finger_2_joint: 0
+  left_A1: 0
+  left_A2: 0
+  left_A3: 0
+  left_A4: 0
+  left_A5: 0
+  left_A6: 0
+  left_A7: 0
+  left_finger_joint: 0
+  right_A1: 0
+  right_A2: 0
+  right_A3: 0
+  right_A4: 0
+  right_A5: 0
+  right_A6: 0
+  right_A7: 0

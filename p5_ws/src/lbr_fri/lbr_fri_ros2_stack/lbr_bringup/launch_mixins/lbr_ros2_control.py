@@ -8,10 +8,10 @@ from launch_ros.substitutions import FindPackageShare
 
 class LBRROS2ControlMixin:
     @staticmethod
-    def arg_ctrl_cfg_pkg() -> DeclareLaunchArgument:
+    def arg_ctrl_cfg_pkg(default_value: str="lbr_ros2_control") -> DeclareLaunchArgument:
         return DeclareLaunchArgument(
             name="ctrl_cfg_pkg",
-            default_value="lbr_ros2_control",
+            default_value=default_value,
             description="Controller configuration package. The package containing the ctrl_cfg.",
         )
 

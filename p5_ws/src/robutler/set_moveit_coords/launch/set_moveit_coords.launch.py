@@ -11,12 +11,12 @@ from launch_ros.actions import Node
 def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     ld = LaunchDescription()
 
-    model = "iiwa7_table"
+    model = "dual_arm"
 
     # generate moveit configs
     moveit_configs = LBRMoveGroupMixin.moveit_configs_builder(
         robot_name=model,
-        package_name=f"{model}_moveit_config",
+        package_name=f"{model}_moveit_config", # changed from f"{model}_moveit_config" to f"{model}_config"
     )
 
     # launch demo node
@@ -31,6 +31,7 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
             ],
         )
     )
+
     return ld.entities
 
 
