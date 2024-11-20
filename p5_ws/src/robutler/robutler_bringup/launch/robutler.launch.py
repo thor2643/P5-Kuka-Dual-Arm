@@ -11,7 +11,7 @@ def generate_launch_description():
         Node(
             package='object_detector',
             executable='detector_service',
-            prefix=['gnome-terminal -- bash -c "ros2 run object_detector detector_service; exec bash"']
+            #prefix=['gnome-terminal -- bash -c "ros2 run object_detector detector_service; exec bash"']
         ),
         
         # 3F Gripper - Service
