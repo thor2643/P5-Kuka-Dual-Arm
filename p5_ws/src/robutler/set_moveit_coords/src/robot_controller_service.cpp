@@ -13,17 +13,17 @@ public:
     std::string model;
     this->get_parameter("model", model);
 
-    if (model == "iiwa7_table")
+    if (false) //"model == iiwa7_table")
     {
       RCLCPP_INFO(this->get_logger(), "Creating MoveGroupInterface for right arm");
       // Create options for the MoveGroupInterface for both arms
-      moveit::planning_interface::MoveGroupInterface::Options options("right_arm", "robot_description", "lbr");   
+      moveit::planning_interface::MoveGroupInterface::Options options("right_arm", "robot_description", "");   
       move_group_interface = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options);  
     }
-    else if (model == "iiwa7")
+    else if (true)
     {
       RCLCPP_INFO(this->get_logger(), "Creating MoveGroupInterface for left arm");
-      moveit::planning_interface::MoveGroupInterface::Options options("left_arm", "robot_description", "lbr_left");
+      moveit::planning_interface::MoveGroupInterface::Options options("left_arm", "robot_description", "");
       move_group_interface = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options);
     }
 
