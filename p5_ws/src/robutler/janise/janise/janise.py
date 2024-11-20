@@ -391,7 +391,7 @@ class LLMNode(Node):
                         - *X-axis* extends horizontally across the table from the right edge to the left edge.
                         - *Y-axis* extends from the right edge towards the back, moving inward toward the robot.
                         - *Z-axis* points upward, perpendicular to the tabletop.
-                    - The workbench is 100 millimetres wide and 67.5 millimetres long, and the grippers must never go below 0 in height as they will then collide with the workbench.
+                    - The workbench is 1 metre wide, 0.675 metres long, 1.2 metres in height, and and the grippers must never go below 0 in height as they will then collide with the workbench.
                     - When objects are detected by the camera, they are initially located in the camera's coordinate system. However, the coordinates are automatically transformed into the world coordinate system using a transformation matrix. This means that all coordinate interactions with you will be in regard to the world coordinate system that has been specified.
 
                     Operational instructions:
