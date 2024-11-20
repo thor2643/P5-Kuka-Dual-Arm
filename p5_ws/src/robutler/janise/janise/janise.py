@@ -72,7 +72,6 @@ class LLMNode(Node):
         self.available_functions = {
             'get_available_locations': self.get_available_locations,
             'get_pose_values_from_location': self.get_pose_values_from_location,
-            'move_to_location': self.move_to_location,
             'find_object': self.find_object,
             'define_object_thresholds': self.define_object_thresholds,
             'move_robot_to_pose': self.move_robot_to_pose,
@@ -184,12 +183,6 @@ class LLMNode(Node):
         pose_values = [float(value) for value in pose_dict.values()]
 
         return pose_values
-    
-    def move_to_location(self, location):
-        pose = self.get_pose_values_from_location(location)
-        self.move_robot_to_pose(pose)
-
-        return f"Moving to {location} station with pose: {pose}"
 
     def find_object(self, object_name: str) -> GetObjectInfo.Response:
         print(f"\nRequesting the detector service to find {object_name}")  # Debugging
@@ -212,16 +205,7 @@ class LLMNode(Node):
             self.get_logger().info(f"Object orientations: {response.orientations}")
             self.get_logger().info(f"Grasping widths: {response.grasp_widths}\n")
 
-            # Define the transformation matrix from camera coordinates to world coordinates
-            """
-            angle_around_x = 180-33
-            T_world_cam = np.array([
-                        [1, 0, 0, 0.487],  # Example values, replace with actual transformation values
-                        [0, np.cos(np.pi/180*angle_around_x), -np.sin(np.pi/180*angle_around_x), 0.77],
-                        [0, np.sin(np.pi/180*angle_around_x), np.cos(np.pi/180*angle_around_x), 0.62],
-                        [0, 0, 0, 1]
-                        ])
-            """
+            # Calibrated transformation matrix from coordinates to camera world
             T_world_cam = np.array([[ 0.9998524,  -0.00382788,  0.01674907,  0.48649258],
                                     [ 0.00545733, -0.85361904, -0.52086923,  0.78510204],
                                     [ 0.01629115,  0.52088376, -0.85347215,  0.70742285],
@@ -267,28 +251,19 @@ class LLMNode(Node):
             self.get_logger().error('Service call failed')
             return DefineObjectInfo.Response()
 
-    def move_robot_to_pose(self, pose):
+    def move_robot_to_pose(self, pose, arm):
         # Define the transformation matrix from camera coordinates to world coordinates
         # Found by CAD model and modified to using print_cartesian in detect_objects.py
-        response = self.plan_robot_trajectory(pose)
+        response = self.plan_robot_trajectory(pose, arm)
 
-        if response.result:
-            self.execute_planned_trajectory()
+        if response.success:
+            return self.execute_planned_trajectory(arm)
         else:
             self.get_logger().error("Failed to plan trajectory. Cannot move robot to pose.")
-            return None
+            return response
 
-    def plan_robot_trajectory(self, pose):
-        # Found in CAD model
-        """
-        T_world_moveit = np.array([
-                        [1, 0, 0, -0.035],  # Example values, replace with actual transformation values
-                        [0, 1, 0, -0.034],
-                        [0, 0, 1, 0.95], #Before gripper correction: 0.809
-                        [0, 0, 0, 1]
-                    ])
-        """
-
+    def plan_robot_trajectory(self, pose, arm):
+        # Calibrated transformation matrix from world to moveit coordinates
         T_world_moveit = np.array([[0.999983  , -0.00554552, -0.0018012 ,  -0.02903434],
                                     [0.00554922,  0.99998249,  0.00205645,  -0.03177714],
                                     [0.00178977, -0.00206641,  0.9999962, 0.84],#0.819373], comment back in when gripper is fixed
@@ -305,7 +280,7 @@ class LLMNode(Node):
         rpy_world = pose[3:]
         quat_moveit = self.euler_to_quat(rpy_world)
 
-        print(f"\nMoving robot to pose: {pose}\n")
+        self.robot_plan_req.arm = arm
         self.robot_plan_req.position.x = float(pos_moveit[0])
         self.robot_plan_req.position.y = float(pos_moveit[1])
         self.robot_plan_req.position.z = float(pos_moveit[2])
@@ -313,16 +288,18 @@ class LLMNode(Node):
         self.robot_plan_req.orientation.y = float(quat_moveit[2])
         self.robot_plan_req.orientation.z = float(quat_moveit[3])
         self.robot_plan_req.orientation.w = float(quat_moveit[0])
-
-        print(f"\nPosition: {self.robot_plan_req.position}")
-        print(f"Orientation: {self.robot_plan_req.orientation}\n")
  
         self.future = self.robot_plan_client.call_async(self.robot_plan_req)
         return self.run_service_request()
         
-    def execute_planned_trajectory(self):
+    def execute_planned_trajectory(self, arm):
+        print(f"Type of arm: {type(arm)}")
+        print(f"Executing planned trajectory for {arm} arm")
+        self.robot_execute_req.arm = arm
         self.future = self.robot_execute_client.call_async(self.robot_execute_req)
-        return self.run_service_request(timeout=15)
+        response = self.run_service_request()
+        print(response)
+        return response
 
     def manipulate_right_gripper(self, width=167, speed=110, force=15):  # Defaults to open gripper with max speed and minimum force
         if width < 0 or width > 167:
@@ -473,7 +450,16 @@ class LLMNode(Node):
                 model=model,
                 messages=messages
             )
+
+
+            
             final_response_text = final_response.choices[0].message.content
+
+            messages.append({
+                'role': 'assistant',
+                'content': final_response_text #json.dumps(function_response)
+            })
+
             self.text_to_speech(final_response_text)
 
 
