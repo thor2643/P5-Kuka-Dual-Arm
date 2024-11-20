@@ -15,8 +15,6 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     arg2 = DeclareLaunchArgument('y', default_value='0.5', description='Second integer parameter')
     arg3 = DeclareLaunchArgument('z', default_value='1', description='Third integer parameter')
 
-    ld = LaunchDescription(arg1, arg2, arg3)
-
     model = "iiwa7_table"
 
     # generate moveit configs
@@ -26,21 +24,25 @@ def launch_setup(context: LaunchContext) -> List[LaunchDescriptionEntity]:
     )
 
     # launch demo node
-    ld.add_action(
-        Node(
-            package="set_moveit_coords",
-            executable="set_moveit_coords", #"set_moveit_coords",
-            parameters=[
-                moveit_configs.to_dict(),
-                {"use_sim_time": LaunchConfiguration("sim")},
-                LBRDescriptionMixin.param_robot_name(),
-                'x': LaunchConfiguration('x'),
-                'y': LaunchConfiguration('y'),
-                'z': LaunchConfiguration('z'),
-            ],
-        )
+    node_action = Node(
+        package="set_moveit_coords",
+        executable="set_moveit_coords",
+        parameters=[
+            moveit_configs.to_dict(),
+            {"use_sim_time": LaunchConfiguration("sim")},
+            LBRDescriptionMixin.param_robot_name(),
+            {"x": LaunchConfiguration('x')},
+            {"y": LaunchConfiguration('y')},
+            {"z": LaunchConfiguration('z')},
+        ],
+        arguments=[
+            LaunchConfiguration('x'),
+            LaunchConfiguration('y'),
+            LaunchConfiguration('z'),
+        ]
     )
-    return ld.entities
+    
+    return [arg1, arg2, arg3, node_action]
 
 
 def generate_launch_description() -> LaunchDescription:
@@ -52,5 +54,4 @@ def generate_launch_description() -> LaunchDescription:
     ld.add_action(LBRDescriptionMixin.arg_sim())
 
     ld.add_action(OpaqueFunction(function=launch_setup))
-
     return ld

@@ -1,6 +1,8 @@
 planning_plugin: ompl_interface/OMPLPlanner
 start_state_max_bounds_error: 0.1
 jiggle_fraction: 0.05
+
+# Request adapters are plugins that can modify the request for planning. They fix common issues with the request, allowing us to set constraints.
 request_adapters: >-
     default_planner_request_adapters/AddTimeOptimalParameterization
     default_planner_request_adapters/ResolveConstraintFrames
@@ -8,37 +10,39 @@ request_adapters: >-
     default_planner_request_adapters/FixStartStateBounds
     default_planner_request_adapters/FixStartStateCollision
     default_planner_request_adapters/FixStartStatePathConstraints
+
+#workspace_parameters:  // Unsure if this does anything
+#  workspace_min_x: -0.1
+#  workspace_min_y: -0.1
+#  workspace_min_z: 0.8
+#  workspace_max_x: 1.0
+#  workspace_max_y: 1.0
+#  workspace_max_z: 1.5
     
 planner_configs: 
-# Define specific parameters for each planner
   RRTstar:
     type: geometric::RRTstar
-    termination_condition: CostConvergence[10,.1]  
-    range: 0.1
-    goal_bias: 0.1
-    delay_collision_checking: 1 #
+    
+    # Parameters for the RRTstar planner
+    range: 0.1 # The maximum distance the planner will extend in the tree.
+    goal_bias: 0.8 # The probability of sampling the goal state in the planner. Right now, the goal state is sampled with a probability of 0.3.
+    delay_collision_checking: 1 # If set to true (1), collision checking is delayed until a solution path is found.
+    termination_condition: CostConvergence[100,.0001]  # Termination condition for the planner. The planner will stop when the last 10 solutions have improved by less than 0.1.
 
-    # Collision checking parameters
-    longest_valid_segment_fraction: 0.01
-    maximum_waypoint_distance: 0.01
-
-    # Tell the planner that the state space is constrained (The box defined in set_moveit_coords), and which joints the projection should be done on (This projection is used to enforce the constraints)
-    #enforce_constrained_state_space: true
-    #projection_evaluator: joints(A1,A2)
-
-    # Just checking if the planner acccpts any prameters: (It does)
-    test: 1
-
-  RRTConnect:
+  RRTConnect: 
     type: geometric::RRTConnect
     range: 0.2
   
-# Eventuelle andre planners kan findes i ompl_default.yaml. Parameterne til RRTstar var fundet i moveit docs. 
+  # Potential other planners can be found in opml_planners.yaml (A document with same name) moveit docs. 
 
-# Definning planners for right_arm MoveGroup
 right_arm:
+# Planner constraints
+  enforce_constrained_state_space: true # Tell the planner that the state space is constrained, as defined in constraints.yaml. We can also set constraints using the cpp interface, as we have doen in robot controller.
+  projection_evaluator: joints(A1,A2)  # Which joints the projection should be done on (The projector is used to calculate the manipulator configuration space, by specefying the first two joints only, this is speed up)
+  
   planner_configs: 
-    - RRTstar       
+    - RRTstar  
+    - RRTConnect     
   
 
 

@@ -9,26 +9,25 @@ int main(int argc, char **argv) {
   rclcpp::init(argc, argv);
 
   // Get position from launch
-  int arg1 = std::atoi(argv[4]);
-  int arg2 = std::atoi(argv[5]);
-  int arg3 = std::atoi(argv[6]);
+  float arg1 = std::atof(argv[1]);
+  float arg2 = std::atof(argv[2]);
+  float arg3 = std::atof(argv[3]);
 
   // Configure node
   auto node_ptr = rclcpp::Node::make_shared("set_moveit_coords");
   node_ptr->declare_parameter("robot_name", "iiwa7_table");
   auto robot_name = node_ptr->get_parameter("robot_name").as_string();
 
+  rclcpp::executors::SingleThreadedExecutor executor;
+  executor.add_node(node_ptr);
+  auto spinner = std::thread([&executor]() { executor.spin(); });
+
   // Create MoveGroupInterface (lives inside robot_name namespace)
   auto move_group_interface = moveit::planning_interface::MoveGroupInterface(
       node_ptr, moveit::planning_interface::MoveGroupInterface::Options("right_arm", "robot_description", robot_name));
 
   //move_group_interface.setEndEffectorLink("3f_palm_finger_2_joint");
-  //move_group_interface.setPlannerId("RRTstar");
-  
-  // Spin rviz
-  rclcpp::executors::SingleThreadedExecutor executor;
-  executor.add_node(node_ptr);
-  auto spinner = std::thread([&executor]() { executor.spin(); });
+  move_group_interface.setPlannerId("RRTstar");
   
   // --- Constraint the planner so the end effector link (3f_tool0) is always inside a box ---
   // Link to this code: https://moveit.picknik.ai/main/doc/how_to_guides/using_ompl_constrained_planning/ompl_constrained_planning.html
@@ -39,14 +38,15 @@ int main(int argc, char **argv) {
   // Create the box and set its dimensions
   shape_msgs::msg::SolidPrimitive box;
   box.type = shape_msgs::msg::SolidPrimitive::BOX;  
-  box.dimensions = { 1, 0.667, 1.5 };
+  box.dimensions = { 1, 0.667, 1.2 };
+  //box.dimensions = { 3, 2, 2.5 };
   box_constraint.constraint_region.primitives.emplace_back(box);
 
   // Set position of the box 
   geometry_msgs::msg::Pose box_pose; // 
   box_pose.position.x = 0.465;
   box_pose.position.y = 0.2995;
-  box_pose.position.z = 1.5595;
+  box_pose.position.z = 1.40945;
   box_pose.orientation.w = 1; 
   box_constraint.constraint_region.primitive_poses.emplace_back(box_pose); // The box position is at it's center
   box_constraint.weight = 1.0;
@@ -62,15 +62,15 @@ int main(int argc, char **argv) {
   Eigen::Vector3d box_point_2(box_pose.position.x + box.dimensions[0] / 2, box_pose.position.y + box.dimensions[1] / 2,
                               box_pose.position.z + box.dimensions[2] / 2);
 
-  //moveit_visual_tools.publishCuboid(box_point_1, box_point_2, rviz_visual_tools::TRANSLUCENT_DARK);
+  moveit_visual_tools.publishCuboid(box_point_1, box_point_2, rviz_visual_tools::TRANSLUCENT_DARK);
   moveit_visual_tools.trigger();
 
   // --- Set a target pose right_arm, placing 3f_tool0 here --- 
   geometry_msgs::msg::Pose target_pose;
   target_pose.orientation.w = 1.0;
-  target_pose.position.x = 0;
-  target_pose.position.y = 0.5;
-  target_pose.position.z = 1.5;
+  target_pose.position.x = arg1;
+  target_pose.position.y = arg2;
+  target_pose.position.z = arg3;
   move_group_interface.setPoseTarget(target_pose);
   
   // -- Create a plan to that target pose -- 
@@ -83,14 +83,15 @@ int main(int argc, char **argv) {
         RCLCPP_INFO(node_ptr->get_logger(), "Parameter: %s, Value: %s", param.first.c_str(), param.second.c_str());
     }
 
-  //move_group_interface.setPathConstraints(box_constraints); // Apply the box constraint to the planner
-  //move_group_interface.setPlanningTime(10.0); // The box constraint adds calculation time to the planner
+  move_group_interface.setPathConstraints(box_constraints); // Apply the box constraint to the planner
+  move_group_interface.setPlanningTime(20.0); // The box constraint adds calculation time to the planner
+  //move_group_interface.setWorkspace(0.0, 0.0, 0.0, 3.0, 3.0, 3.0); // Does not effect revvolute joints
   auto error_code = move_group_interface.plan(plan);
 
   if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
     // Execute the plannode_ptr->get_logger()->info("The plan is now executed");
     RCLCPP_INFO(node_ptr->get_logger(), "\nThe plan is now executed\n");
-    //move_group_interface.execute(plan);
+    move_group_interface.execute(plan);
     RCLCPP_INFO(node_ptr->get_logger(), "\nThe plan has been executed\n");
   } else {
     RCLCPP_ERROR(node_ptr->get_logger(), "Failed to plan to target pose");
