@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [ 
-            'omni_client = janise.janise:main'
+            'omni_client = janise.janise:main',
+            'test_client = janise.callbackTest:main'
         ],
     },
 )

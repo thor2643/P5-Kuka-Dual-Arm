@@ -162,11 +162,11 @@ class ObjectDetector(Node):
 
                 point_idx = np.argmax([point[1] for point in rotated_bounding_boxes[i]])
 
-                cv2.putText(
-                    image_with_bbx, 
-                    obj,                #object name
-                    (rotated_bounding_boxes[i][point_idx][0], rotated_bounding_boxes[i][point_idx][0]+5), cv2.FONT_HERSHEY_SIMPLEX, 4, (255, 0, 0), 2, cv2.LINE_AA
-                )
+                image_with_bbx =cv2.putText(
+                                    image_with_bbx, 
+                                    obj,                #object name
+                                    (rotated_bounding_boxes[i][point_idx][0], rotated_bounding_boxes[i][point_idx][0]+5), cv2.FONT_HERSHEY_SIMPLEX, 4, (255, 0, 0), 2, cv2.LINE_AA
+                                )
 
             self.get_logger().info(f'Found {response.object_count} {object}\n')
 
@@ -180,7 +180,7 @@ class ObjectDetector(Node):
             self.get_logger().info('Object thresholds not available. Consider adding the object by running the adjust_hsv option at startup.\n')
             response.object_count = 0
 
-            print("I am now returning")
+        print("I am now returning")
         return response
     
     # The callback function for the threshold adjust service    
