@@ -138,7 +138,7 @@ class LLMNode(Node):
     #######################################################################################
 
 
-    def run_service_request(self, timeout=10):
+    def run_service_request(self, timeout=60):
         try:
             rclpy.spin_until_future_complete(self, self.future, timeout_sec=timeout)
             if self.future.result() is not None:
