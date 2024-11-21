@@ -21,7 +21,6 @@ setup(
     entry_points={
         'console_scripts': [ 
             'omni_client = janise.janise:main',
-            'test_client = janise.callbackTest:main'
         ],
     },
 )
