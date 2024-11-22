@@ -117,8 +117,8 @@ private:
     moveit_msgs::msg::JointConstraint joint_constraint1;
     joint_constraint1.joint_name = (*linkArray)[0]; // The first joint
     joint_constraint1.position = 0.0;       // Center of the allowed range
-    joint_constraint1.tolerance_above = 2;//1.57;  // +90 degrees in radians
-    joint_constraint1.tolerance_below = 2;//1.57;  // -90 degrees in radians
+    joint_constraint1.tolerance_above = 1.57;  // +90 degrees in radians
+    joint_constraint1.tolerance_below = 1.57;  // -90 degrees in radians
     joint_constraint1.weight = 1.0;         // Weight of the constraint
     // We add joint constraints to the generic constraints
     constraints.joint_constraints.push_back(joint_constraint1);
