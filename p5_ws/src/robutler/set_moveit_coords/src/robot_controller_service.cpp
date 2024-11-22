@@ -3,6 +3,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "project_interfaces/srv/plan_move_command.hpp"
 #include "project_interfaces/srv/execute_move_command.hpp"
+#include "project_interfaces/srv/get_current_pose.hpp"
 #//include <moveit_visual_tools/moveit_visual_tools.h>
 #include <string>
 
@@ -16,11 +17,23 @@ public:
 
     RCLCPP_INFO(this->get_logger(), "Creating MoveGroupInterface for right arm");
     moveit::planning_interface::MoveGroupInterface::Options options_right("right_arm", "robot_description", "");   
-    move_group_interface_right = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options_right);  
+    move_group_interface_right = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options_right); 
 
     RCLCPP_INFO(this->get_logger(), "Creating MoveGroupInterface for left arm");
     moveit::planning_interface::MoveGroupInterface::Options options_left("left_arm", "robot_description", "");
     move_group_interface_left = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options_left);
+
+    // Fix bug in MoveGroupInterface
+    move_group_interface_right->setEndEffectorLink("3f_tool0");
+    move_group_interface_right->getCurrentPose(); 
+    move_group_interface_left->setEndEffectorLink("2f_tool0");
+    move_group_interface_left->getCurrentPose();
+
+    getPoseReferenceFrame = move_group_interface_right->getPoseReferenceFrame();
+    RCLCPP_INFO(this->get_logger(), "Received request to plan a trajectory");
+
+
+    
        
     // Pass the options and the shared pointer of the current node
     planner_service = this->create_service<project_interfaces::srv::PlanMoveCommand>(
@@ -28,6 +41,9 @@ public:
 
     execute_service = this->create_service<project_interfaces::srv::ExecuteMoveCommand>(
         "execute_move_command", std::bind(&RobotControllerService::handle_execute_service, this, std::placeholders::_1, std::placeholders::_2));
+
+    get_pose_service = this->create_service<project_interfaces::srv::GetCurrentPose>(
+        "get_pose", std::bind(&RobotControllerService::handle_pose_request_service, this, std::placeholders::_1, std::placeholders::_2));
   }
 
 private:
@@ -35,6 +51,7 @@ private:
   std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface_left;
   rclcpp::Service<project_interfaces::srv::PlanMoveCommand>::SharedPtr planner_service;
   rclcpp::Service<project_interfaces::srv::ExecuteMoveCommand>::SharedPtr execute_service;
+  rclcpp::Service<project_interfaces::srv::GetCurrentPose>::SharedPtr get_pose_service;
   moveit::planning_interface::MoveGroupInterface::Plan plan_right;
   moveit::planning_interface::MoveGroupInterface::Plan plan_left;
 
@@ -239,6 +256,34 @@ private:
       response->success = false;
     }
 
+  }
+
+  void handle_pose_request_service(const std::shared_ptr<project_interfaces::srv::GetCurrentPose::Request> request,
+                      const std::shared_ptr<project_interfaces::srv::GetCurrentPose::Response> response) {
+    RCLCPP_INFO(this->get_logger(), "Received request to get current pose for %s arm", request->arm.c_str());
+
+    std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface;
+    //std::string *end_effector_link;
+
+    // Check if the request is for the right or left arm
+    if (request->arm == "right") {
+      move_group_interface = move_group_interface_right;
+      //*end_effector_link = "3f_tool0";
+
+    } else if (request->arm == "left") {
+      move_group_interface = move_group_interface_left;
+      //*end_effector_link = "2f_tool0";
+    } else {
+      RCLCPP_ERROR(this->get_logger(), "Invalid arm specified");
+      response->log = "Invalid arm specified";
+      response->success = false;
+      return;
+    }
+
+    geometry_msgs::msg::PoseStamped current_pose = move_group_interface->getCurrentPose("3f_tool0"); // The end effector link for the right arm
+    response->pose = current_pose.pose;
+    response->success = true;
+    RCLCPP_INFO(this->get_logger(), "Current pose retrieved successfully");
   }
 };
 

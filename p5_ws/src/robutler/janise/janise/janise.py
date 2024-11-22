@@ -24,6 +24,7 @@ from project_interfaces.srv import DefineObjectInfo
 from project_interfaces.srv import PlanMoveCommand
 from project_interfaces.srv import ExecuteMoveCommand
 from project_interfaces.srv import PromptJanice
+from project_interfaces.srv import GetCurrentPose
 from robotiq_3f_gripper_ros2_interfaces.srv import Robotiq3FGripperOutputService
 from robotiq_2f_85_interfaces.srv import Robotiq2F85GripperCommand
 
@@ -61,6 +62,9 @@ class LLMNode(Node):
         self.robot_execute_client = self.create_client(ExecuteMoveCommand, 'execute_move_command', callback_group=client_cb_group)
         self.robot_execute_req = ExecuteMoveCommand.Request()
 
+        self.robot_pose_client = self.create_client(GetCurrentPose, 'get_pose', callback_group=client_cb_group)
+        self.robot_pose_req = GetCurrentPose.Request()
+
         # Specify a specific microphone if needed
         self.microphone_index = 8
         self.microphone_timeout = 10
@@ -90,7 +94,8 @@ class LLMNode(Node):
             'plan_robot_trajectory': self.plan_robot_trajectory,
             'execute_planned_trajectory': self.execute_planned_trajectory,
             'manipulate_right_gripper': self.manipulate_right_gripper,
-            'manipulate_left_gripper': self.manipulate_left_gripper
+            'manipulate_left_gripper': self.manipulate_left_gripper,
+            'get_current_pose': self.get_current_pose
         }
 
         # Initialize Ollama client or OpenAI client with API key and optional project ID
@@ -227,6 +232,24 @@ class LLMNode(Node):
         q_z = cr * cp * sy - sr * sp * cy
 
         return [q_w, q_x, q_y, q_z]
+
+    
+    def quat_to_euler(self, quat):
+        w, x, y, z = quat
+        t0 = +2.0 * (w * x + y * z)
+        t1 = +1.0 - 2.0 * (x * x + y * y)
+        roll = np.degrees(np.arctan2(t0, t1))
+
+        t2 = +2.0 * (w * y - z * x)
+        t2 = +1.0 if t2 > +1.0 else t2
+        t2 = -1.0 if t2 < -1.0 else t2
+        pitch = np.degrees(np.arcsin(t2))
+
+        t3 = +2.0 * (w * z + x * y)
+        t4 = +1.0 - 2.0 * (y * y + z * z)
+        yaw = np.degrees(np.arctan2(t3, t4))
+
+        return [roll, pitch, yaw]
 
 
     ########################################################################################
@@ -386,9 +409,9 @@ class LLMNode(Node):
         self._3f_controller.output_registers.r_mod = 1  # Basic Gripper Mode
         self._3f_controller.output_registers.r_gto = 1  # Go To Position
         self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
-        self._3f_controller.output_registers.r_pra = int(round((167 - width) / 167 * 255))          # Gripper limitations [0 - 167mm]
-        self._3f_controller.output_registers.r_spa = int(round((speed - 22) / (110 - 22) * 255))    # Speed limitations [22 - 110mm/sec]
-        self._3f_controller.output_registers.r_fra = int(round((force - 15) / (60 - 15) * 255))     # Force limitations [15 - 60N]
+        self._3f_controller.output_registers.r_pra = round((167 - width) / 167 * 112)          # Gripper limitations [0 - 167mm]
+        self._3f_controller.output_registers.r_spa = round((speed - 22) / (110 - 22) * 255)    # Speed limitations [22 - 110mm/sec]
+        self._3f_controller.output_registers.r_fra = round((force - 15) / (60 - 15) * 255)     # Force limitations [15 - 60N]
 
         # Call the service asynchronously
         future = self._3f_controller_cli.call_async(self._3f_controller)
@@ -418,6 +441,44 @@ class LLMNode(Node):
 
         # Wait for the result
         response = self.wait_future(future)
+
+        return response
+    
+    def get_current_pose(self, arm: str) -> GetCurrentPose.Response:
+        self.get_logger().info(f"Received request to get current pose for {arm} arm")
+        self.robot_pose_req.arm = arm
+
+        future = self.robot_pose_client.call_async(self.robot_pose_req)
+
+        # Wait for the result
+        response = self.wait_future(future)
+
+        if response is None:
+            self.get_logger().error('Service call failed')
+            return GetCurrentPose.Response()
+
+        if response.success:
+            self.get_logger().info(f"Current pose for {arm} arm retrieved successfully")
+
+            # Convert quat to euler
+            rpy = self.quat_to_euler([response.pose.orientation.w, response.pose.orientation.x, response.pose.orientation.y, response.pose.orientation.z])
+
+            pose_dict = {
+            'position': {
+                'x': response.pose.position.x,
+                'y': response.pose.position.y,
+                'z': response.pose.position.z
+            },
+            'orientation': {
+                'roll': rpy[0],
+                'pitch': rpy[1],
+                'yaw': rpy[2]
+            }
+            }
+
+            return pose_dict
+        else:
+            self.get_logger().error(f"Failed to get current pose for {arm} arm: {response.log}") 
 
         return response
 

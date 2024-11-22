@@ -33,6 +33,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/DefineObjectInfo.srv"
   "srv/ExecuteMoveCommand.srv"
   "srv/PromptJanice.srv"
+  "srv/GetCurrentPose.srv"
   DEPENDENCIES geometry_msgs
 )
 

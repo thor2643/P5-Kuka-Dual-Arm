@@ -125,6 +125,24 @@
     {
         "type": "function",
         "function": {
+            "name": "get_current_pose",
+            "description": "Get the current pose of the selected robot arm",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "arm": {
+                        "type": "string",
+                        "enum": ["left", "right"],
+                        "description": "The arm to get the current pose from. Can be either 'left' or 'right'."
+                    }
+                },
+                "required": ["arm"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "manipulate_right_gripper",
             "description": "Adjusts the right gripper, so that it opens or closes or anywhere inbetween depending on the situation. The width, speed, and force of the gripper can be specified as an argument. The default width is 167, default speed is 110, and default force is 15.",
             "parameters": {
