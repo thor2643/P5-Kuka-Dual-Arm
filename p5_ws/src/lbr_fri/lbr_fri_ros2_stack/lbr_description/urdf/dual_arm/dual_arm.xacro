@@ -1261,7 +1261,7 @@
   <joint name="3f_palm_tool0" type="fixed">
     <parent link="3f_palm"/>
     <child link="3f_tool0"/>
-    <origin rpy="0 -1.5707 1.5707" xyz="0.0 0.17 0"/>
+    <origin rpy="0 -1.5707 1.5707" xyz="0.0 0.15 0"/>
   </joint>
   <!-- end of joint list -->
   <link name="left_robotiq_arg2f_base_link">
@@ -1705,6 +1705,6 @@
   <joint name="2f_ee_tool0" type="fixed">
     <parent link="left_link_ee"/>
     <child link="2f_tool0"/>
-    <origin rpy="0 3.14 0" xyz="0 0 0.155"/>
+    <origin rpy="0 3.14 0" xyz="0 0 0.175"/>
   </joint>
 </robot>
