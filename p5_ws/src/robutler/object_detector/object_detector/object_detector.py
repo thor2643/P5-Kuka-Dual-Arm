@@ -96,6 +96,8 @@ class ObjectDetector(Node):
         self.detector_srv = self.create_service(GetObjectInfo, 'get_object_info', self.get_object_information)
         self.threshold_adjust_srv = self.create_service(DefineObjectInfo, 'define_object_info', self.define_object_thresholds)
 
+        self.image_publisher = self.create_publisher(Image, 'video_frames', 10)
+
         # Instantiate the RealSenseCamera object
         self.realsense_camera = RealSenseCamera()
 
@@ -137,11 +139,19 @@ class ObjectDetector(Node):
 
         if object in self.lego_bricks:
             self.retrieve_aligned_frames()
-            self.find_object(self.get_color_image(), object)
+
+            image = self.get_color_image()
+            _, rotated_bounding_boxes, _ = self.find_object(image, object)
+
+            image_with_bbx = self.draw_rotated_boxes(image.copy(), rotated_bounding_boxes)
+            image_with_bbx = cv2.rotate(image_with_bbx, cv2.ROTATE_180)
 
             response.object_count = len(self.found_objects)
 
-            for obj in self.found_objects:
+            img_x = self.color_frame.shape[1]
+            img_y = self.color_frame.shape[0]
+
+            for i, obj in enumerate(self.found_objects):
                 point = Point()
                 point.x = float(self.found_objects[obj]['center_coords'][0])
                 point.y = float(self.found_objects[obj]['center_coords'][1])
@@ -149,9 +159,28 @@ class ObjectDetector(Node):
 
                 response.centers.append(point)
                 response.orientations.append(self.found_objects[obj]['rotated_rect'][2])
-                response.grasp_widths.append(self.found_objects[obj]['width'])
+
+                if self.found_objects[obj]['width'] is not None:
+                    response.grasp_widths.append(self.found_objects[obj]['width'])
+                else:
+                    response.grasp_widths.append(0)
+
+                # Extract the x, y couple from rotated_bounding_boxes with the highest y value
+                print(rotated_bounding_boxes)
+
+                point_idx = np.argmax([point[1] for point in rotated_bounding_boxes[i]])
+
+                image_with_bbx =cv2.putText(
+                                    image_with_bbx, 
+                                    obj,                #object name
+                                    (img_x-rotated_bounding_boxes[i][point_idx][0], img_y-rotated_bounding_boxes[i][point_idx][0]), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA
+                                )
 
             self.get_logger().info(f'Found {response.object_count} {object}\n')
+
+            self.image_publisher.publish(self.realsense_camera.bridge.cv2_to_imgmsg(image_with_bbx))
+
+            print("I have moved on")
 
             # Clear the found objects dictionary
             self.found_objects.clear()
@@ -159,6 +188,7 @@ class ObjectDetector(Node):
             self.get_logger().info('Object thresholds not available. Consider adding the object by running the adjust_hsv option at startup.\n')
             response.object_count = 0
 
+        print("I am now returning")
         return response
     
     # The callback function for the threshold adjust service    
@@ -317,7 +347,7 @@ class ObjectDetector(Node):
                 box = np.int0(box)
                 rotated_bounding_boxes.append(box)
 
-                self.found_objects[f"{object_name}_{i}"] = {'bounding_box': (x, y, x + w, y + h), 
+                self.found_objects[f"{object_name}_{i+1}"] = {'bounding_box': (x, y, x + w, y + h), 
                                                             'rotated_bounding_box': box, 
                                                             'rotated_rect': rect}
 
@@ -329,7 +359,7 @@ class ObjectDetector(Node):
 
                 if center_coordinates is not None:
                     # Add center coordinates to the dictionary
-                    self.found_objects[f"{object_name}_{i}"].update({'center_coords': center_coordinates})
+                    self.found_objects[f"{object_name}_{i+1}"].update({'center_coords': center_coordinates})
                 else:
                     print("Failed to calculate center coordinates of the object.")
 
@@ -348,8 +378,9 @@ class ObjectDetector(Node):
                     height = np.linalg.norm(height_point_1_metric[:2] - height_point_2_metric[:2])
 
                     # Add width and height of object to the dictionary
-                    self.found_objects[f"{object_name}_{i}"].update({'width': width, 'height': height})
+                    self.found_objects[f"{object_name}_{i+1}"].update({'width': width, 'height': height})
                 else:
+                    self.found_objects[f"{object_name}_{i+1}"].update({'width': None, 'height': None})
                     print("Failed to calculate width and height of the object.")
 
                 
@@ -518,8 +549,7 @@ class ObjectDetector(Node):
         cv2.namedWindow("Image with Coordinates")
         cv2.setMouseCallback("Image with Coordinates", mouse_callback)
 
-        
-
+    
         while True:
             cv2.imshow("Image with Coordinates", cv2.rotate(color_image, cv2.ROTATE_180))
 
