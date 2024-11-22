@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'janise'
+package_name = 'gui_package'
 
 setup(
     name=package_name,
@@ -13,14 +13,14 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='thor',
-    maintainer_email='thor951753@hotmail.com',
+    maintainer='marcus',
+    maintainer_email='marcfriis@protonmail.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': [ 
-            'omni_client = janise.janise:main',
+        'console_scripts': [
+            "gui_node = gui_package.gui:main",
         ],
     },
 )
