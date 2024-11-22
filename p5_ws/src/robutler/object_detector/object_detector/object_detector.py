@@ -144,8 +144,12 @@ class ObjectDetector(Node):
             _, rotated_bounding_boxes, _ = self.find_object(image, object)
 
             image_with_bbx = self.draw_rotated_boxes(image.copy(), rotated_bounding_boxes)
+            image_with_bbx = cv2.rotate(image_with_bbx, cv2.ROTATE_180)
 
             response.object_count = len(self.found_objects)
+
+            img_x = self.color_frame.shape[1]
+            img_y = self.color_frame.shape[0]
 
             for i, obj in enumerate(self.found_objects):
                 point = Point()
@@ -155,7 +159,11 @@ class ObjectDetector(Node):
 
                 response.centers.append(point)
                 response.orientations.append(self.found_objects[obj]['rotated_rect'][2])
-                response.grasp_widths.append(self.found_objects[obj]['width'])
+
+                if self.found_objects[obj]['width'] is not None:
+                    response.grasp_widths.append(self.found_objects[obj]['width'])
+                else:
+                    response.grasp_widths.append(0)
 
                 # Extract the x, y couple from rotated_bounding_boxes with the highest y value
                 print(rotated_bounding_boxes)
@@ -165,7 +173,7 @@ class ObjectDetector(Node):
                 image_with_bbx =cv2.putText(
                                     image_with_bbx, 
                                     obj,                #object name
-                                    (rotated_bounding_boxes[i][point_idx][0], rotated_bounding_boxes[i][point_idx][0]+5), cv2.FONT_HERSHEY_SIMPLEX, 4, (255, 0, 0), 2, cv2.LINE_AA
+                                    (img_x-rotated_bounding_boxes[i][point_idx][0], img_y-rotated_bounding_boxes[i][point_idx][0]), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA
                                 )
 
             self.get_logger().info(f'Found {response.object_count} {object}\n')
@@ -372,6 +380,7 @@ class ObjectDetector(Node):
                     # Add width and height of object to the dictionary
                     self.found_objects[f"{object_name}_{i+1}"].update({'width': width, 'height': height})
                 else:
+                    self.found_objects[f"{object_name}_{i+1}"].update({'width': None, 'height': None})
                     print("Failed to calculate width and height of the object.")
 
                 

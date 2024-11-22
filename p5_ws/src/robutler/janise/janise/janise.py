@@ -264,7 +264,6 @@ class LLMNode(Node):
             return GetObjectInfo.Response()
 
         if response.object_count != 0:
-            response = self.future.result()
             self.get_logger().info(f"\nObjects found: {response.object_count}")
             self.get_logger().info(f"Center points: {response.centers}")
             self.get_logger().info(f"Object orientations: {response.orientations}")
