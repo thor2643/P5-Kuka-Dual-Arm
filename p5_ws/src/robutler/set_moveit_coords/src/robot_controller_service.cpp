@@ -132,6 +132,7 @@ private:
     joint_constraint2.weight = 1.0;         // Weight of the constraint
     constraints.joint_constraints.push_back(joint_constraint2);
     */
+    
         
     /*
     moveit_msgs::msg::JointConstraint joint_constraint4;
@@ -176,7 +177,7 @@ private:
     move_group_interface->setPlannerId("TRRT"); // Other options in ompl_planning.yaml
     move_group_interface->setStartStateToCurrentState(); // Ensure that the planner has the current state of the robot
     move_group_interface->setPathConstraints(constraints);
-    move_group_interface->setMaxVelocityScalingFactor(0.1); // Set the maximum velocity scaling factor (10% of the maximum speed)
+    move_group_interface->setMaxVelocityScalingFactor(0.02); // Set the maximum velocity scaling factor (10% of the maximum speed)
     move_group_interface->setMaxAccelerationScalingFactor(0.1); // Set the maximum acceleration scaling factor (10% of the maximum acceleration)
     move_group_interface->setPoseTarget(target_pose);
   
