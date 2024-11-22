@@ -22,6 +22,10 @@ int main(int argc, char **argv) {
   executor.add_node(node_ptr);
   auto spinner = std::thread([&executor]() { executor.spin(); });
 
+  //moveit::planning_interface::MoveGroupInterface gripper_group(node, "3f_tool0");
+
+
+
   // Create MoveGroupInterface (lives inside robot_name namespace)
   auto move_group_interface = moveit::planning_interface::MoveGroupInterface(
       node_ptr, moveit::planning_interface::MoveGroupInterface::Options("right_arm", "robot_description", robot_name));
