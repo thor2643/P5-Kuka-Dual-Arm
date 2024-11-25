@@ -34,7 +34,7 @@
                 "properties": {
                     "location": {
                         "type": "string",
-                        "description": "The name of the target location, e.g., 'home', 'cooling', or 'painting'."
+                        "description": "The name of the target location, e.g., 'home'. You can use the get_available_locations function to get a list of available locations."
                     }
                 },
                 "required": ["location"]

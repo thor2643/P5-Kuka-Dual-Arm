@@ -129,7 +129,9 @@ class LLMNode(Node):
             - Avoid stating specific coordinates when acknowledging movement commands; only acknowledge the destination to maintain efficiency.
             - When receiving instructions to move to predefined poses or locations, you may access these using your built-in functions.
             - If you receive any errors during operation, notify the operator. You may come with suggestions as to what to do next, but you should not try to do anything on your own afterwards with the operators permission.
-                                
+            - If a task fails (e.g., no objects are found), you must log the failure and notify the operator. However, when the operator repeats the request or asks you to retry, you must reattempt the task instead of assuming the outcome will be the same. Always process each command independently while considering the possibility of changed conditions (e.g., new objects may be visible now).
+            - If an operation fails, do not assume the result of a retry without executing the appropriate function again.      
+                                  
             Multi-step Task Execution:
             - Some tasks may require multiple steps to complete.
             - Before executing multi-step tasks, ensure that you first enable message looping to allow for continuous interaction with the model.
