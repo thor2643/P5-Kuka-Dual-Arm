@@ -75,9 +75,11 @@ class LLMNode(Node):
         # Attributes
         self.future = 0
 
+        self.llm_loop = False
+
         # Define the locations in the environment
         self.coordinates = { # Predefined poses for different locations
-            'HOME': {'x': '0.5', 'y': '0.3', 'z': "0.2", 'roll': '0', 'pitch': '90', 'yaw': '0'}
+            'HOME': {'x': '0.3', 'y': '0.3', 'z': "0.3", 'roll': '0', 'pitch': '0', 'yaw': '0'}
         }
 
         # Load and define all functions available to models
@@ -95,7 +97,8 @@ class LLMNode(Node):
             'execute_planned_trajectory': self.execute_planned_trajectory,
             'manipulate_right_gripper': self.manipulate_right_gripper,
             'manipulate_left_gripper': self.manipulate_left_gripper,
-            'get_current_pose': self.get_current_pose
+            'get_current_pose': self.get_current_pose,
+            'set_message_looping': self.set_message_looping
         }
 
         # Initialize Ollama client or OpenAI client with API key and optional project ID
@@ -111,7 +114,7 @@ class LLMNode(Node):
         self.message_buffer = [{"role": "system", "content": """
             Your name is Janise. You are an AI robotic arm assistant using the LLM gpt-4o for task reasoning and manipulation tasks. You are to assume the persona of a butler.
 
-            Context for your workspace:
+            Context for your Workspace:
             - You operate in a dual-arm robotic cell consisting of two collaborative KUKA iiwa 7 robots, each with 7 degrees of freedom (DoF). Both robots are mounted on a fixed frame positioned on top of a workbench, which provides a stable working surface.
             - The setup includes a left and right side, each equipped with its respective robot arm:
                 - The left arm is equipped with a RobotIQ 2F-85 gripper for precise, standard gripping tasks.
@@ -126,11 +129,19 @@ class LLMNode(Node):
             - The workbench is 100 millimetres wide and 67.5 millimetres long, and the grippers must never go below 0 in height as they will then collide with the workbench.
             - When objects are detected by the camera, they are initially located in the camera's coordinate system. However, the coordinates are automatically transformed into the world coordinate system using a transformation matrix. This means that all coordinate interactions with you will be in regard to the world coordinate system that has been specified.
 
-            Operational instructions:
+            Operational Instructions:
             - Always be aware of the distinction between the left and right sides and the unique tools on each arm when executing tasks.
             - Avoid stating specific coordinates when acknowledging movement commands; only acknowledge the destination to maintain efficiency.
             - When receiving instructions to move to predefined poses or locations, you may access these using your built-in functions.
             - If you receive any errors during operation, notify the operator. You may come with suggestions as to what to do next, but you should not try to do anything on your own afterwards with the operators permission.
+            - If a task fails (e.g., no objects are found), you must log the failure and notify the operator. However, when the operator repeats the request or asks you to retry, you must reattempt the task instead of assuming the outcome will be the same. Always process each command independently while considering the possibility of changed conditions (e.g., new objects may be visible now).
+            - If an operation fails, do not assume the result of a retry without executing the appropriate function again.      
+                                  
+            Multi-step Task Execution:
+            - Some tasks may require multiple steps to complete.
+            - Before executing multi-step tasks, ensure that you first enable message looping to allow for continuous interaction with the model.
+            - When all steps have been completed, disable message looping to conclude the task and provide a final response to the user.
+            - A maximum of 5 steps can be executed in a single task. If more steps are required, the task should be split into multiple interactions.
 
             Interaction Style:
             - You must always reply to the user in a manner fitting a butler persona, using the following styles when executing movement tasks:
@@ -256,6 +267,12 @@ class LLMNode(Node):
     # -------------------------- FUNCTIONS AVAILABLE TO THE LLM -------------------------- #
     ########################################################################################
 
+    def set_message_looping(self, enable: bool=False):
+        self.llm_loop = enable
+
+        print("\nMessage looping has been", "enabled." if enable else "disabled.")
+
+        return f"Message looping has been {'enabled' if enable else 'disabled'}. {'Remember to disable looping after all tasks have been completed.' if enable else ''}"
 
     def get_available_locations(self):
         return list(self.coordinates.keys())
@@ -278,7 +295,7 @@ class LLMNode(Node):
         future = self.detector_client.call_async(self.detector_req)
 
         # Wait for the result
-        response = self.wait_future(future)
+        response = self.wait_future(future, timeout=15)
 
         print("The service call has been completed.")  # Debugging
 
@@ -332,7 +349,7 @@ class LLMNode(Node):
         future = self.define_objects_client.call_async(self.define_objects_req)
 
         # Wait for the result
-        response = self.wait_future(future)
+        response = self.wait_future(future, timeout=600)
 
         return response
 
@@ -378,8 +395,7 @@ class LLMNode(Node):
         future = self.robot_plan_client.call_async(self.robot_plan_req)
 
         # Wait for the result
-        response = self.wait_future(future)
-
+        response = self.wait_future(future, timeout=20)
         return response
         
     def execute_planned_trajectory(self, arm):
@@ -390,7 +406,7 @@ class LLMNode(Node):
         future = self.robot_execute_client.call_async(self.robot_execute_req)
 
         # Wait for the result
-        response = self.wait_future(future)
+        response = self.wait_future(future, timeout=20)
 
         return response
 
@@ -417,7 +433,7 @@ class LLMNode(Node):
         future = self._3f_controller_cli.call_async(self._3f_controller)
 
         # Wait for the result
-        response = self.wait_future(future)
+        response = self.wait_future(future, timeout=15)
 
         return response
 
@@ -440,7 +456,45 @@ class LLMNode(Node):
         future = self._2f_client.call_async(self._2f_req)
 
         # Wait for the result
-        response = self.wait_future(future)
+        response = self.wait_future(future, timeout=15)
+
+        return response
+    
+    def get_current_pose(self, arm: str) -> GetCurrentPose.Response:
+        self.get_logger().info(f"Received request to get current pose for {arm} arm")
+        self.robot_pose_req.arm = arm
+
+        future = self.robot_pose_client.call_async(self.robot_pose_req)
+
+        # Wait for the result
+        response = self.wait_future(future, timeout=15)
+
+        if response is None:
+            self.get_logger().error('Service call failed')
+            return GetCurrentPose.Response()
+
+        if response.success:
+            self.get_logger().info(f"Current pose for {arm} arm retrieved successfully")
+
+            # Convert quat to euler
+            rpy = self.quat_to_euler([response.pose.orientation.w, response.pose.orientation.x, response.pose.orientation.y, response.pose.orientation.z])
+
+            pose_dict = {
+            'position': {
+                'x': response.pose.position.x,
+                'y': response.pose.position.y,
+                'z': response.pose.position.z
+            },
+            'orientation': {
+                'roll': rpy[0],
+                'pitch': rpy[1],
+                'yaw': rpy[2]
+            }
+            }
+
+            return pose_dict
+        else:
+            self.get_logger().error(f"Failed to get current pose for {arm} arm: {response.log}") 
 
         return response
     
@@ -490,56 +544,82 @@ class LLMNode(Node):
         prompt = request.prompt  # prompt is a string
         self.message_buffer.append({'role': 'user', 'content': prompt})
 
-        # API Request to chat with model with user-defined functions
-        llm_response = self.client.chat.completions.create(
-            model="gpt-4o",
-            messages=self.message_buffer,
-            tools=self.tools,
-            max_completion_tokens=200,
-            tool_choice='auto'
-        )
+        loop_counter = 0
 
-        # Check if tool calls exist in response
-        tool_calls = llm_response.choices[0].message.tool_calls
-        if not tool_calls:
-            self.get_logger().info("The model didn't use a function.")
-            final_response = self.client.chat.completions.create(
+        while True:
+            # API Request to chat with model with user-defined functions
+            llm_response = self.client.chat.completions.create(
                 model="gpt-4o",
-                messages=self.message_buffer
+                messages=self.message_buffer,
+                tools=self.tools,
+                max_completion_tokens=200,
+                tool_choice='auto'
             )
-            response.message = final_response.choices[0].message.content
-            return response
 
-        print("Tool calls: ", tool_calls)
-        for tool_call in tool_calls:
-            tool_call_id = tool_calls[0].id
-            tool_func_name = tool_call.function.name
-            tool_func_args = json.loads(tool_call.function.arguments)
+            #print("\nModel response: ", llm_response)
 
-            # Debugging information
-            print(f"\nFunction called by model: {tool_func_name}")
-            print(f"Arguments received: {tool_func_args}")
+            # Check if tool calls exist in response
+            tool_calls = llm_response.choices[0].message.tool_calls
+            if not tool_calls:
+                self.get_logger().info("The model didn't use a function.")
 
-            # Call the function dynamically and handle response
-            function_call = self.available_functions.get(tool_func_name)
-            if function_call:
-                function_response = function_call(**tool_func_args)
-                print(f"Function response for {tool_func_name}: ", function_response)
+                final_response = self.client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=self.message_buffer
+                )
+                response.message = final_response.choices[0].message.content
+                
+                self.message_buffer.append({'role': 'assistant', 'content': response.message})
 
-                # Append function response to message history
+                print(final_response.choices[0].message.content)
+                return response
+
+            print("\nTool calls: ", tool_calls)
+            for tool_call in tool_calls:
+                tool_call_id = tool_calls[0].id
+                tool_func_name = tool_call.function.name
+                tool_func_args = json.loads(tool_call.function.arguments)
+
+                # Debugging information
+                print(f"\nFunction called by model: {tool_func_name}")
+                print(f"Arguments received: {tool_func_args}")
+
+                # Call the function dynamically and handle response
+                function_call = self.available_functions.get(tool_func_name)
+                if function_call:
+                    function_response = function_call(**tool_func_args)
+                    print(f"\nFunction response for {tool_func_name}: ", function_response)
+
+                    # Append function response to message history
+                    self.message_buffer.append({
+                        'role': 'function',
+                        "tool_call_id": tool_call_id,
+                        'name': tool_func_name,
+                        'content': f"Function response: {function_response}" #json.dumps(function_response)
+                    })
+
+            # Check if the model wants to continue the conversation
+            if not self.llm_loop:
+                break
+            elif loop_counter > 5:
                 self.message_buffer.append({
-                    'role': 'function',
-                    "tool_call_id": tool_call_id,
-                    'name': tool_func_name,
-                    'content': f"Function response: {function_response}" #json.dumps(function_response)
+                    'role': 'system',
+                    'content': f"The maximum number of coherent steps is reached. Message looping will be disabled and the model must now generate a reply to the user." #json.dumps(function_response)
                 })
+                print("Maximum number of coherent steps reached. Disabling message looping.")
+                self.set_message_looping(False)
+                break
 
-        print("Generating response from model...")
+            loop_counter += 1
+
+
+        print("\nGenerating response from model...")
         # Get final response from model
         final_response = self.client.chat.completions.create(
             model="gpt-4o",
             messages=self.message_buffer
         )
+
         response.message = final_response.choices[0].message.content
         self.message_buffer.append({'role': 'assistant', 'content': response.message})
 
