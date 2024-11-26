@@ -112,7 +112,13 @@ class Interface(ctk.CTkFrame):
         minimal_client = MinimalClientAsync()
         future = minimal_client.send_request(request)
         rclpy.spin_until_future_complete(minimal_client, future, timeout_sec=20)
-        self._insert_msg(future.result().message, role="janise")
+
+        if future is None:
+            self._insert_msg("Error: No response from server", role="system")
+            self.after(0, self._reset)
+            return
+        else:
+            self._insert_msg(future.result().message, role="janise")
 
         self.after(0, self._reset)
 
@@ -137,6 +143,7 @@ class Interface(ctk.CTkFrame):
             self.chatbox.insert(ctk.END, "System: ", tags="system")
         else:
             self.chatbox.insert(ctk.END, "You: ", tags="worker")
+
         self.chatbox.insert(ctk.END, f"{msg}\n")
         self.chatbox.see("end")
         self.chatbox.configure(state="disabled")

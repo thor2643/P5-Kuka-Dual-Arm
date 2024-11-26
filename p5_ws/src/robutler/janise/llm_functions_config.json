@@ -27,6 +27,14 @@
     {
         "type": "function",
         "function": {
+            "name": "get_available_objects",
+            "description": "Used only to retrieve a list of objects that have predefined thresholds. It can be called before find_object to ensure that the object_name parameter is indeed a valid parameter.",
+            "parameters": {}
+        }
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "get_pose_values_from_location",
             "description": "Used only to retrieve the robot world coordinates based on the user-specified location. It does not move the robot",
             "parameters": {
@@ -161,7 +169,7 @@
         "type": "function",
         "function": {
             "name": "manipulate_right_gripper",
-            "description": "Adjusts the right gripper, so that it opens or closes or anywhere inbetween depending on the situation. The width, speed, and force of the gripper can be specified as an argument. The default width is 167, default speed is 110, and default force is 15.",
+            "description": "Adjusts the right gripper, so that it opens or closes or anywhere inbetween depending on the situation. The width, speed, and force of the gripper can be specified as an argument. The default width is 167, default speed is 110, and default force is 15. This executes at once, so do not call together with plan_robot_trajectory and expect it to first execute when executing the trajectory.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -186,7 +194,7 @@
         "type": "function",
         "function": {
             "name": "manipulate_left_gripper",
-            "description": "Adjusts the left gripper, so that it opens or closes or anywhere inbetween depending on the situation. The width, speed, and force of the gripper can be specified as an argument. The width range is from 0 (closed) to 85 (open). The default width is 85, default speed is 110, and default force is 20.",
+            "description": "Adjusts the left gripper, so that it opens or closes or anywhere inbetween depending on the situation. The width, speed, and force of the gripper can be specified as an argument. The width range is from 0 (closed) to 85 (open). The default width is 85, default speed is 110, and default force is 20. This executes at once, so do not call together with plan_robot_trajectory and expect it to first execute when executing the trajectory.",
             "parameters": {
                 "type": "object",
                 "properties": {

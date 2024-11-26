@@ -77,6 +77,13 @@ class LLMNode(Node):
 
         self.llm_loop = False
 
+        self.object_file = 'src/robutler/object_detector/object_detector/lego_bricks_config.json'
+
+        self.lego_bricks = {}
+
+        with open(self.object_file, 'r') as file:
+            self.lego_bricks = json.load(file)
+
         # Define the locations in the environment
         self.coordinates = { # Predefined poses for different locations
             'HOME': {'x': '0.3', 'y': '0.3', 'z': "0.3", 'roll': '0', 'pitch': '0', 'yaw': '0'}
@@ -91,6 +98,7 @@ class LLMNode(Node):
             'get_available_locations': self.get_available_locations,
             'get_pose_values_from_location': self.get_pose_values_from_location,
             'find_object': self.find_object,
+            'get_available_objects': self.get_available_objects,
             'define_object_thresholds': self.define_object_thresholds,
             'move_robot_to_pose': self.move_robot_to_pose,
             'plan_robot_trajectory': self.plan_robot_trajectory,
@@ -126,7 +134,7 @@ class LLMNode(Node):
                 - *X-axis* extends horizontally across the table from the right edge to the left edge.
                 - *Y-axis* extends from the right edge towards the back, moving inward toward the robot.
                 - *Z-axis* points upward, perpendicular to the tabletop.
-            - The workbench is 100 millimetres wide and 67.5 millimetres long, and the grippers must never go below 0 in height as they will then collide with the workbench.
+            - The workbench is 1 metre wide and 0.67 metres long, and the grippers must never go below 0 in height as they will then collide with the workbench.
             - When objects are detected by the camera, they are initially located in the camera's coordinate system. However, the coordinates are automatically transformed into the world coordinate system using a transformation matrix. This means that all coordinate interactions with you will be in regard to the world coordinate system that has been specified.
 
             Operational Instructions:
@@ -141,12 +149,15 @@ class LLMNode(Node):
             - Some tasks may require multiple steps to complete.
             - Before executing multi-step tasks, ensure that you first enable message looping to allow for continuous interaction with the model.
             - When all steps have been completed, disable message looping to conclude the task and provide a final response to the user.
-            - A maximum of 5 steps can be executed in a single task. If more steps are required, the task should be split into multiple interactions.
+            - A maximum of 10 steps can be executed in a single task. If more steps are required, the task should be split into multiple interactions.
 
             Interaction Style:
             - You must always reply to the user in a manner fitting a butler persona, using the following styles when executing movement tasks:
                 - "Yes, sir. Moving the gripper to cooling station."
                 - "Right away, sir. The gripper will be moved to home position."
+                                
+            Remember:
+            - A plan must be executed before it makes sense to manipulate the grippers
 
             Your primary task is to execute movements and manipulations as requested, utilizing precise understanding of your left and right sides, grippers, and the overview provided by the RealSense camera.
         """}]
@@ -276,6 +287,9 @@ class LLMNode(Node):
 
     def get_available_locations(self):
         return list(self.coordinates.keys())
+    
+    def get_available_objects(self):
+        return list(self.lego_bricks.keys())
 
     def get_pose_values_from_location(self, location: str) -> list:
         self.get_logger().info(f"Received location to find pose for: location={location}")
@@ -351,6 +365,10 @@ class LLMNode(Node):
         # Wait for the result
         response = self.wait_future(future, timeout=600)
 
+        # Save the updated object information in a dictionary
+        with open(self.object_file, 'r') as file:
+            self.lego_bricks = json.load(file)
+
         return response
 
     def move_robot_to_pose(self, pose, arm):
@@ -358,7 +376,10 @@ class LLMNode(Node):
         # Found by CAD model and modified to using print_cartesian in detect_objects.py
         response = self.plan_robot_trajectory(pose, arm)
 
-        if response.success:
+        if response is None:
+            self.get_logger().error("Service call failed")
+            return "Service call failed"
+        elif response.success:
             return self.execute_planned_trajectory(arm)
         else:
             self.get_logger().error("Failed to plan trajectory. Cannot move robot to pose.")
@@ -471,7 +492,7 @@ class LLMNode(Node):
 
         if response is None:
             self.get_logger().error('Service call failed')
-            return GetCurrentPose.Response()
+            return "Service call failed"
 
         if response.success:
             self.get_logger().info(f"Current pose for {arm} arm retrieved successfully")
@@ -479,16 +500,17 @@ class LLMNode(Node):
             # Convert quat to euler
             rpy = self.quat_to_euler([response.pose.orientation.w, response.pose.orientation.x, response.pose.orientation.y, response.pose.orientation.z])
 
+            # Add offsets to the pose to match the world coordinates
             pose_dict = {
             'position': {
-                'x': response.pose.position.x,
-                'y': response.pose.position.y,
-                'z': response.pose.position.z
+                'x': response.pose.position.x + 0.02903434,
+                'y': response.pose.position.y + 0.03177714,
+                'z': response.pose.position.z - 0.84
             },
             'orientation': {
-                'roll': rpy[0],
+                'roll': rpy[0] + 180,   #Not sure why 180 this is needed...
                 'pitch': rpy[1],
-                'yaw': rpy[2]
+                'yaw': rpy[2] + 180     #Not sure why 180 this is needed...
             }
             }
 
@@ -498,43 +520,6 @@ class LLMNode(Node):
 
         return response
     
-    def get_current_pose(self, arm: str) -> GetCurrentPose.Response:
-        self.get_logger().info(f"Received request to get current pose for {arm} arm")
-        self.robot_pose_req.arm = arm
-
-        future = self.robot_pose_client.call_async(self.robot_pose_req)
-
-        # Wait for the result
-        response = self.wait_future(future)
-
-        if response is None:
-            self.get_logger().error('Service call failed')
-            return GetCurrentPose.Response()
-
-        if response.success:
-            self.get_logger().info(f"Current pose for {arm} arm retrieved successfully")
-
-            # Convert quat to euler
-            rpy = self.quat_to_euler([response.pose.orientation.w, response.pose.orientation.x, response.pose.orientation.y, response.pose.orientation.z])
-
-            pose_dict = {
-            'position': {
-                'x': response.pose.position.x,
-                'y': response.pose.position.y,
-                'z': response.pose.position.z
-            },
-            'orientation': {
-                'roll': rpy[0],
-                'pitch': rpy[1],
-                'yaw': rpy[2]
-            }
-            }
-
-            return pose_dict
-        else:
-            self.get_logger().error(f"Failed to get current pose for {arm} arm: {response.log}") 
-
-        return response
 
     ################################################################################################
     # -------------------------- INTERACTION WITH LARGE LANGUAGE MODELS -------------------------- #
@@ -601,7 +586,7 @@ class LLMNode(Node):
             # Check if the model wants to continue the conversation
             if not self.llm_loop:
                 break
-            elif loop_counter > 5:
+            elif loop_counter > 10:
                 self.message_buffer.append({
                     'role': 'system',
                     'content': f"The maximum number of coherent steps is reached. Message looping will be disabled and the model must now generate a reply to the user." #json.dumps(function_response)
@@ -614,6 +599,7 @@ class LLMNode(Node):
 
 
         print("\nGenerating response from model...")
+        
         # Get final response from model
         final_response = self.client.chat.completions.create(
             model="gpt-4o",
@@ -623,7 +609,8 @@ class LLMNode(Node):
         response.message = final_response.choices[0].message.content
         self.message_buffer.append({'role': 'assistant', 'content': response.message})
 
-        print(final_response.choices[0].message.content)
+        print(response.message)
+
         return response
 
 

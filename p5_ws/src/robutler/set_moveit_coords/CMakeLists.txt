@@ -22,6 +22,7 @@ add_executable(robot_controller_service src/robot_controller_service.cpp)
 
 ament_target_dependencies(set_moveit_coords
   geometry_msgs  
+  sensor_msgs
   moveit_ros_planning_interface
   moveit_visual_tools
   rclcpp
@@ -29,6 +30,7 @@ ament_target_dependencies(set_moveit_coords
 
 ament_target_dependencies(robot_controller_service
   geometry_msgs  
+  sensor_msgs
   moveit_ros_planning_interface
   project_interfaces
   rclcpp

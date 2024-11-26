@@ -116,6 +116,11 @@ class ObjectDetector(Node):
         self.camera_info = None
         self.yolo_results = None
 
+        # Publish initial image to GUI
+        self.retrieve_aligned_frames()
+        image = self.get_color_image()
+        self.image_publisher.publish(self.realsense_camera.bridge.cv2_to_imgmsg(cv2.rotate(image, cv2.ROTATE_180)))
+
 
     def retrieve_aligned_frames(self):      
         # Retrieve aligned frames from the RealSense camera by spinning the node untill new frames are available
@@ -136,6 +141,8 @@ class ObjectDetector(Node):
     def get_object_information(self, request, response):
         object = request.object_name
         self.get_logger().info(f'Requested to find {object}\n')
+
+        self.found_objects.clear()
 
         if object in self.lego_bricks:
             self.retrieve_aligned_frames()
@@ -173,7 +180,7 @@ class ObjectDetector(Node):
                 image_with_bbx =cv2.putText(
                                     image_with_bbx, 
                                     obj,                #object name
-                                    (img_x-rotated_bounding_boxes[i][point_idx][0], img_y-rotated_bounding_boxes[i][point_idx][0]), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA
+                                    (img_x-rotated_bounding_boxes[i][point_idx][0], img_y-rotated_bounding_boxes[i][point_idx][1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA
                                 )
 
             self.get_logger().info(f'Found {response.object_count} {object}\n')

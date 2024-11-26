@@ -1,12 +1,17 @@
 #include "geometry_msgs/msg/pose.hpp"
+#include "sensor_msgs/msg/joint_state.hpp"
 #include "moveit/move_group_interface/move_group_interface.h"
+#include "moveit/robot_state/robot_state.h"
+#include "moveit/robot_model_loader/robot_model_loader.h"
 #include "rclcpp/rclcpp.hpp"
 #include "project_interfaces/srv/plan_move_command.hpp"
 #include "project_interfaces/srv/execute_move_command.hpp"
 #include "project_interfaces/srv/get_current_pose.hpp"
-#//include <moveit_visual_tools/moveit_visual_tools.h>
+//include <moveit_visual_tools/moveit_visual_tools.h>
 #include <string>
+#include <sstream>
 
+using namespace Eigen;
 
 class RobotControllerService : public rclcpp::Node{
 public:
@@ -24,16 +29,28 @@ public:
     move_group_interface_left = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options_left);
 
     // Fix bug in MoveGroupInterface
-    move_group_interface_right->setEndEffectorLink("3f_tool0");
-    move_group_interface_right->getCurrentPose(); 
-    move_group_interface_left->setEndEffectorLink("2f_tool0");
-    move_group_interface_left->getCurrentPose();
-
-    getPoseReferenceFrame = move_group_interface_right->getPoseReferenceFrame();
-    RCLCPP_INFO(this->get_logger(), "Received request to plan a trajectory");
+    ee_link_right = move_group_interface_right->getEndEffectorLink();
+    ee_link_left = move_group_interface_left->getEndEffectorLink();
 
 
-    
+    RCLCPP_INFO(this->get_logger(), "End effector link for right arm: %s", ee_link_right.c_str());
+    RCLCPP_INFO(this->get_logger(), "End effector link for left arm: %s", ee_link_left.c_str());
+
+    auto current_pose_right = move_group_interface_right->getCurrentPose(ee_link_right);
+    auto current_pose_left = move_group_interface_left->getCurrentPose(ee_link_left);
+
+    RCLCPP_INFO(this->get_logger(), "Current position for right arm: x=%f, y=%f, z=%f", 
+          current_pose_right.pose.position.x, 
+          current_pose_right.pose.position.y, 
+          current_pose_right.pose.position.z);
+
+    RCLCPP_INFO(this->get_logger(), "Current position for left arm: x=%f, y=%f, z=%f", 
+          current_pose_left.pose.position.x, 
+          current_pose_left.pose.position.y, 
+          current_pose_left.pose.position.z);
+
+    //getPoseReferenceFrame = move_group_interface_right->getPoseReferenceFrame();
+    //RCLCPP_INFO(this->get_logger(), "Received request to plan a trajectory");
        
     // Pass the options and the shared pointer of the current node
     planner_service = this->create_service<project_interfaces::srv::PlanMoveCommand>(
@@ -44,6 +61,12 @@ public:
 
     get_pose_service = this->create_service<project_interfaces::srv::GetCurrentPose>(
         "get_pose", std::bind(&RobotControllerService::handle_pose_request_service, this, std::placeholders::_1, std::placeholders::_2));
+
+    joint_state_subscriber = this->create_subscription<sensor_msgs::msg::JointState>(
+      "joint_states", 10, std::bind(&RobotControllerService::joint_state_callback, this, std::placeholders::_1));
+
+    // Print the pose
+    //RCLCPP_INFO(this->get_logger(), "End effector pose:\n%s", end_effector_state.matrix().format(Eigen::IOFormat()).c_str());
   }
 
 private:
@@ -52,11 +75,54 @@ private:
   rclcpp::Service<project_interfaces::srv::PlanMoveCommand>::SharedPtr planner_service;
   rclcpp::Service<project_interfaces::srv::ExecuteMoveCommand>::SharedPtr execute_service;
   rclcpp::Service<project_interfaces::srv::GetCurrentPose>::SharedPtr get_pose_service;
+  rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_subscriber;
   moveit::planning_interface::MoveGroupInterface::Plan plan_right;
   moveit::planning_interface::MoveGroupInterface::Plan plan_left;
+  const moveit::core::JointModelGroup* joint_model_group_right;
+  const moveit::core::JointModelGroup* joint_model_group_left;
+  moveit::core::RobotModelPtr kinematic_model;
+
+  sensor_msgs::msg::JointState::SharedPtr current_joint_state;
+
+  std::string ee_link_right;
+  std::string ee_link_left;
 
   bool plan_available_right = false;
   bool plan_available_left = false;
+
+  std::vector<double> joint_values_right;
+  std::vector<double> joint_values_left;
+  
+  void joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
+    {
+        //current_joint_state = msg->position;
+        joint_values_right.clear();
+        joint_values_left.clear();
+
+        joint_values_right.resize(7);
+        joint_values_left.resize(7);
+
+        for (size_t i = 0; i < msg->name.size(); ++i) {
+            if (msg->name[i].find("right_") != std::string::npos) {
+              if (msg->name[i] == "right_A1") joint_values_right[0] = msg->position[i];
+              else if (msg->name[i] == "right_A2") joint_values_right[1] = msg->position[i];
+              else if (msg->name[i] == "right_A3") joint_values_right[2] = msg->position[i];
+              else if (msg->name[i] == "right_A4") joint_values_right[3] = msg->position[i];
+              else if (msg->name[i] == "right_A5") joint_values_right[4] = msg->position[i];
+              else if (msg->name[i] == "right_A6") joint_values_right[5] = msg->position[i];
+              else if (msg->name[i] == "right_A7") joint_values_right[6] = msg->position[i];
+
+            } else if (msg->name[i].find("left_") != std::string::npos) {
+              if (msg->name[i] == "left_A1") joint_values_left[0] = msg->position[i];
+              else if (msg->name[i] == "left_A2") joint_values_left[1] = msg->position[i];
+              else if (msg->name[i] == "left_A3") joint_values_left[2] = msg->position[i];
+              else if (msg->name[i] == "left_A4") joint_values_left[3] = msg->position[i];
+              else if (msg->name[i] == "left_A5") joint_values_left[4] = msg->position[i];
+              else if (msg->name[i] == "left_A6") joint_values_left[5] = msg->position[i];
+              else if (msg->name[i] == "left_A7") joint_values_left[6] = msg->position[i];
+            }
+        }
+    }
 
   // Callback to plan the trajectory to the target pose
   void handle_planner_service(const std::shared_ptr<project_interfaces::srv::PlanMoveCommand::Request> request,
@@ -258,34 +324,163 @@ private:
 
   }
 
+  //TODO: Make moveit actually listen to the joint_states topic to make the function below work
+  //Alternatively as suggested by a student assistent, listen to the tf topic and calculate the joint states from the tf topic
+  /*
   void handle_pose_request_service(const std::shared_ptr<project_interfaces::srv::GetCurrentPose::Request> request,
                       const std::shared_ptr<project_interfaces::srv::GetCurrentPose::Response> response) {
     RCLCPP_INFO(this->get_logger(), "Received request to get current pose for %s arm", request->arm.c_str());
 
-    std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface;
-    //std::string *end_effector_link;
-
     // Check if the request is for the right or left arm
     if (request->arm == "right") {
-      move_group_interface = move_group_interface_right;
-      //*end_effector_link = "3f_tool0";
+      move_group_interface_right->setStartStateToCurrentState();
+      geometry_msgs::msg::PoseStamped current_pose = move_group_interface_right->getCurrentPose(ee_link_right); // The end effector link for the right arm
+
+      std::vector<double> joint_values = move_group_interface_right->getCurrentJointValues();	
+
+      for (size_t i = 0; i < joint_values.size(); ++i) {
+        RCLCPP_INFO(this->get_logger(), "Joint %zu: %f", i, joint_values[i]);
+      }
+
+      response->pose = current_pose.pose;
+      response->success = true;
+      RCLCPP_INFO(this->get_logger(), "Current pose retrieved successfully");
 
     } else if (request->arm == "left") {
-      move_group_interface = move_group_interface_left;
-      //*end_effector_link = "2f_tool0";
+      geometry_msgs::msg::PoseStamped current_pose = move_group_interface_left->getCurrentPose(ee_link_left); // The end effector link for the left arm
+
+      std::vector<double> joint_values = move_group_interface_left->getCurrentJointValues();	
+
+      for (size_t i = 0; i < joint_values.size(); ++i) {
+        RCLCPP_INFO(this->get_logger(), "Joint %zu: %f", i, joint_values[i]);
+      }
+
+      response->pose = current_pose.pose;
+      response->success = true;
+      RCLCPP_INFO(this->get_logger(), "Current pose retrieved successfully");
     } else {
       RCLCPP_ERROR(this->get_logger(), "Invalid arm specified");
       response->log = "Invalid arm specified";
       response->success = false;
       return;
     }
+    }
+    */
+    
+    void handle_pose_request_service(const std::shared_ptr<project_interfaces::srv::GetCurrentPose::Request> request,
+                      const std::shared_ptr<project_interfaces::srv::GetCurrentPose::Response> response) {
+      Matrix4d pose;
 
-    geometry_msgs::msg::PoseStamped current_pose = move_group_interface->getCurrentPose("3f_tool0"); // The end effector link for the right arm
-    response->pose = current_pose.pose;
-    response->success = true;
-    RCLCPP_INFO(this->get_logger(), "Current pose retrieved successfully");
+      if (request->arm == "left") {
+          pose = forward_kinematics_left(joint_values_left);
+          RCLCPP_INFO(this->get_logger(), "Calculated pose for left arm");
+      } else if (request->arm == "right") {
+          pose = forward_kinematics_right(joint_values_right);
+          RCLCPP_INFO(this->get_logger(), "Calculated pose for right arm");
+      } else {
+          RCLCPP_ERROR(this->get_logger(), "Invalid arm specified. Use 'left' or 'right'.");
+          response->success = false;
+          response->log = "Invalid arm specified. Use 'left' or 'right'.";
+          return;
+      }
+
+      RCLCPP_INFO(this->get_logger(), "Parsing the pose to the response message");
+      response->pose.position.x = pose(0, 3);
+      response->pose.position.y = pose(1, 3);
+      response->pose.position.z = pose(2, 3);
+
+      RCLCPP_INFO(this->get_logger(), "Position: x=%f, y=%f, z=%f", response->pose.position.x, response->pose.position.y, response->pose.position.z);
+
+      Quaterniond q(pose.block<3,3>(0,0));
+      response->pose.orientation.x = q.x();
+      response->pose.orientation.y = q.y();
+      response->pose.orientation.z = q.z();
+      response->pose.orientation.w = q.w();
+
+      RCLCPP_INFO(this->get_logger(), "Orientation: x=%f, y=%f, z=%f, w=%f", response->pose.orientation.x, response->pose.orientation.y, response->pose.orientation.z, response->pose.orientation.w);
+
+      response->success = true;
+
+      return;
+    }     
+
+    Matrix4d transformation_matrix(Vector3d rpy, Vector3d xyz) {
+    double roll = rpy(0), pitch = rpy(1), yaw = rpy(2);
+    //double x = xyz(0), y = xyz(1), z = xyz(2);
+
+    Matrix3d Rx, Ry, Rz;
+
+    Rx << 1, 0, 0,
+          0, cos(roll), -sin(roll),
+          0, sin(roll), cos(roll);
+
+    Ry << cos(pitch), 0, sin(pitch),
+          0, 1, 0,
+          -sin(pitch), 0, cos(pitch);
+
+    Rz << cos(yaw), -sin(yaw), 0,
+          sin(yaw), cos(yaw), 0,
+          0, 0, 1;
+
+    Matrix3d R = Rz * Ry * Rx;
+
+    Matrix4d T = Matrix4d::Identity();
+    T.block<3,3>(0,0) = R;
+    T.block<3,1>(0,3) = xyz;
+
+    return T;
   }
+
+  Matrix4d forward_kinematics_left(const std::vector<double>& joint_angles) {
+    Matrix4d T_mount_left = transformation_matrix(Vector3d(-0.785398163, 0, -1.57079633), Vector3d(0.711114, 0.756691, 1.037203));
+    Matrix4d T_left_A1 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, 0.0, 0.1475));
+    Matrix4d T_left_A2 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, -0.0105, 0.1925));
+    Matrix4d T_left_A3 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, 0.0105, 0.2075));
+    Matrix4d T_left_A4 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, 0.0105, 0.1925));
+    Matrix4d T_left_A5 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, -0.0105, 0.2075));
+    Matrix4d T_left_A6 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, -0.0707, 0.1925));
+    Matrix4d T_left_A7 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, 0.0707, 0.091));
+    Matrix4d T_left_joint_ee = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0, 0, 0.035));
+
+    Matrix4d R_left_A1 = transformation_matrix(Vector3d(0, 0, joint_angles[0]), Vector3d(0, 0, 0));
+    Matrix4d R_left_A2 = transformation_matrix(Vector3d(0, joint_angles[1], 0), Vector3d(0, 0, 0));
+    Matrix4d R_left_A3 = transformation_matrix(Vector3d(0, 0, joint_angles[2]), Vector3d(0, 0, 0));
+    Matrix4d R_left_A4 = transformation_matrix(Vector3d(0, -joint_angles[3], 0), Vector3d(0, 0, 0));
+    Matrix4d R_left_A5 = transformation_matrix(Vector3d(0, 0, joint_angles[4]), Vector3d(0, 0, 0));
+    Matrix4d R_left_A6 = transformation_matrix(Vector3d(0, joint_angles[5], 0), Vector3d(0, 0, 0));
+    Matrix4d R_left_A7 = transformation_matrix(Vector3d(0, 0, joint_angles[6]), Vector3d(0, 0, 0));
+
+    Matrix4d T = T_mount_left * T_left_A1 * R_left_A1 * T_left_A2 * R_left_A2 * T_left_A3 * R_left_A3 * T_left_A4 * R_left_A4 * T_left_A5 * R_left_A5 * T_left_A6 * R_left_A6 * T_left_A7 * R_left_A7 * T_left_joint_ee;
+
+    return T;
+  }
+
+  Matrix4d forward_kinematics_right(const std::vector<double>& joint_angles) {
+    Matrix4d T_mount_right = transformation_matrix(Vector3d(0.785398163, 0, -1.57079633), Vector3d(0.268524, 0.756691, 1.037203));
+    Matrix4d T_right_A1 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, 0.0, 0.1475));
+    Matrix4d T_right_A2 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, -0.0105, 0.1925));
+    Matrix4d T_right_A3 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, 0.0105, 0.2075));
+    Matrix4d T_right_A4 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, 0.0105, 0.1925));
+    Matrix4d T_right_A5 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, -0.0105, 0.2075));
+    Matrix4d T_right_A6 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, -0.0707, 0.1925));
+    Matrix4d T_right_A7 = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0.0, 0.0707, 0.091));
+    Matrix4d T_right_joint_ee = transformation_matrix(Vector3d(0, 0, 0), Vector3d(0, 0, 0.035));
+
+    Matrix4d R_right_A1 = transformation_matrix(Vector3d(0, 0, joint_angles[0]), Vector3d(0, 0, 0));
+    Matrix4d R_right_A2 = transformation_matrix(Vector3d(0, joint_angles[1], 0), Vector3d(0, 0, 0));
+    Matrix4d R_right_A3 = transformation_matrix(Vector3d(0, 0, joint_angles[2]), Vector3d(0, 0, 0));
+    Matrix4d R_right_A4 = transformation_matrix(Vector3d(0, -joint_angles[3], 0), Vector3d(0, 0, 0));
+    Matrix4d R_right_A5 = transformation_matrix(Vector3d(0, 0, joint_angles[4]), Vector3d(0, 0, 0));
+    Matrix4d R_right_A6 = transformation_matrix(Vector3d(0, joint_angles[5], 0), Vector3d(0, 0, 0));
+    Matrix4d R_right_A7 = transformation_matrix(Vector3d(0, 0, joint_angles[6]), Vector3d(0, 0, 0));
+
+    Matrix4d T = T_mount_right * T_right_A1 * R_right_A1 * T_right_A2 * R_right_A2 * T_right_A3 * R_right_A3 * T_right_A4 * R_right_A4 * T_right_A5 * R_right_A5 * T_right_A6 * R_right_A6 * T_right_A7 * R_right_A7 * T_right_joint_ee;
+
+    return T;
+  }
+
 };
+
 
 int main(int argc, char **argv) {
   rclcpp::init(argc, argv);
