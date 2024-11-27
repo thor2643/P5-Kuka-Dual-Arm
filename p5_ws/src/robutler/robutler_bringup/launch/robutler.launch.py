@@ -72,10 +72,4 @@ def generate_launch_description():
                 )
             )
         ),
-
-        # GUI
-        Node(
-            package='gui_package',
-            executable='gui_node'
-        ),
     ])
