@@ -18,8 +18,8 @@ This project was developed by group 565 on Aalborg University, Robot Technology 
 
 ## Quick Start
 This quick-start guide assumes a clean installation of Ubuntu 22.04 LTS (Jammy Jellyfish) along with ROS 2 Humble. If either is not yet set up, you can refer to the following resources:
-- Ubuntu 22.04 LTS (https://medium.com/@maheshdeshmukh22/how-to-install-ubuntu-22-04-lts-on-virtualbox-in-windows-11-6c259ce8ef60)
-- ROS2 - Humble (https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
+- [Ubuntu 22.04 LTS](https://medium.com/@maheshdeshmukh22/how-to-install-ubuntu-22-04-lts-on-virtualbox-in-windows-11-6c259ce8ef60)
+- [ROS2 - Humble](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
 
 If your system crashes or you need to switch terminals at any point, ensure you re-run the following command
 
