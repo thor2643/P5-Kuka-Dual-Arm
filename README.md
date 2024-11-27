@@ -56,3 +56,10 @@ This project was developed by group 565 on Aalborg University, Robot Technology 
     export MAKEFLAGS="-j3"
     colcon build --mixin release
     ```
+    
+6. Recommendations - *Don't do this, if you run multiple ROS Distros*
+
+    ```shell
+    echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+    echo "source ~/P5-Kuka-Dual-Arm/p5_ws/install/setup.bash" >> ~/.bashrc
+    ```
