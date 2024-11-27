@@ -29,5 +29,7 @@ This project was developed by group 565 on Aalborg University, Robot Technology 
     source /opt/ros/humble/setup.bash
     git clone https://github.com/thor2643/P5-Kuka-Dual-Arm.git
     cd P5-Kuka-Dual-Arm/p5_ws
+    sudo rosdep init
+    rosdep update
     rosdep install --from-paths src -i -r -y
     ```
