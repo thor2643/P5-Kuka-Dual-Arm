@@ -51,8 +51,15 @@ Before starting the installation of this project, we recommend grabbing a snack 
     export MAKEFLAGS="-j3"
     colcon build --mixin release
     ```
+
+6. Running the system
+
+    ```shell
+    source install/setup.bash
+    ros2 launch robutler_bringup robutler.launch.py
+    ```
     
-6. Recommendations - *Don't do this, if you run multiple ROS Distros*
+7. Recommendations - *Don't do this, if you run multiple ROS Distros*
 
     ```shell
     echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
