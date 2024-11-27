@@ -45,7 +45,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
     pip install ...?
     ```
 
-5. Colcon build
+5. Colcon build - Re-run if any packages timeout during compile
 
     ```shell
     export MAKEFLAGS="-j3"
