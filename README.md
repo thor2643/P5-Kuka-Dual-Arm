@@ -16,7 +16,6 @@ This project was developed by group 565 on Aalborg University, Robot Technology 
   </tr>
 </table>
 
-<section id="quick_start">
 ## Quick Start
 1. Install ROS 2 development tools
 
