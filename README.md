@@ -53,7 +53,6 @@ This project was developed by group 565 on Aalborg University, Robot Technology 
 5. Colcon build
 
     ```shell
-    cd src
     export MAKEFLAGS="-j3"
     colcon build --mixin release
     ```
