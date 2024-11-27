@@ -21,9 +21,14 @@ This quick-start guide assumes a clean installation of Ubuntu 22.04 LTS (Jammy J
 - Ubuntu 22.04 LTS (https://medium.com/@maheshdeshmukh22/how-to-install-ubuntu-22-04-lts-on-virtualbox-in-windows-11-6c259ce8ef60)
 - ROS2 - Humble (https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
 
+If your system crashes or you need to switch terminals at any point, ensure you re-run the following command
+
+    ```shell
+    source /opt/ros/humble/setup.bash
+    ```
+    
 Before starting the installation of this project, we recommend grabbing a snack and a beverage. The process will take at least 30 minutes.
 
-If your system crashes or you need to switch terminals at any point, ensure you re-run the following command: "source /opt/ros/humble/setup.bash"
 1. Install ROS 2 development tools
 
     ```shell
