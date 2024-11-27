@@ -188,5 +188,22 @@
                 "required": ["width"]
             }
         }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "find_object_yolo",
+            "description": "This function uses Yolo World to find the object in the environment. This function is to be used when requested directly for yolo world or id no object was found using find_object. The object name should be provided as an argument to this function. The object detector service will return the number of objects found as well as the Cartesian center point, width, height and orientation of each object. In the case where it does not find any objects it will return a message saying what other objects waas found.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "object_name": {
+                        "type": "string",
+                        "description": "The name of the object that must be found. Only one name can be provided. Must use _ (underscore) instead of spaces."
+                    }
+                },
+                "required": ["object_name"]
+            }
+        }
     }
 ]

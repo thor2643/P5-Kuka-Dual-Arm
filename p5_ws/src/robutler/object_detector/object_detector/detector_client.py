@@ -12,11 +12,13 @@ class DetectorClientAsync(Node):
         super().__init__('detector_client_async')
         self.cli = self.create_client(GetObjectInfo, 'get_object_info')
         self.adjust_cli = self.create_client(DefineObjectInfo, 'define_object_info')
+        self.cli = self.create_client(GetObjectInfo, 'get_object_info_yolo')
 
         while not self.cli.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('service not available, waiting again...')
         self.req = GetObjectInfo.Request()
         self.define_req = DefineObjectInfo.Request()
+        self.req = GetObjectInfo.Request()
 
     def send_request(self, object):
         self.req.object_name = object
