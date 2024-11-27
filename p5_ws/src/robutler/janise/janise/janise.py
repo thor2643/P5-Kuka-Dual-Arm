@@ -55,6 +55,10 @@ class LLMNode(Node):
         self.define_objects_client = self.create_client(DefineObjectInfo, 'define_object_info', callback_group=client_cb_group)
         self.define_objects_req = DefineObjectInfo.Request()
 
+        self.detector_client_yolo = self.create_client(GetObjectInfo, 'get_object_info_yolo', callback_group=client_cb_group)
+        self.detector_req_yolo = GetObjectInfo.Request()
+        self.objects_on_table_yolo = {}
+
         # Robot service client
         self.robot_plan_client = self.create_client(PlanMoveCommand, 'plan_move_command', callback_group=client_cb_group)
         self.robot_plan_req = PlanMoveCommand.Request()
@@ -99,6 +103,7 @@ class LLMNode(Node):
             'get_pose_values_from_location': self.get_pose_values_from_location,
             'find_object': self.find_object,
             'get_available_objects': self.get_available_objects,
+            'find_object_yolo': self.find_object_yolo,
             'define_object_thresholds': self.define_object_thresholds,
             'move_robot_to_pose': self.move_robot_to_pose,
             'plan_robot_trajectory': self.plan_robot_trajectory,
@@ -356,6 +361,61 @@ class LLMNode(Node):
         else:
             self.get_logger().error('No objects found')
             return GetObjectInfo.Response()
+        
+
+    def find_object_yolo(self, object_name: str) -> GetObjectInfo.Response:
+        print(f"\nRequesting the YoloWorld detector service to find {object_name}")
+        self.get_logger().info(f"\nLooking for object: {object_name}\n")
+        self.detector_req_yolo.object_name = object_name
+
+        future = self.detector_client_yolo.call_async(self.detector_req_yolo)
+
+        # Wait for the result
+        response = self.wait_future(future, timeout=40)
+
+        print("The service call has been completed.")  # Debugging
+
+        if response is None:
+            self.get_logger().error('Service call failed')
+            return GetObjectInfo.Response()
+        
+        if response.object_count != 0:
+            self.get_logger().info(f"\nObjects found: {response.object_count}")
+            self.get_logger().info(f"Center points: {response.centers}")
+            self.get_logger().info(f"Object orientations: {response.orientations}")
+            self.get_logger().info(f"Grasping widths: {response.grasp_widths}\n")
+
+            # Calibrated transformation matrix from coordinates to camera world
+            T_world_cam = np.array([[ 0.9998524,  -0.00382788,  0.01674907,  0.48649258],
+                                    [ 0.00545733, -0.85361904, -0.52086923,  0.78510204],
+                                    [ 0.01629115,  0.52088376, -0.85347215,  0.70742285],
+                                    [ 0.0,          0.0,          0.0,          1.0, ]])
+            
+            # Extract the position from the pose and append 1 to make it a 4D vector
+            center_pts = []
+            for point in response.centers:
+                center_pts.append([point.x, point.y, point.z, 1])
+
+            # Transform the position from camera to world coordinates
+            center_pts_world = np.dot(T_world_cam, np.array(center_pts).T).T
+
+            # Save the object information in a dictionary
+            for i, center in enumerate(center_pts_world):
+                # Make sure the object name is unique
+                object_name_temp = object_name
+                count = 1
+                while object_name_temp in self.objects_on_table_yolo:
+                    object_name_temp = f"{object_name}_{count}"
+                    count += 1
+
+                self.objects_on_table_yolo[object_name_temp] = {
+                    'center': center.tolist()[0:3],
+                    'orientation': response.orientations[i],
+                    'grasp_width': response.grasp_widths[i]
+                }
+
+            return self.objects_on_table_yolo
+        
 
     def define_object_thresholds(self, object_name: str) -> DefineObjectInfo.Response:
         self.define_objects_req.object_name = object_name

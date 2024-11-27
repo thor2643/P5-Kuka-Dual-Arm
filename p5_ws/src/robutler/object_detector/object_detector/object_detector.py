@@ -95,6 +95,7 @@ class ObjectDetector(Node):
         super().__init__('object_detector')
         self.detector_srv = self.create_service(GetObjectInfo, 'get_object_info', self.get_object_information)
         self.threshold_adjust_srv = self.create_service(DefineObjectInfo, 'define_object_info', self.define_object_thresholds)
+        self.yolo_world_srv = self.create_service(GetObjectInfo, 'get_object_info_yolo', self.get_object_information_yolo)
 
         self.image_publisher = self.create_publisher(Image, 'video_frames', 10)
 
@@ -198,6 +199,50 @@ class ObjectDetector(Node):
         print("I am now returning")
         return response
     
+    
+    #The callback function for the detector service
+    def get_object_information_yolo(self, request, response):
+        object = request.object_name
+        self.get_logger().info(f'Requested to find {object} with Yolo World\n')
+
+        self.retrieve_aligned_frames()
+        image = self.get_color_image()
+        image = cv2.rotate(image, cv2.ROTATE_180)
+
+        #Apply Yolo World, data is stored in self.yolo_results
+        self.apply_yolo_world(image, object, verbose=False)
+
+        if len(self.yolo_results[0].boxes.data) == 0:
+            self.get_logger().info(f'No {object} found\n')
+            self.apply_yolo_world(image, object, verbose=False, name_objects = True)
+            image = self.yolo_results[0].plot()
+            self.image_publisher.publish(self.realsense_camera.bridge.cv2_to_imgmsg(image))
+            response.object_count = 0
+            return response
+
+        for i in range(len(self.yolo_results[0].boxes.data)):
+            x_min, y_min, x_max, y_max, _, _ = self.yolo_results[0].boxes.data[i]  #confidence and class
+            response.object_count += 1
+            cartesian_coordinates = self.get_cartesian_coordinates(int((x_min + x_max) / 2), int((y_min + y_max) / 2))
+            print(cartesian_coordinates)
+            print(type(cartesian_coordinates))
+            point = Point()
+            point.x = float(cartesian_coordinates[0])
+            point.y = float(cartesian_coordinates[1])
+            point.z = float(cartesian_coordinates[2])
+            response.centers.append(point)
+            response.orientations.append(0)
+            response.grasp_widths.append(min(x_max - x_min, y_max - y_min))
+ 
+
+        image_with_bbx = self.yolo_results[0].plot()
+
+        self.get_logger().info(f'Found {response.object_count} {object}\n')
+
+        self.image_publisher.publish(self.realsense_camera.bridge.cv2_to_imgmsg(image_with_bbx))
+            
+        return response
+    
     # The callback function for the threshold adjust service    
     def define_object_thresholds(self, request, response):
         object = request.object_name
@@ -222,7 +267,6 @@ class ObjectDetector(Node):
         response.success = True
 
         return response
-    
    
     def show_depth_map(self):
         cv2.namedWindow("Depth Map", cv2.WINDOW_AUTOSIZE)
@@ -286,27 +330,22 @@ class ObjectDetector(Node):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-    def apply_yolo_world(self, img):
-        img =cv2.rotate(img, cv2.ROTATE_180)
+    def apply_yolo_world(self, img, object_name, name_objects = False, verbose = False):
         model = YOLOWorld("yolov8l-world.pt")  # or select yolov8{s/m/l}-world.pt for different sizes
 
-        # Define custom classes
-        if False: 
-            model.set_classes(["brick", "lego", "laptop"])
+        if name_objects == False:
+            model.set_classes([object_name])
 
-        # Execute inference with the YOLOv8s-world model on the specified image
+        # Execute inference with the YOLOv8l-world model on the specified image
         self.yolo_results = model.predict(img)
 
-        # Convert the result to an OpenCV-compatible format and display it
-        result_image = self.yolo_results[0].plot()  # plot() returns an image array with annotations
+        #the following prints the results of the yolo model without the class contrains
+        if name_objects:
+            objects_found = []
+            for i in range(len(self.yolo_results[0].boxes.data)):
+                objects_found.append(model.names[int(self.yolo_results[0].boxes.data[i][5])])
 
-        while True:
-            cv2.imshow("YOLOv8s-world", result_image)
-
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-        
-        cv2.destroyAllWindows()
+            self.get_logger().info(f'No {object_name} were found, but a {objects_found} was located.\n')
 
     def find_object(self, image, object_name):
         # Get features from dictionary
@@ -584,8 +623,9 @@ def main(args=None):
     # Create an ObjectDetector instance
     detector = ObjectDetector()
 
-    # Comment out for running the node with a menu
-    rclpy.spin(detector)
+
+    #this was commented out
+    rclpy.spin(detector) 
 
     # Insert the code snippet below to run the node with a menu
     """

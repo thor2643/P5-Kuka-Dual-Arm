@@ -33,6 +33,13 @@ def generate_launch_description():
             prefix=['gnome-terminal -- bash -c "ros2 run janise omni_client; exec bash"']
         ),
 
+        #GUI
+        Node(
+            package='gui_package',
+            executable='gui_node',
+            prefix=['gnome-terminal -- bash -c "ros2 run gui_package gui_node; exec bash"']
+        ),
+
         # Moveit Coords - Set_moveit_coords.launch
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
