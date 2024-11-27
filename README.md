@@ -34,13 +34,7 @@ This project was developed by group 565 on Aalborg University, Robot Technology 
     rosdep install --from-paths src -i -r -y
     ```
 
-3. Installing python libraries
-
-    ```shell
-    pip install ...?
-    ```
-    
-4. Installing colcon - Mixin (Needed for Moveit2)
+3. Installing colcon - Mixin (Needed for Moveit2)
 
     ```shell
     sudo apt install python3-colcon-common-extensions
@@ -48,6 +42,12 @@ This project was developed by group 565 on Aalborg University, Robot Technology 
     colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
     colcon mixin update default
     sudo apt install python3-vcstool
+    ```
+
+4. Installing python libraries
+
+    ```shell
+    pip install ...?
     ```
 
 5. Colcon build
