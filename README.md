@@ -27,8 +27,7 @@ This project was developed by group 565 on Aalborg University, Robot Technology 
 
     ```shell
     source /opt/ros/humble/setup.bash
-    export FRI_CLIENT_VERSION=1.15
-    mkdir -p lbr-stack/src && cd lbr-stack
-    vcs import src --input https://raw.githubusercontent.com/lbr-stack/lbr_fri_ros2_stack/humble/lbr_fri_ros2_stack/repos-fri-${FRI_CLIENT_VERSION}.yaml
+    git clone https://github.com/thor2643/P5-Kuka-Dual-Arm.git
+    cd P5-Kuka-Dual-Arm/p5_ws
     rosdep install --from-paths src -i -r -y
     ```
