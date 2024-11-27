@@ -54,5 +54,6 @@ This project was developed by group 565 on Aalborg University, Robot Technology 
 
     ```shell
     cd src
-    pip install ...?
+    export MAKEFLAGS="-j3"
+    colcon build --mixin release
     ```
