@@ -21,7 +21,9 @@ public:
     RCLCPP_INFO(this->get_logger(), "Creating MoveGroupInterface for left arm");
     moveit::planning_interface::MoveGroupInterface::Options options_left("left_arm", "robot_description", "");
     move_group_interface_left = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), options_left);
-       
+
+    gripper_group = std::make_shared<moveit::planning_interface::MoveGroupInterface>(std::make_shared<rclcpp::Node>(this->get_name()), "3f_gripper");
+         
     // Pass the options and the shared pointer of the current node
     planner_service = this->create_service<project_interfaces::srv::PlanMoveCommand>(
         "plan_move_command", std::bind(&RobotControllerService::handle_planner_service, this, std::placeholders::_1, std::placeholders::_2));
@@ -33,6 +35,8 @@ public:
 private:
   std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface_right;
   std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface_left;
+  std::shared_ptr<moveit::planning_interface::MoveGroupInterface> gripper_group;
+
   rclcpp::Service<project_interfaces::srv::PlanMoveCommand>::SharedPtr planner_service;
   rclcpp::Service<project_interfaces::srv::ExecuteMoveCommand>::SharedPtr execute_service;
   moveit::planning_interface::MoveGroupInterface::Plan plan_right;
@@ -46,6 +50,9 @@ private:
                       const std::shared_ptr<project_interfaces::srv::PlanMoveCommand::Response> response) {
 
     RCLCPP_INFO(this->get_logger(), "Received request to plan a trajectory");
+
+    gripper_group->setNamedTarget("open");
+    gripper_group->move(); 
 
     std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface;
     moveit::planning_interface::MoveGroupInterface::Plan *plan;
@@ -182,7 +189,7 @@ private:
     move_group_interface->setPoseTarget(target_pose);
   
     moveit::core::MoveItErrorCode error_code;
-    error_code = move_group_interface->plan(*plan);
+    //error_code = move_group_interface->plan(*plan);
 
     if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
       RCLCPP_INFO(this->get_logger(), "The trajectory has been planned succesfully");
