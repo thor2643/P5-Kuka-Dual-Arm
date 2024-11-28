@@ -85,7 +85,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
     ```
 
 ## Contributors
-This project was developed by group 565 on Aalborg University, Robot Technology at 5rd semester.
+This project was developed by group 565 on Aalborg University, Robot Technology at 5th semester.
 
 <section id="sec_contributors">
 <table>
