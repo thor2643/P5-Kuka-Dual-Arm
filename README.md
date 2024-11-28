@@ -56,14 +56,27 @@ Before starting the installation of this project, we recommend grabbing a snack 
     colcon build --mixin release
     ```
 
-6. Running the system
+6. Adding an API key for Janise
+
+   ```shell
+    cd src/robutler/janise
+    nano API_KEY.json
+    # Added your API Key for GPT following the format
+    # {
+    #     "API_KEY": "Insert your API Key here"
+    # }
+    # Remember to write the file, ctrl + s then ctrl + x
+    ```
+   
+
+8. Running the system
 
     ```shell
     source install/setup.bash
     ros2 launch robutler_bringup robutler.launch.py
     ```
     
-7. Recommendations - *Don't do this, if you run multiple ROS Distros*
+9. Recommendations - *Don't do this, if you run multiple ROS Distros*
 
     ```shell
     echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
