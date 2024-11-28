@@ -111,7 +111,7 @@ class Interface(ctk.CTkFrame):
 
         minimal_client = MinimalClientAsync()
         future = minimal_client.send_request(request)
-        rclpy.spin_until_future_complete(minimal_client, future, timeout_sec=20)
+        rclpy.spin_until_future_complete(minimal_client, future)
 
         if future is None:
             self._insert_msg("Error: No response from server", role="system")
