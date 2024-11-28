@@ -21,6 +21,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
 2. Create a workspace, clone, and install dependencies
 
     ```shell
+    cd ~
     source /opt/ros/humble/setup.bash
     git clone https://github.com/thor2643/P5-Kuka-Dual-Arm.git
     cd P5-Kuka-Dual-Arm/p5_ws
