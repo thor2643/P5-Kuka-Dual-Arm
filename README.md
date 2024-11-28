@@ -44,12 +44,14 @@ Before starting the installation of this project, we recommend grabbing a snack 
 4. Installing python libraries
 
     ```shell
-    pip install ...?
+    cd ..
+    pip install -r requirements.txt
     ```
 
 5. Colcon build - Re-run if any packages timeout during compile
 
     ```shell
+    cd p5_ws
     export MAKEFLAGS="-j3"
     colcon build --mixin release
     ```
