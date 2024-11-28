@@ -45,7 +45,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
 
     ```shell
     cd ..
-    pip install -r requirements.txt
+    sudo pip install -r requirements.txt
     ```
 
 5. Colcon build - Re-run if any packages timeout during compile
