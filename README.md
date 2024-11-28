@@ -44,14 +44,14 @@ Before starting the installation of this project, we recommend grabbing a snack 
 4. Installing python libraries
 
     ```shell
-    cd ..
+    cd ~/P5-Kuka-Dual-Arm
     sudo pip install -r requirements.txt
     ```
 
 5. Colcon build - Re-run if any packages timeout during compile
 
     ```shell
-    cd p5_ws
+    cd ~/P5-Kuka-Dual-Arm/p5_ws
     export MAKEFLAGS="-j3"
     colcon build --mixin release
     ```
@@ -59,7 +59,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
 6. Adding an API key for Janise
 
    ```shell
-    cd src/robutler/janise
+    cd ~/P5-Kuka-Dual-Arm/p5_ws/src/robutler/janise
     nano API_KEY.json
     # Added your API Key for GPT following the format
     # {
@@ -68,10 +68,10 @@ Before starting the installation of this project, we recommend grabbing a snack 
     # Remember to write the file, ctrl + s then ctrl + x
     ```
    
-
 8. Running the system
 
     ```shell
+    cd ~/P5-Kuka-Dual-Arm/p5_ws
     source install/setup.bash
     ros2 launch robutler_bringup robutler.launch.py
     ```
