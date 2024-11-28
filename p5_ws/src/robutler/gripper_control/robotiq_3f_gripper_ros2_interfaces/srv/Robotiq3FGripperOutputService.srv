@@ -1,3 +1,4 @@
 Robotiq3FGripperOutputRegisters output_registers
 ---
 bool success
+string log

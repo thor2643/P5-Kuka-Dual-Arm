@@ -88,7 +88,7 @@ class Move3F(Node):
         self._3f_controller.output_registers.r_mod = 0  # Basic Gripper Mode
         self._3f_controller.output_registers.r_gto = 1  # Go To Position
         self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
-        self._3f_controller.output_registers.r_pra = 255  # Close Gripper
+        self._3f_controller.output_registers.r_pra = 110  # Close Gripper
         self._3f_controller.output_registers.r_spa = 255  # Max Speed
         self._3f_controller.output_registers.r_fra = 0  # Minimum Force
 
@@ -102,9 +102,9 @@ class Move3F(Node):
         self._3f_controller.output_registers.r_mod = 1  # Pinch Gripper Mode
         self._3f_controller.output_registers.r_gto = 1  # Go To Position
         self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
-        self._3f_controller.output_registers.r_pra = 255  # Close Gripper
+        self._3f_controller.output_registers.r_pra = 110  # Close Gripper
         self._3f_controller.output_registers.r_spa = 255  # Max Speed
-        self._3f_controller.output_registers.r_fra = 0  # Minimum Force
+        self._3f_controller.output_registers.r_fra = 125  # Minimum Force
 
         # Publish command to gripper
         self.future = self._3f_controller_cli.call_async(self._3f_controller)
@@ -116,7 +116,7 @@ class Move3F(Node):
         self._3f_controller.output_registers.r_mod = 2  # Wide Gripper Mode
         self._3f_controller.output_registers.r_gto = 1  # Go To Position
         self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
-        self._3f_controller.output_registers.r_pra = 255  # Close Gripper
+        self._3f_controller.output_registers.r_pra = 125  # Close Gripper
         self._3f_controller.output_registers.r_spa = 255  # Max Speed
         self._3f_controller.output_registers.r_fra = 0  # Minimum Force
 

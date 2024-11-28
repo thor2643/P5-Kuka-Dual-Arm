@@ -1,102 +1,103 @@
-import rclpy
-from rclpy.node import Node
-import pyrealsense2 as rs
-import cv2
+#Yolo World
+from ultralytics import YOLOWorld    #pip install ultralytics
+
+#Image processing
 import numpy as np
+import cv2
+from cv_bridge import CvBridge, CvBridgeError
 import json
 import os
-import time
+
+
 
 #ROS stuff
 from project_interfaces.srv import GetObjectInfo
+from project_interfaces.srv import DefineObjectInfo
 from geometry_msgs.msg import Point
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image, CameraInfo
 
 
-class RealSenseCamera:
+
+#the following is the ros2 launch command for the realsense camera with user settings
+"""
+ros2 launch realsense2_camera rs_launch.py 
+
+If you want to chance any parameters do it in the launch file. and remember to colcon build the package after you have made the changes.
+
+"""
+
+
+
+class RealSenseCamera(Node):
     def __init__(self):
-        # Configure depth and color streams
-        self.pipeline = rs.pipeline()
-        self.config = rs.config()
-
-        # Enable color stream
-        self.config.enable_stream(
-            rs.stream.color, 640, 480, rs.format.bgr8, 30
+        super().__init__('my_subscriber_node')
+        
+        # Create a subscriber to the topic 
+        self.subscription = self.create_subscription(
+            Image,  # Message type
+            '/camera/camera/aligned_depth_to_color/image_raw',  # Topic name
+            self.convert_to_depth_img,  # Callback function
+            10  # Queue size
+        )
+        
+         # Create a subscriber to the topic 
+        self.subscription = self.create_subscription(
+            Image,  # Message type
+            '/camera/camera/color/image_raw',  # Topic name
+            self.convert_to_color_img,  # Callback function
+            10  # Queue size
         )
 
-        # Enable depth stream
-        self.config.enable_stream(
-            rs.stream.depth, 640, 480, rs.format.z16, 30
+         # Create a subscriber to the topic 
+        self.subscription = self.create_subscription(
+            CameraInfo,  # Message type
+            '/camera/camera/aligned_depth_to_color/camera_info',  # Topic name
+            self.camera_info_callback,  # Callback function
+            10  # Queue size
         )
-
-        # Reset the camera to default settings (avoids an error when starting the pipeline)
-        ctx = rs.context()
-        devices = ctx.query_devices()
-        for dev in devices:
-            dev.hardware_reset()
-        print("reset done")
-
-        # Placeholder for calibrated values
-        self.calibrated_exposure = 166
-        self.calibrated_white_balance = 4600
-
-    def calibrate_camera(self):
-        # Start the pipeline temporarily for calibration
-        self.pipeline.start(self.config)
-
-        # Alignment setup
-        self.align_to = rs.stream.color
-        self.align = rs.align(self.align_to)
-
-        # Access the color sensor
-        color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
-
-        # Enable auto-exposure and auto-white-balance
-        color_sensor.set_option(rs.option.enable_auto_exposure, 1)
-        color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
-
-        # Allow time for auto-exposure and auto-white-balance to stabilize
-        for _ in range(30):
-            frames = self.pipeline.wait_for_frames()
-
-        # Retrieve and store the settled values
-        self.calibrated_exposure = color_sensor.get_option(rs.option.exposure)
-        self.calibrated_white_balance = color_sensor.get_option(rs.option.white_balance)
         
-        print(f"Calibrated exposure: {self.calibrated_exposure}")
-        print(f"Calibrated white balance: {self.calibrated_white_balance}")
+        self.subscription  # Prevent unused variable warning
+        self.bridge = CvBridge()  
 
-        # Stop the pipeline after calibration
-        self.pipeline.stop()
+        #Image frames for depth and color
+        self.color_img = None
+        self.depth_img = None
+        self.camera_info = None
+
         
-    def __enter__(self):
-        self.pipeline.start(self.config)
+    def convert_to_depth_img(self, msg):
+        try:
+            # Convert the ROS Image message to OpenCV image (16-bit single-channel)
+            self.depth_img = self.bridge.imgmsg_to_cv2(msg, desired_encoding="16UC1")
 
-        self.align_to = rs.stream.color
-        self.align = rs.align(self.align_to)
+        except CvBridgeError as e:
+            self.get_logger().error(f'Error converting image: {e}')
 
-        color_sensor = self.pipeline.get_active_profile().get_device().query_sensors()[1]
+    def convert_to_color_img(self, msg):
+        try:
+            # Convert the ROS Image message to an OpenCV image
+            color_img_rgb = self.bridge.imgmsg_to_cv2(msg, desired_encoding="rgb8")
+            
+            # Convert RGB to BGR for OpenCV display (OpenCV uses BGR by default)
+            self.color_img = cv2.cvtColor(color_img_rgb, cv2.COLOR_RGB2BGR)
 
-         # If calibrated values exist, apply them
-        if self.calibrated_exposure and self.calibrated_white_balance:
-            color_sensor.set_option(rs.option.enable_auto_exposure, 0)
-            color_sensor.set_option(rs.option.enable_auto_white_balance, 0)
-            color_sensor.set_option(rs.option.exposure, self.calibrated_exposure)
-            color_sensor.set_option(rs.option.white_balance, self.calibrated_white_balance)
-        else:
-            # If no calibrated values are present, enable auto settings
-            color_sensor.set_option(rs.option.enable_auto_exposure, 1)
-            color_sensor.set_option(rs.option.enable_auto_white_balance, 1)
+        except CvBridgeError as e:
+            self.get_logger().error(f'Error converting color image: {e}')
 
-        return self.pipeline
+    def camera_info_callback(self, msg):
+        self.camera_info = msg.k
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.pipeline.stop()
-      
 
 class ObjectDetector(Node):
     def __init__(self):
         super().__init__('object_detector')
-        self.srv = self.create_service(GetObjectInfo, 'get_object_info', self.get_object_information)
+        self.detector_srv = self.create_service(GetObjectInfo, 'get_object_info', self.get_object_information)
+        self.threshold_adjust_srv = self.create_service(DefineObjectInfo, 'define_object_info', self.define_object_thresholds)
+        self.yolo_world_srv = self.create_service(GetObjectInfo, 'get_object_info_yolo', self.get_object_information_yolo)
+
+        self.image_publisher = self.create_publisher(Image, 'video_frames', 10)
 
         # Instantiate the RealSenseCamera object
         self.realsense_camera = RealSenseCamera()
@@ -111,22 +112,54 @@ class ObjectDetector(Node):
         self.found_objects = {}
 
         #Frames for depth and color
-        self.depth_frame = None
+        self.depth_frame = None   
         self.color_frame = None
+        self.camera_info = None
+        self.yolo_results = None
 
+        # Publish initial image to GUI
+        self.retrieve_aligned_frames()
+        image = self.get_color_image()
+        self.image_publisher.publish(self.realsense_camera.bridge.cv2_to_imgmsg(cv2.rotate(image, cv2.ROTATE_180)))
+
+
+    def retrieve_aligned_frames(self):      
+        # Retrieve aligned frames from the RealSense camera by spinning the node untill new frames are available
+
+        while self.realsense_camera.depth_img is None or self.realsense_camera.color_img is None or self.realsense_camera.camera_info is None:
+                rclpy.spin_once(self.realsense_camera)
+
+        while np.array_equal(self.realsense_camera.depth_img, self.depth_frame) or np.array_equal(self.realsense_camera.color_img, self.color_frame):
+                rclpy.spin_once(self.realsense_camera)
+        
+        self.depth_frame = self.realsense_camera.depth_img
+        self.color_frame = self.realsense_camera.color_img
+        self.camera_info = self.realsense_camera.camera_info
+        
+        
     
-    #The callback function for the service
+    #The callback function for the detector service
     def get_object_information(self, request, response):
         object = request.object_name
         self.get_logger().info(f'Requested to find {object}\n')
 
+        self.found_objects.clear()
+
         if object in self.lego_bricks:
-            self.capture_aligned_frames()
-            self.find_object(self.get_color_image(), object)
+            self.retrieve_aligned_frames()
+
+            image = self.get_color_image()
+            _, rotated_bounding_boxes, _ = self.find_object(image, object)
+
+            image_with_bbx = self.draw_rotated_boxes(image.copy(), rotated_bounding_boxes)
+            image_with_bbx = cv2.rotate(image_with_bbx, cv2.ROTATE_180)
 
             response.object_count = len(self.found_objects)
 
-            for obj in self.found_objects:
+            img_x = self.color_frame.shape[1]
+            img_y = self.color_frame.shape[0]
+
+            for i, obj in enumerate(self.found_objects):
                 point = Point()
                 point.x = float(self.found_objects[obj]['center_coords'][0])
                 point.y = float(self.found_objects[obj]['center_coords'][1])
@@ -134,9 +167,28 @@ class ObjectDetector(Node):
 
                 response.centers.append(point)
                 response.orientations.append(self.found_objects[obj]['rotated_rect'][2])
-                response.grasp_widths.append(self.found_objects[obj]['width'])
+
+                if self.found_objects[obj]['width'] is not None:
+                    response.grasp_widths.append(self.found_objects[obj]['width'])
+                else:
+                    response.grasp_widths.append(0)
+
+                # Extract the x, y couple from rotated_bounding_boxes with the highest y value
+                print(rotated_bounding_boxes)
+
+                point_idx = np.argmax([point[1] for point in rotated_bounding_boxes[i]])
+
+                image_with_bbx =cv2.putText(
+                                    image_with_bbx, 
+                                    obj,                #object name
+                                    (img_x-rotated_bounding_boxes[i][point_idx][0], img_y-rotated_bounding_boxes[i][point_idx][1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA
+                                )
 
             self.get_logger().info(f'Found {response.object_count} {object}\n')
+
+            self.image_publisher.publish(self.realsense_camera.bridge.cv2_to_imgmsg(image_with_bbx))
+
+            print("I have moved on")
 
             # Clear the found objects dictionary
             self.found_objects.clear()
@@ -144,32 +196,97 @@ class ObjectDetector(Node):
             self.get_logger().info('Object thresholds not available. Consider adding the object by running the adjust_hsv option at startup.\n')
             response.object_count = 0
 
+        print("I am now returning")
         return response
+    
+    
+    #The callback function for the detector service
+    def get_object_information_yolo(self, request, response):
+        object = request.object_name
+        self.get_logger().info(f'Requested to find {object} with Yolo World\n')
 
+        self.retrieve_aligned_frames()
+        image = self.get_color_image()
+        image = cv2.rotate(image, cv2.ROTATE_180)
 
-    def capture_aligned_frames(self):
-        with self.realsense_camera as cam:
-            frames = cam.wait_for_frames()
-            aligned_frames = self.realsense_camera.align.process(frames)
+        #Apply Yolo World, data is stored in self.yolo_results
+        self.apply_yolo_world(image, object, verbose=False)
 
-            # Retrieve the depth frame
-            self.depth_frame = aligned_frames.get_depth_frame()
-            self.color_frame = aligned_frames.get_color_frame()
+        if len(self.yolo_results[0].boxes.data) == 0:
+            self.get_logger().info(f'No {object} found\n')
+            self.apply_yolo_world(image, object, verbose=False, name_objects = True)
+            image = self.yolo_results[0].plot()
+            self.image_publisher.publish(self.realsense_camera.bridge.cv2_to_imgmsg(image))
+            response.object_count = 0
+            return response
+
+        for i in range(len(self.yolo_results[0].boxes.data)):
+            x_min, y_min, x_max, y_max, _, _ = self.yolo_results[0].boxes.data[i]  #confidence and class
+            response.object_count += 1
+            cartesian_coordinates = self.get_cartesian_coordinates(int((x_min + x_max) / 2), int((y_min + y_max) / 2))
+            print(cartesian_coordinates)
+            print(type(cartesian_coordinates))
+            point = Point()
+            point.x = float(cartesian_coordinates[0])
+            point.y = float(cartesian_coordinates[1])
+            point.z = float(cartesian_coordinates[2])
+            response.centers.append(point)
+            response.orientations.append(0)
+            response.grasp_widths.append(min(x_max - x_min, y_max - y_min))
+ 
+
+        image_with_bbx = self.yolo_results[0].plot()
+
+        self.get_logger().info(f'Found {response.object_count} {object}\n')
+
+        self.image_publisher.publish(self.realsense_camera.bridge.cv2_to_imgmsg(image_with_bbx))
             
-            if not self.depth_frame or not self.color_frame:
-                print("No depth or color frame captured.")
-                
+        return response
+    
+    # The callback function for the threshold adjust service    
+    def define_object_thresholds(self, request, response):
+        object = request.object_name
+        self.get_logger().info(f'Requested to define {object}\n')
 
+        # Get Image
+        self.retrieve_aligned_frames()
+        image = self.get_color_image()
+
+        if image is None:
+            self.get_logger().info("Failed to capture image from camera.")
+            response.success = False
+            return response
+            
+        #Manually adjust the HSV thresholds and size range
+        lower_bound, upper_bound, min_size, max_size = self.adjust_hsv_and_size_thresholds(image, object)
+        self.get_logger().info(f"Lower Bound: {lower_bound}")
+        self.get_logger().info(f"Upper Bound: {upper_bound}")
+        self.get_logger().info(f"Min Size: {min_size}")
+        self.get_logger().info(f"Max Size: {max_size}")
+
+        response.success = True
+
+        return response
+   
     def show_depth_map(self):
         cv2.namedWindow("Depth Map", cv2.WINDOW_AUTOSIZE)
 
         while True:
-            self.capture_aligned_frames()
+            self.retrieve_aligned_frames()
 
             # Convert the depth frame to a NumPy array
-            depth_image = np.asanyarray(self.depth_frame.get_data())
+            depth_image = np.asanyarray(self.depth_frame)
 
             #depth_image = cv2.rotate(depth_image, cv2.ROTATE_180)
+
+            if True: #True: gets a tresholded colormap. False all depth data are used in normalisation
+                # Define the depth range (in millimeters) to display
+                min_depth = 0  # Minimum depth to display  0 m
+                max_depth = 3000  # Maximum depth to display 3m
+
+                # 1. Threshold the depth image to the specified range
+                # Set values outside the range to 0 (this can be chanced if needed).
+                depth_image = np.where((depth_image >= min_depth) & (depth_image <= max_depth),depth_image, 0)
 
             # Normalize the depth image for display
             depth_image = cv2.normalize(depth_image, None, 0, 255, cv2.NORM_MINMAX)
@@ -191,7 +308,7 @@ class ObjectDetector(Node):
         cv2.namedWindow("Image", cv2.WINDOW_AUTOSIZE)
         cv2.namedWindow("Image", cv2.WINDOW_AUTOSIZE)
         while True:
-            self.capture_aligned_frames()
+            self.retrieve_aligned_frames()
 
             # Convert the frame to a NumPy array for OpenCV
             color_frame = self.get_color_image()
@@ -206,13 +323,29 @@ class ObjectDetector(Node):
         cv2.destroyAllWindows()
 
     def get_color_image(self):
-        #return cv2.rotate(np.asanyarray(self.color_frame.get_data()), cv2.ROTATE_180)
-        return np.asanyarray(self.color_frame.get_data())
+        return np.asanyarray(self.color_frame)
 
     def show_image(self, image):
         cv2.imshow("Image", cv2.rotate(image, cv2.ROTATE_180))
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
+    def apply_yolo_world(self, img, object_name, name_objects = False, verbose = False):
+        model = YOLOWorld("yolov8l-world.pt")  # or select yolov8{s/m/l}-world.pt for different sizes
+
+        if name_objects == False:
+            model.set_classes([object_name])
+
+        # Execute inference with the YOLOv8l-world model on the specified image
+        self.yolo_results = model.predict(img)
+
+        #the following prints the results of the yolo model without the class contrains
+        if name_objects:
+            objects_found = []
+            for i in range(len(self.yolo_results[0].boxes.data)):
+                objects_found.append(model.names[int(self.yolo_results[0].boxes.data[i][5])])
+
+            self.get_logger().info(f'No {object_name} were found, but a {objects_found} was located.\n')
 
     def find_object(self, image, object_name):
         # Get features from dictionary
@@ -260,7 +393,7 @@ class ObjectDetector(Node):
                 box = np.int0(box)
                 rotated_bounding_boxes.append(box)
 
-                self.found_objects[f"{object_name}_{i}"] = {'bounding_box': (x, y, x + w, y + h), 
+                self.found_objects[f"{object_name}_{i+1}"] = {'bounding_box': (x, y, x + w, y + h), 
                                                             'rotated_bounding_box': box, 
                                                             'rotated_rect': rect}
 
@@ -272,7 +405,7 @@ class ObjectDetector(Node):
 
                 if center_coordinates is not None:
                     # Add center coordinates to the dictionary
-                    self.found_objects[f"{object_name}_{i}"].update({'center_coords': center_coordinates})
+                    self.found_objects[f"{object_name}_{i+1}"].update({'center_coords': center_coordinates})
                 else:
                     print("Failed to calculate center coordinates of the object.")
 
@@ -284,15 +417,16 @@ class ObjectDetector(Node):
                 height_point_1_metric = self.get_cartesian_coordinates(height_point_1[0], height_point_1[1])
                 height_point_2_metric = self.get_cartesian_coordinates(height_point_2[0], height_point_2[1])
 
-
-                if width_point_1_metric is not None and width_point_2_metric is not None:
+                
+                if width_point_1_metric is not None and width_point_2_metric is not None and height_point_1_metric is not None and height_point_2_metric is not None:
                     # Calculate the width of the bounding box
                     width = np.linalg.norm(width_point_1_metric[:2] - width_point_2_metric[:2])
                     height = np.linalg.norm(height_point_1_metric[:2] - height_point_2_metric[:2])
 
                     # Add width and height of object to the dictionary
-                    self.found_objects[f"{object_name}_{i}"].update({'width': width, 'height': height})
+                    self.found_objects[f"{object_name}_{i+1}"].update({'width': width, 'height': height})
                 else:
+                    self.found_objects[f"{object_name}_{i+1}"].update({'width': None, 'height': None})
                     print("Failed to calculate width and height of the object.")
 
                 
@@ -322,7 +456,7 @@ class ObjectDetector(Node):
         return image
     
     # Function to create trackbars for adjusting HSV thresholds and size range
-    def adjust_hsv_and_size_thresholds(self, image):
+    def adjust_hsv_and_size_thresholds(self, image, object_name=None):
         def nothing(x):
             pass
 
@@ -334,8 +468,9 @@ class ObjectDetector(Node):
 
         self.close_windows = False
 
-        # Ask user for object name
-        object_name = input("Enter the name of the object you want to adjust: ")
+        if object_name is None:
+            # Ask user for object name
+            object_name = input("Enter the name of the object you want to adjust: ")
         
         if object_name not in self.lego_bricks:
             # If the object is not already in the dictionary, initialize it with default values
@@ -414,43 +549,39 @@ class ObjectDetector(Node):
         return lower_bound, upper_bound, min_size, max_size
 
     def get_cartesian_coordinates(self, pixel_x, pixel_y):
+        # The camera info message .K contains the camera intrinsics
+        #[ fx   0  cx ]
+        #[  0  fy  cy ]
+        #[  0   0   1 ]
 
-        # Create a point cloud
-        pc = rs.pointcloud()
-        points = pc.calculate(self.depth_frame)
-        pc.map_to(self.color_frame)
+        # Get the camera intrinsics
+        fx = self.camera_info[0]
+        fy = self.camera_info[4]
+        cx = self.camera_info[2]
+        cy = self.camera_info[5]
 
-        # Get the vertices of the point cloud
-        vertices = np.asanyarray(points.get_vertices()).view(np.float32).reshape(-1, 3)
-
-        # Get the width and height of the depth image
-        width = self.depth_frame.get_width()
-
-        # Calculate the index in the point cloud corresponding to the 2D pixel
-        index = pixel_y * width + pixel_x
-
-        # Ensure the index is within bounds
-        if 0 <= index < len(vertices):
-            # Access the 3D coordinates corresponding to the pixel
-            cartesian_coordinates = vertices[index]
-
-            #print(f"Cartesian coordinates for pixel ({pixel_x}, {pixel_y}): {cartesian_coordinates}")
-
-            # Rotate the Cartesian coordinates 180 degrees around the z-axis
-            # Because the camera has been flipped 180 degrees
-            #rotation_matrix = np.array([[-1, 0, 0],
-            #                            [0, -1, 0],
-            #                            [0, 0, 1]])
-
-            #rotated_coordinates = np.dot(rotation_matrix, cartesian_coordinates)
-
-            #return rotated_coordinates
-            return cartesian_coordinates
-        else:
-            print(f"Pixel coordinates ({pixel_x}, {pixel_y}) are out of bounds.")
+        if pixel_x < 0 or pixel_x >= self.depth_frame.shape[1] or pixel_y < 0 or pixel_y >= self.depth_frame.shape[0]:
+            print("Pixel coordinates out of bounds.")
+            return None
+        
+        if self.depth_frame[pixel_y, pixel_x] == 0:
+            print("No depth data available at the selected pixel.")
             return None
 
+        print(f"size of depth frame: {self.depth_frame.shape}")
+
+        # Calculate the x, y, z coordinates
+        z = self.depth_frame[pixel_y, pixel_x] / 1000  # Convert to meters
+        x = ((pixel_x - cx) * z / fx) 
+        y = ((pixel_y - cy) * z / fy) 
+        
+
+        return np.array([x, y, z])
+        
     def show_cartesian_coordinates(self):
+        self.retrieve_aligned_frames()
+        color_image = self.get_color_image()
+
         def mouse_callback(event, x, y, flags, param):
             if event == cv2.EVENT_MOUSEMOVE:
                 # Adjust the x, y coordinates to reflect a rotated image
@@ -458,16 +589,13 @@ class ObjectDetector(Node):
                 adjusted_x = width - x
                 adjusted_y = height - y
                 coordinates = self.get_cartesian_coordinates(adjusted_x, adjusted_y)
-                #coordinates = self.get_cartesian_coordinates(x, y)
                 if coordinates is not None:
                     print(f"Cartesian coordinates at ({x}, {y}): {coordinates}")
 
         cv2.namedWindow("Image with Coordinates")
         cv2.setMouseCallback("Image with Coordinates", mouse_callback)
 
-        self.capture_aligned_frames()
-        color_image = self.get_color_image()
-
+    
         while True:
             cv2.imshow("Image with Coordinates", cv2.rotate(color_image, cv2.ROTATE_180))
 
@@ -476,7 +604,6 @@ class ObjectDetector(Node):
 
         cv2.destroyAllWindows()
 
-    
     def load_object_descriptions(self):
         if os.path.exists(self.object_file):
             with open(self.object_file, 'r') as file:
@@ -493,23 +620,27 @@ class ObjectDetector(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    # Load the image you provided
-    image_path = 'src/object_detector/Cell_Image_Example.jpg'
-    image_example = cv2.imread(image_path)
-
+    # Create an ObjectDetector instance
     detector = ObjectDetector()
 
+
+    #this was commented out
+    rclpy.spin(detector) 
+
+    # Insert the code snippet below to run the node with a menu
+    """
     while True:
         # Ask use which function to run
         print("\nChoose a function to run:")
         print("1. Show Frame")
-        print("2. Find Object")
-        print("3. Adjust HSV and Size Thresholds")
-        print("4. Show Depth Map")
-        print("5. Print Cartesian Coordinates")
-        print("6. Spin the node")
-        print("7. Calibrate Camera")
-        print("8. Exit\n")
+        print("2. Find Object using traditional vision techniques")
+        print("3. find Object using YOLO")
+        print("4. Adjust HSV and Size Thresholds")
+        print("5. Show Depth Map")
+        print("6. Print Cartesian Coordinates")
+        print("7. Spin the node")
+        print("8. Calibrate Camera")
+        print("9. Exit\n")
 
         choice = input("Enter your choice: ")
 
@@ -520,7 +651,7 @@ def main(args=None):
 
         elif choice == '2':
             #Find an object in the image
-            detector.capture_aligned_frames()
+            detector.retrieve_aligned_frames()
             image = detector.get_color_image()
 
             if image is None:
@@ -539,8 +670,20 @@ def main(args=None):
             else:
                 print(f"{object_name} not found in the image.")
 
-        elif choice == '3':
-            detector.capture_aligned_frames()
+
+        elif choice == '3': #YOLO
+            #Find an object in the image
+            detector.retrieve_aligned_frames()
+            image = detector.get_color_image()
+
+            if image is None:
+                print("Failed to capture image from camera.")
+                continue
+
+            detector.apply_yolo_world(image)
+
+        elif choice == '4':
+            detector.retrieve_aligned_frames()
             image = detector.get_color_image()
 
             if image is None:
@@ -554,28 +697,28 @@ def main(args=None):
             print(f"Min Size: {min_size}")
             print(f"Max Size: {max_size}")
 
-        elif choice == '4':
+        elif choice == '5':
             detector.show_depth_map()
 
-        elif choice == '5':
+        elif choice == '6':
+            
             detector.show_cartesian_coordinates()
 
-        elif choice == '6':
+        elif choice == '7':
             rclpy.spin(detector) 
 
-        elif choice == '7':
+        elif choice == '8':
             detector.realsense_camera.calibrate_camera()               
 
-        elif choice == '8':
+        elif choice == '9':
             break
 
         else:
             print("Invalid choice. Please try again.")
+    """
 
     rclpy.shutdown()
 
 
 if __name__ == '__main__':
     main()
-
-    # TODO: Integrate to ROS2

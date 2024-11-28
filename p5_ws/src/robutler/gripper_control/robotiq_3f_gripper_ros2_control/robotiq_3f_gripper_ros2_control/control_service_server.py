@@ -13,6 +13,7 @@ from robotiq_3f_gripper_ros2_interfaces.srv import Robotiq3FGripperOutputService
 # Others
 import time, threading, math
 from pymodbus.client import ModbusTcpClient
+import numpy as np
 
 
 ####### Helper function #######
@@ -50,6 +51,7 @@ class GripperServiceServer(Node):
         
         # msgs init
         self.input_registers = Robotiq3FGripperInputRegisters()
+        self._3f_controller = Robotiq3FGripperOutputService.Request()
         
         # Publisher
         self._input_register_pub = self.create_publisher(Robotiq3FGripperInputRegisters, "Robotiq3FGripper/InputRegisters", 10)
@@ -59,6 +61,9 @@ class GripperServiceServer(Node):
 
         # Timer
         self._read_input_timer = self.create_timer(0.1, self.read_input_registers, callback_group=self.group_2)
+
+        # Bootup sequence
+        self.gripper_bootup()
         
         self.get_logger().info("Gripper service start-up successful!")
 
@@ -164,7 +169,7 @@ class GripperServiceServer(Node):
             # Assign status to variables
             gSTA = self.input_registers.g_sta
             gIMC = self.input_registers.g_imc
-            self.get_logger().info(f"gSTA = {gSTA}    gIMC = {gIMC}")
+            #self.get_logger().info(f"gSTA = {gSTA}    gIMC = {gIMC}")
 
             # Check the gripper activation, mode, and position has reached stop point
             if gSTA != 0 and gIMC == 3:
@@ -173,6 +178,42 @@ class GripperServiceServer(Node):
                 break
         
         return response
+    
+    def gripper_bootup(self): # Bootup Sequence, should only be called once.  
+        self._3f_controller.output_registers.r_act = 1  # Active Gripper
+        self._3f_controller.output_registers.r_mod = 1  # Wide Gripper Mode
+        self._3f_controller.output_registers.r_gto = 1  # Go To Position
+        self._3f_controller.output_registers.r_atr = 0  # Stop Automatic Release
+        self._3f_controller.output_registers.r_pra = 0  # Open
+        self._3f_controller.output_registers.r_spa = 255  # Max Speed
+        self._3f_controller.output_registers.r_fra = 0  # Minimum Force
+
+        output_registers_list = self.output_registers_msg_to_list(self._3f_controller.output_registers)
+        # Publish command to gripper
+        self.send_data(output_registers_list) # Send list to gripper
+
+        i=0
+        
+        while True:
+            time.sleep(0.1) # Let the gripper process the msg for the given amount of time
+
+            # Assign status to variables
+            gSTA = self.input_registers.g_sta
+            gIMC = self.input_registers.g_imc
+
+            # Check the gripper activation, mode, and position has reached stop point
+            if gSTA != 0 and gIMC == 3:
+                self.get_logger().info("Bootup successfully completed")
+                break
+
+            if i == 50:
+                self.get_logger().info("Bootup timed out")
+                break
+
+            i+=1
+
+
+        
     
     
     def shutdown_callback(self):

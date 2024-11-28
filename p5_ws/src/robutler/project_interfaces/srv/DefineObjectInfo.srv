@@ -1,0 +1,6 @@
+# Request
+string object_name  # Name of the object to adjust the value for
+
+---
+# Response
+bool success
