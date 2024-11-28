@@ -22,9 +22,16 @@ int main(int argc, char **argv) {
   executor.add_node(node_ptr);
   auto spinner = std::thread([&executor]() { executor.spin(); });
 
+
+
   // Create MoveGroupInterface (lives inside robot_name namespace)
   auto move_group_interface = moveit::planning_interface::MoveGroupInterface(
       node_ptr, moveit::planning_interface::MoveGroupInterface::Options("right_arm", "robot_description", robot_name));
+
+  // 3f hripper interface
+  moveit::planning_interface::MoveGroupInterface gripper_group(node_ptr, "3f_gripper");
+  gripper_group.setNamedTarget("open");
+  gripper_group.move(); 
   
   // --- Constraint the planner so the end effector link (3f_tool0) is always inside a box ---
   // Link to this code: https://moveit.picknik.ai/main/doc/how_to_guides/using_ompl_constrained_planning/ompl_constrained_planning.html
