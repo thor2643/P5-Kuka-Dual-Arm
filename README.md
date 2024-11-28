@@ -35,6 +35,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
     sudo apt install python3-colcon-common-extensions
     sudo apt install python3-colcon-mixin
     sudo apt install python3-pip
+    sudo apt-get install portaudio19-dev python-all-dev
     colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
     colcon mixin update default
     sudo apt install python3-vcstool
