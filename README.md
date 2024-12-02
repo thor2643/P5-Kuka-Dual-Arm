@@ -46,7 +46,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
 
     ```shell
     cd ~/P5-Kuka-Dual-Arm
-    sudo pip install -r requirements.txt
+    pip install -r requirements.txt
     ```
 
 5. Colcon build - Re-run if any packages timeout during compile
@@ -69,7 +69,9 @@ Before starting the installation of this project, we recommend grabbing a snack 
     # Remember to write the file, ctrl + s then ctrl + x
     ```
    
-8. Running the system
+8. NOTE: If you are running on our setup, remember to set your IP to 172.31.1.168 and Netmask to 255.255.255.0, also ensure that you are correctly connected to the setup (2 USB's 1 Ethernet). ([Static IP configuration](https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-22-04-jammy-jellyfish-desktop-server))
+   
+9. Running the system
 
     ```shell
     cd ~/P5-Kuka-Dual-Arm/p5_ws
@@ -77,7 +79,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
     ros2 launch robutler_bringup robutler.launch.py
     ```
     
-9. Recommendations - *Don't do this, if you run multiple ROS Distros*
+10. Recommendations - *Don't do this, if you run multiple ROS Distros*
 
     ```shell
     echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc

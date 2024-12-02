@@ -114,12 +114,10 @@ fsspec==2024.10.0
 future==0.18.2
 gast==0.5.2
 gazebo-msgs==3.7.0
-generate-parameter-library-py==0.3.7
 geometry-msgs==4.2.4
 gpg==1.16.0
 graph-msgs==0.2.0
 gTTS==2.5.4
-gui-package==0.0.0
 h11==0.14.0
 html5lib==1.1
 httpcore==1.0.7
@@ -130,7 +128,6 @@ image-geometry==3.2.1
 importlib-metadata==4.6.4
 iniconfig==1.1.1
 interactive-markers==2.3.2
-janise==0.0.0
 jeepney==0.7.1
 Jinja2==3.0.3
 jiter==0.8.0
@@ -142,7 +139,6 @@ language-selector==0.1
 lark==1.1.1
 laser-geometry==2.4.0
 launch==1.0.6
-launch-mixins==2.0.0
 launch-param-builder==0.1.1
 launch-pytest==1.0.6
 launch-ros==0.19.7
@@ -153,7 +149,6 @@ launch-yaml==1.0.6
 launchpadlib==1.10.16
 lazr.restfulclient==0.14.4
 lazr.uri==1.0.6
-lbr-fri-idl==1.5.0
 lifecycle-msgs==1.2.1
 lockfile==0.12.2
 logging-demo==0.20.5
@@ -194,7 +189,6 @@ nvidia-nccl-cu12==2.21.5
 nvidia-nvjitlink-cu12==12.4.127
 nvidia-nvtx-cu12==12.4.127
 oauthlib==3.2.0
-object-detector==0.0.0
 object-recognition-msgs==2.0.0
 octomap-msgs==2.0.0
 olefile==0.46
@@ -213,7 +207,6 @@ Pillow==9.0.1
 playsound==1.3.0
 pluggy==0.13.0
 ply==3.11
-project-interfaces==0.0.0
 protobuf==3.12.4
 psutil==5.9.0
 ptyprocess==0.7.0
@@ -260,16 +253,11 @@ quality-of-service-demo-py==0.20.5
 rcl-interfaces==1.2.1
 rclpy==3.3.14
 rcutils==5.1.6
-realsense2-camera-msgs==4.55.1
 reportlab==3.6.8
 requests==2.32.3
 requests-toolbelt==0.9.1
 resource-retriever==3.1.2
 rmw-dds-common==1.6.0
-robotiq-2f-85-control==0.0.0
-robotiq-2f-85-interfaces==0.0.0
-robotiq-3f-gripper-ros2-control==0.1.0
-robotiq-3f-gripper-ros2-interfaces==0.0.0
 roman==3.3
 ros2action==0.18.11
 ros2bag==0.15.12
@@ -388,5 +376,4 @@ wrapt==1.13.3
 xacro==2.0.8
 xdg==5
 xkit==0.0.0
-yolo-world==0.0.0
 zipp==1.0.0
