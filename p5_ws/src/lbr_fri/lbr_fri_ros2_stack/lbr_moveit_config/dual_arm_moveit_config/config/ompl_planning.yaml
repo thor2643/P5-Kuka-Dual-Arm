@@ -1,5 +1,5 @@
 planning_plugin: ompl_interface/OMPLPlanner
-start_state_max_bounds_error: 0.1
+start_state_max_bounds_error: 2.0
 jiggle_fraction: 0.05  # How much the FixStartStateCollision is allowed to jiggle the robot around in order to find a collision free state.
 
 # Request adapters are plugins that can modify the request for planning. They fix common issues with the request, allowing us to set constraints.

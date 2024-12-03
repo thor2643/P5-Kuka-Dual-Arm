@@ -265,7 +265,7 @@ private:
     move_group_interface->setPoseTarget(target_pose);
   
     moveit::core::MoveItErrorCode error_code;
-    //error_code = move_group_interface->plan(*plan);
+    error_code = move_group_interface->plan(*plan);
 
     if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
       RCLCPP_INFO(this->get_logger(), "The trajectory has been planned succesfully");
