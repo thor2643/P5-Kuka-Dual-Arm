@@ -72,7 +72,6 @@ public:
 private:
   std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface_right;
   std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface_left;
-  std::shared_ptr<moveit::planning_interface::MoveGroupInterface> gripper_group;
 
   rclcpp::Service<project_interfaces::srv::PlanMoveCommand>::SharedPtr planner_service;
   rclcpp::Service<project_interfaces::srv::ExecuteMoveCommand>::SharedPtr execute_service;
@@ -131,9 +130,6 @@ private:
                       const std::shared_ptr<project_interfaces::srv::PlanMoveCommand::Response> response) {
 
     RCLCPP_INFO(this->get_logger(), "Received request to plan a trajectory");
-
-    gripper_group->setNamedTarget("open");
-    gripper_group->move(); 
 
     std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_interface;
     moveit::planning_interface::MoveGroupInterface::Plan *plan;
@@ -221,7 +217,6 @@ private:
     constraints.joint_constraints.push_back(joint_constraint2);
     */
     
-        
     /*
     moveit_msgs::msg::JointConstraint joint_constraint4;
     joint_constraint4.joint_name = "A4"; // The fourth joint
@@ -270,7 +265,7 @@ private:
     move_group_interface->setPoseTarget(target_pose);
   
     moveit::core::MoveItErrorCode error_code;
-    //error_code = move_group_interface->plan(*plan);
+    error_code = move_group_interface->plan(*plan);
 
     if (error_code == moveit::core::MoveItErrorCode::SUCCESS) {
       RCLCPP_INFO(this->get_logger(), "The trajectory has been planned succesfully");

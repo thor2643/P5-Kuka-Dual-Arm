@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   auto move_group_interface = moveit::planning_interface::MoveGroupInterface(
       node_ptr, moveit::planning_interface::MoveGroupInterface::Options("right_arm", "robot_description", robot_name));
 
-  // 3f hripper interface
+  // 3f gripper interface
   moveit::planning_interface::MoveGroupInterface gripper_group(node_ptr, "3f_gripper");
   gripper_group.setNamedTarget("open");
   gripper_group.move(); 
