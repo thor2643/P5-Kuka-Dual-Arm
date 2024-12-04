@@ -955,7 +955,7 @@
     <parent link="3f_finger_1_link_0"/>
     <child link="3f_finger_1_link_1"/>
     <axis xyz="0 0 1"/>
-    <origin rpy="0 0 0" xyz="0.020 0 0"/>
+    <origin rpy="0 0 -0.43" xyz="0.020 0 0"/>
     <limit effort="100" lower="0.0495" upper="1.2218" velocity="1.23"/>
     <dynamics damping="1" friction="0.1"/>
   </joint>
@@ -1071,7 +1071,7 @@
     <parent link="3f_finger_2_link_0"/>
     <child link="3f_finger_2_link_1"/>
     <axis xyz="0 0 1"/>
-    <origin rpy="0 0 0" xyz="0.020 0 0"/>
+    <origin rpy="0 0 -0.43" xyz="0.020 0 0"/>
     <limit effort="100" lower="0.0495" upper="1.2218" velocity="1.23"/>
     <dynamics damping="1" friction="0.1"/>
   </joint>
@@ -1187,7 +1187,7 @@
     <parent link="3f_finger_middle_link_0"/>
     <child link="3f_finger_middle_link_1"/>
     <axis xyz="0 0 1"/>
-    <origin rpy="0 0 0" xyz="0.020 0 0"/>
+    <origin rpy="0 0 -0.43" xyz="0.020 0 0"/>
     <limit effort="100" lower="0.0495" upper="1.2218" velocity="1.23"/>
     <dynamics damping="1" friction="0.1"/>
   </joint>
