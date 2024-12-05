@@ -242,7 +242,7 @@
     <parent link="right_link_0"/>
     <child link="right_link_1"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="200" lower="-2.9670597283903604" upper="2.9670597283903604" velocity="1.710422666954443"/>
+    <limit effort="200" lower="-2.9" upper="2.9" velocity="1.710422666954443"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="right_link_1">
@@ -269,7 +269,7 @@
     <parent link="right_link_1"/>
     <child link="right_link_2"/>
     <axis xyz="0.0 1.0 0.0"/>
-    <limit effort="200" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="1.710422666954443"/>
+    <limit effort="200" lower="-2" upper="2" velocity="1.710422666954443"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="right_link_2">
@@ -296,7 +296,7 @@
     <parent link="right_link_2"/>
     <child link="right_link_3"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="200" lower="-2.9670597283903604" upper="2.9670597283903604" velocity="1.7453292519943295"/>
+    <limit effort="200" lower="-2.9" upper="2.9" velocity="1.7453292519943295"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="right_link_3">
@@ -323,7 +323,7 @@
     <parent link="right_link_3"/>
     <child link="right_link_4"/>
     <axis xyz="0.0 -1.0 0.0"/>
-    <limit effort="200" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="2.2689280275926285"/>
+    <limit effort="200" lower="-2" upper="2" velocity="2.2689280275926285"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="right_link_4">
@@ -350,7 +350,7 @@
     <parent link="right_link_4"/>
     <child link="right_link_5"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="200" lower="-2.9670597283903604" upper="2.9670597283903604" velocity="2.443460952792061"/>
+    <limit effort="200" lower="-2.9" upper="2.9" velocity="2.443460952792061"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="right_link_5">
@@ -377,7 +377,7 @@
     <parent link="right_link_5"/>
     <child link="right_link_6"/>
     <axis xyz="0.0 1.0 0.0"/>
-    <limit effort="200" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="3.141592653589793"/>
+    <limit effort="200" lower="-2" upper="2" velocity="3.141592653589793"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="right_link_6">
@@ -404,7 +404,7 @@
     <parent link="right_link_6"/>
     <child link="right_link_7"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="200" lower="-3.0543261909900763" upper="3.0543261909900763" velocity="3.141592653589793"/>
+    <limit effort="200" lower="-3" upper="3" velocity="3.141592653589793"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="right_link_7">
@@ -669,7 +669,7 @@
     <parent link="left_link_0"/>
     <child link="left_link_1"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="200" lower="-2.9670597283903604" upper="2.9670597283903604" velocity="1.710422666954443"/>
+    <limit effort="200" lower="-2.9" upper="2.9" velocity="1.710422666954443"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="left_link_1">
@@ -696,7 +696,7 @@
     <parent link="left_link_1"/>
     <child link="left_link_2"/>
     <axis xyz="0.0 1.0 0.0"/>
-    <limit effort="200" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="1.710422666954443"/>
+    <limit effort="200" lower="-2" upper="2" velocity="1.710422666954443"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="left_link_2">
@@ -723,7 +723,7 @@
     <parent link="left_link_2"/>
     <child link="left_link_3"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="200" lower="-2.9670597283903604" upper="2.9670597283903604" velocity="1.7453292519943295"/>
+    <limit effort="200" lower="-2.9" upper="2.9" velocity="1.7453292519943295"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="left_link_3">
@@ -750,7 +750,7 @@
     <parent link="left_link_3"/>
     <child link="left_link_4"/>
     <axis xyz="0.0 -1.0 0.0"/>
-    <limit effort="200" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="2.2689280275926285"/>
+    <limit effort="200" lower="-2" upper="2" velocity="2.2689280275926285"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="left_link_4">
@@ -777,7 +777,7 @@
     <parent link="left_link_4"/>
     <child link="left_link_5"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="200" lower="-2.9670597283903604" upper="2.9670597283903604" velocity="2.443460952792061"/>
+    <limit effort="200" lower="-2.9" upper="2.9" velocity="2.443460952792061"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="left_link_5">
@@ -804,7 +804,7 @@
     <parent link="left_link_5"/>
     <child link="left_link_6"/>
     <axis xyz="0.0 1.0 0.0"/>
-    <limit effort="200" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="3.141592653589793"/>
+    <limit effort="200" lower="-2" upper="2" velocity="3.141592653589793"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="left_link_6">
@@ -831,7 +831,7 @@
     <parent link="left_link_6"/>
     <child link="left_link_7"/>
     <axis xyz="0.0 0.0 1.0"/>
-    <limit effort="200" lower="-3.0543261909900763" upper="3.0543261909900763" velocity="3.141592653589793"/>
+    <limit effort="200" lower="-3" upper="3" velocity="3.141592653589793"/>
     <dynamics damping="10.0" friction="0.1"/>
   </joint>
   <link name="left_link_7">
