@@ -79,12 +79,18 @@ class Interface(ctk.CTkFrame):
             self.menu_frame, image=self.mic_icon, text="", width=38, height=38,            
             command=lambda: self._send_msg(from_mic=True))
         
-        self.mic_button.grid(row=1, column=1, padx=5)
+        self.mic_button.grid(row=1, column=2, padx=2)
+
+        self.del_button = ctk.CTkButton(
+            self.menu_frame, text="DEL", width=38, border_spacing=10,          
+            command=self.clear_history)
+        
+        self.del_button.grid(row=1, column=1, padx=2)
 
         self.btn = ctk.CTkButton(
                 self.menu_frame, text="SEND", border_spacing=10,
                 command=self._send_msg)
-        self.btn.grid(row=1, column=2, padx=10)
+        self.btn.grid(row=1, column=3, padx=5)
 
     def _send_msg(self, from_mic=False):
         if from_mic:
@@ -125,6 +131,26 @@ class Interface(ctk.CTkFrame):
         if self.speak:
             thread = threading.Thread(target=self._text_to_speech, args=(future.result().message,))
             thread.start()
+
+    def clear_history(self):
+        request = "clear history"
+
+        #Clear Janise messages
+        minimal_client = MinimalClientAsync()
+        future = minimal_client.send_request(request)
+        rclpy.spin_until_future_complete(minimal_client, future)
+
+        if future is None:
+            self._insert_msg("Error: No response from server", role="system")
+            self.after(0, self._reset)
+        else:
+            self.chatbox.configure(state="normal")
+            self.chatbox.delete("1.0", "end")
+            self.chatbox.configure(state="disabled")
+            self._insert_msg(future.result().message, role="system")
+            
+
+        
 
     def _mic_button_clicked(self):
         print("Mic button clicked")

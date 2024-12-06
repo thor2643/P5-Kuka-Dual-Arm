@@ -472,9 +472,9 @@ class LLMNode(Node):
             
         if arm == 'left':
             # Calibrated transformation matrix from world to moveit coordinates based on left arm
-            T_world_moveit = np.array([ [ 0.99994978,  0.01001088, -0.00046925,  0.03011298],
-                                        [-0.01001359,  0.99993071, -0.00618906,  0.03906320],
-                                        [ 0.00040726,  0.00619345,  0.99998074, -0.81322784],
+            T_world_moveit = np.array([ [ 0.99994978,  -0.01001088, 0.00046925,  -0.03011298],
+                                        [0.01001359,  0.99993071, 0.00618906,  -0.03906320],
+                                        [ -0.00040726,  -0.00619345,  0.99998074, 0.81322784],
                                         [        0.0,         0.0,         0.0,         1.0]])
             
         
@@ -614,6 +614,12 @@ class LLMNode(Node):
     def gui_handle_service(self, request, response):
         prompt = request.prompt  # prompt is a string
         self.message_buffer.append({'role': 'user', 'content': prompt})
+
+        #If the user wants to clear the history, do so
+        if "clear history" in prompt:
+            self.message_buffer = [self.message_buffer[0]]
+            response.message = "History cleared."
+            return response
 
         loop_counter = 0
 
