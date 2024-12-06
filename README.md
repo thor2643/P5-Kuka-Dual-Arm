@@ -1,5 +1,12 @@
 # P5-Kuka-Dual-Arm
-This is a fifth semester project, which proposes an integration of a Large Language Model to make automation more intuitive for operators.
+This project, developed during our fifth semester at AAU, explores the integration of a large language model (LLM) to make automation more intuitive for operators. This GitHub page hosts all the code produced throughout the project period, from September 1st to December 20th, and allows for the use of an LLM to control two Kuka LBR iiwa 7 R800 robots.
+
+The LLM is capable of the following:
+- Detecting LEGO bricks using a RealSense D435i camera, with either traditional computer vision or YOLO-World.
+- Planning and executing trajectories to any point defined by Cartesian coordinates and roll-pitch-yaw parameters [𝑥,𝑦,𝑧,𝑟,z,𝑦].
+- Performing pick-and-place tasks using the attached grippers. NOTE: The code is built for a RobotIQ 3-F Gripper and a RobotIQ 2-F 85 Gripper.
+- Informing operators about its capabilities.
+- Providing insights into errors encountered during operation.
 
 ## Quick Start
 This quick-start guide assumes a clean installation of Ubuntu 22.04 LTS (Jammy Jellyfish) along with ROS 2 Humble. If either is not yet set up, you can refer to the following resources:
@@ -69,7 +76,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
     # Remember to write the file, ctrl + s then ctrl + x
     ```
    
-8. NOTE: If you are running on our setup, remember to set your IP to 172.31.1.168 and Netmask to 255.255.255.0, also ensure that you are correctly connected to the setup (2 USB's 1 Ethernet). ([Static IP configuration](https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-22-04-jammy-jellyfish-desktop-server))
+8. NOTE: If you are running on our setup, remember to set your IP to 172.31.1.148 and Netmask to 255.255.255.0, also ensure that you are correctly connected to the setup (2 USB's 1 Ethernet). ([Static IP configuration](https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-22-04-jammy-jellyfish-desktop-server))
    
 9. Running the system
 
@@ -87,7 +94,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
     ```
 
 ## Contributors
-This project was developed by group 565 on Aalborg University, Robot Technology at 5th semester.
+This project was developed by group 565 at Aalborg University, during the 5th semester of Robot Technology. Every member of the group can be found listed below, alongside their GitHub pages:
 
 <section id="sec_contributors">
 <table>
