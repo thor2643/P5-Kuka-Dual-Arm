@@ -4,23 +4,21 @@ jiggle_fraction: 0.05  # How much the FixStartStateCollision is allowed to jiggl
 
 # Request adapters are plugins that can modify the request for planning. They fix common issues with the request, allowing us to set constraints.
 request_adapters: >-
-    default_planner_request_adapters/ResolveConstraintFrames
-    default_planner_request_adapters/FixWorkspaceBounds
-    default_planner_request_adapters/FixStartStateBounds
     default_planner_request_adapters/FixStartStateCollision
     default_planner_request_adapters/FixStartStatePathConstraints
-    default_planner_request_adapters/AddTimeOptimalParameterization  
-#time parameterization is convert the path from planner to a trejectory that upholds the velocity and acceleration limits in joint_limits.yaml.
+    default_planner_request_adapters/AddTimeOptimalParameterization
+    default_planner_request_adapters/FixStartStateBounds
+    default_planner_request_adapters/ResolveConstraintFrames
+    default_planner_request_adapters/FixWorkspaceBounds
 
-#Unsure if this does anything
-#workspace_parameters:  
-#      min_x: -0.1
-#      min_y: -0.1
-#      min_z: 0.0
-#      max_x: 1.0
-#      max_y: 1.0
-#      max_z: 1.5
-
+#workspace_parameters:  // Unsure if this does anything
+#  workspace_min_x: -0.1
+#  workspace_min_y: -0.1
+#  workspace_min_z: 0.8
+#  workspace_max_x: 1.0
+#  workspace_max_y: 1.0
+#  workspace_max_z: 1.5
+    
 planner_configs: 
   RRTstar:
     type: geometric::RRTstar
@@ -34,6 +32,9 @@ planner_configs:
   RRTconnect: 
     type: geometric::RRTConnect
     range: 0.2
+
+  RRT: 
+    type: geometric::RRT
 
   TRRT:
     type: geometric::TRRT
@@ -55,7 +56,7 @@ right_arm:
   projection_evaluator: joints(right_A2,right_A2)  # Which joints the projection should be done on (The projector is used to calculate the manipulator configuration space, by specefying the first two joints only, this is speed up)
   
   planner_configs:
-    - TRRT 
+    - RRT 
     #- RRTstar  
     
     #- RRTConnect     
@@ -66,7 +67,7 @@ left_arm:
   projection_evaluator: joints(left_A2,left_A2)  # Which joints the projection should be done on (The projector is used to calculate the manipulator configuration space, by specefying the first two joints only, this is speed up)
   
   planner_configs:
-    - TRRT 
+    - RRT 
   
 
 #3f_gripper:
