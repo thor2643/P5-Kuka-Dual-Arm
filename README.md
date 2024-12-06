@@ -1,5 +1,5 @@
 # P5-Kuka-Dual-Arm
-This project, developed during our fifth semester at AAU, explores the integration of a large language model (LLM) to make automation more intuitive for operators. This GitHub page hosts all the code produced throughout the project period, from September 1st to December 20th, and allows for the use of an LLM to control two Kuka LBR iiwa 7 R800 robots.
+This project, developed during our fifth semester at AAU, explores the integration of a large language model (LLM) to make automation more intuitive for operators. The GitHub contains all the code produced throughout the project period, from September 1st to December 20th, and allows for the use of an LLM to control two Kuka LBR iiwa 7 R800 robots.
 
 The LLM is capable of the following:
 - Detecting LEGO bricks using a RealSense D435i camera, with either traditional computer vision or YOLO-World.
