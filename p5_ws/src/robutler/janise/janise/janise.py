@@ -446,11 +446,20 @@ class LLMNode(Node):
             return response
 
     def plan_robot_trajectory(self, pose, arm):
-        # Calibrated transformation matrix from world to moveit coordinates
-        T_world_moveit = np.array([[0.999983  , -0.00554552, -0.0018012 ,  -0.02903434],
-                                    [0.00554922,  0.99998249,  0.00205645,  -0.03177714],
-                                    [0.00178977, -0.00206641,  0.9999962, 0.84],#0.819373], comment back in when gripper is fixed
-                                    [0.0,          0.0,          0.0,          1.0        ]])
+        if arm == 'right':
+            # Calibrated transformation matrix from world to moveit coordinates based on right arm
+            T_world_moveit = np.array([ [0.999983  , -0.00554552, -0.0018012 ,  -0.02903434],
+                                        [0.00554922,  0.99998249,  0.00205645,  -0.03177714],
+                                        [0.00178977, -0.00206641,   0.9999962,         0.84],
+                                        [       0.0,         0.0,         0.0,          1.0]])
+            
+        if arm == 'left':
+            # Calibrated transformation matrix from world to moveit coordinates based on left arm
+            T_world_moveit = np.array([ [ 0.99994978,  0.01001088, -0.00046925,  0.03011298],
+                                        [-0.01001359,  0.99993071, -0.00618906,  0.03906320],
+                                        [ 0.00040726,  0.00619345,  0.99998074, -0.81322784],
+                                        [        0.0,         0.0,         0.0,         1.0]])
+            
         
         # Extract the position from the pose and append 1 to make it a 4D vector
         pos_world = pose[:3]
