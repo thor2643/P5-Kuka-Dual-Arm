@@ -263,8 +263,8 @@ private:
     std::vector<geometry_msgs::msg::Pose> waypoints;
     waypoints.push_back(target_pose);
 
-    double eef_step = 0.01;  // Step size for end-effector
-    double jump_threshold = 0.0; // If the jump is bigger than this, it will be considered invalid
+    double eef_step = 0.005;  // Step size for end-effector
+    double jump_threshold = 2.0; // If the jump is bigger than this, it will be considered invalid
     moveit_msgs::msg::RobotTrajectory trajectory;
 
     // Fraction is how big a precentage of the path that was successfully planned
@@ -292,11 +292,10 @@ private:
       move_group_interface->setMaxAccelerationScalingFactor(0.1); // Set the maximum acceleration scaling factor (10% of the maximum acceleration)
       move_group_interface->setPoseTarget(target_pose);
   
-      moveit::core::MoveItErrorCode error_code;
       error_code = move_group_interface->plan(*plan);
     }
 
-    if (error_code == moveit::core::MoveItErrorCode::SUCCESS | fraction > 0.95) {
+    if (error_code == moveit::core::MoveItErrorCode::SUCCESS || fraction > 0.95) {
       RCLCPP_INFO(this->get_logger(), "The trajectory has been planned succesfully");
       *plan_available = true;
       response->log = "The trajectory has been planned succesfully";
