@@ -615,6 +615,7 @@ class LLMNode(Node):
 
         #If the user wants to clear the history, do so
         if "clear history" in prompt:
+            os.system('clear')
             self.message_buffer = [self.message_buffer[0]]
             response.message = "History cleared."
             return response
