@@ -172,8 +172,6 @@ class LLMNode(Node):
             - Step 1: Plan a trajectory to the object's position, which is the position that you first detected the object at with the find_object function.
             - Step 2: Execute the planned trajectory to get into pickup position of the object.
             - Step 3: Close the gripper to grasp the object.
-            - Step 4: Plan a trajectory to lift up the object by 0.05 metres in the z-direction.
-            - Step 5: Execute the planned trajectory to lift up the object.
             - Step 6: Continue with the next task or provide a final response to the user.
 
             Mistakes you have made in the past and should avoid (you should not refer to these in your responses, but be aware of them):
