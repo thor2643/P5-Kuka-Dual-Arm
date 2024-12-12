@@ -1,8 +1,19 @@
-@software{Robutler2024,
-  title = {{Robutler}},
-  author = {Iversen, Thor and Baastrup, Gustav and Jensen, Silas and Friis, Marcus and Møller-Skuldbøl, Signe and Lauritsen, Kasper},
-  month = {12},
-  year = {2024},
-  version = {1.0.0},
-  url = {https://github.com/thor2643/P5-Kuka-Dual-Arm}
-}
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below!"
+authors:
+- family-names: "Iversen"
+  given-names: "Thor"
+- family-names: "Baastrup"
+  given-names: "Gustav"
+- family-names: "Jensen"
+  given-names: "Silas"
+- family-names: "Friis"
+  given-names: "Marcus"
+- family-names: "Møller-Skuldbøl"
+  given-names: "Signe"
+- family-names: "Lauritsen"
+  given-names: "Kasper"
+title: "Robutler"
+version: 1.0.0
+date-released: 2024-12-20
+url: "https://github.com/thor2643/P5-Kuka-Dual-Arm"
