@@ -17,3 +17,22 @@ title: "Robutler"
 version: 1.0.0
 date-released: 2024-12-20
 url: "https://github.com/thor2643/P5-Kuka-Dual-Arm"
+
+preferred-citation:
+  type: software
+  authors:
+  - family-names: "Iversen"
+    given-names: "Thor"
+  - family-names: "Baastrup"
+    given-names: "Gustav"
+  - family-names: "Jensen"
+    given-names: "Silas"
+  - family-names: "Friis"
+    given-names: "Marcus"
+  - family-names: "Møller-Skuldbøl"
+    given-names: "Signe"
+  - family-names: "Lauritsen"
+    given-names: "Kasper"
+  title: "Robutler"
+  month: 12
+  year: 2024
