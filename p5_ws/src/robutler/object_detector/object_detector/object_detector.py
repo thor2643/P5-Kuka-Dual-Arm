@@ -616,6 +616,181 @@ class ObjectDetector(Node):
         with open(self.object_file, 'w') as file:
             json.dump(self.lego_bricks, file, indent=4)
 
+    def test_precision_recall(self):
+        def nothing(x):
+            pass
+
+        # Load the object descriptions
+        self.load_object_descriptions()
+
+        # Base directory for saving test images
+        base_dir = "test_results"
+        if not os.path.exists(base_dir):
+            os.makedirs(base_dir)
+
+        # Find the next available test number
+        test_numbers = [int(d.split('_')[1]) for d in os.listdir(base_dir) if d.startswith("test_")]
+        test_number = max(test_numbers, default=0) + 1  # Increment the highest test number or start at 1
+
+        # Create a folder for this test run
+        test_dir = os.path.join(base_dir, f"test_{test_number}")
+        os.makedirs(test_dir)
+
+        print(f"Saving test results in: {test_dir}")
+
+        # Dictionary to store metrics for each color
+        results = {}
+
+        # Loop through each brick color in the config file
+        for brick_color, features in self.lego_bricks.items():
+            print(f"Testing for {brick_color}...")
+
+            # Create a subdirectory for the brick color
+            color_dir = os.path.join(test_dir, brick_color)
+            if not os.path.exists(color_dir):
+                os.makedirs(color_dir)
+
+            self.retrieve_aligned_frames()
+            image = self.get_color_image()
+
+            if image is None:
+                print(f"Failed to capture image from camera for {brick_color}.")
+                continue
+
+            # Detect objects
+            bounding_boxes, rotated_bounding_boxes, _ = self.find_object(image, brick_color)
+
+            # Debugging: Check if bounding boxes are detected
+            if not bounding_boxes:
+                print(f"No bounding boxes detected for {brick_color}.")
+                results[brick_color] = {
+                    "True Positives": 0,
+                    "False Positives": 0,
+                    "False Negatives": 10,
+                    "Precision": 0.0,
+                    "Recall": 0.0,
+                }
+                continue
+
+            # Draw bounding boxes on the image
+            try:
+                image_with_boxes = self.draw_boxes(image.copy(), bounding_boxes)
+                image_with_boxes = self.draw_rotated_boxes(image_with_boxes, rotated_bounding_boxes)
+            except Exception as e:
+                print(f"Error drawing bounding boxes: {e}")
+                continue
+
+            # DEBUGGING: Save the image with bounding boxes for later analysis
+            """
+            debug_path = os.path.join(color_dir, f"{brick_color}_debug.png")
+            cv2.imwrite(debug_path, cv2.rotate(image_with_boxes, cv2.ROTATE_180))
+            print(f"Debug image saved at {debug_path}.")
+            """
+            
+            # Create a window with sliders
+            window_name = f"Testing {brick_color}"
+            cv2.namedWindow(window_name)
+
+            # Add sliders
+            cv2.createTrackbar("False Positives", window_name, 0, 10, nothing)
+            cv2.createTrackbar("False Negatives", window_name, 0, 10, nothing)
+            cv2.createTrackbar("Send Data", window_name, 0, 1, nothing)
+
+            while True:
+                # Display the image with bounding boxes
+                cv2.imshow(window_name, cv2.rotate(image_with_boxes, cv2.ROTATE_180))
+
+                # Read the slider values
+                false_positives = cv2.getTrackbarPos("False Positives", window_name)
+                false_negatives = cv2.getTrackbarPos("False Negatives", window_name)
+                send_data = cv2.getTrackbarPos("Send Data", window_name)
+
+                # If "Send Data" slider is set to 1, capture data and move to next
+                if send_data == 1:
+                    true_positives = len(bounding_boxes) - false_positives
+                    precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
+                    recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
+
+                    # Save results for the current color
+                    results[brick_color] = {
+                        "True Positives": true_positives,
+                        "False Positives": false_positives,
+                        "False Negatives": false_negatives,
+                        "Precision": precision,
+                        "Recall": recall,
+                    }
+
+                    # Save the image with precision/recall in the filename
+                    image_filename = f"{brick_color}_precision_{precision:.2f}_recall_{recall:.2f}.png"
+                    image_path = os.path.join(color_dir, image_filename)
+                    cv2.imwrite(image_path, cv2.rotate(image_with_boxes, cv2.ROTATE_180))
+                    print(f"Saved detection image for {brick_color} at {image_path}.")
+
+                    # Reset "Send Data" slider and close the window
+                    cv2.setTrackbarPos("Send Data", window_name, 0)
+                    cv2.destroyWindow(window_name)
+                    break
+
+                # Add a short wait to allow OpenCV to process events
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    print("User exited.")
+                    cv2.destroyAllWindows()
+                    return
+
+        # Save all results to a summary file and CSV
+        summary_path = os.path.join(test_dir, "summary.txt")
+        csv_path = os.path.join(test_dir, "results.csv")
+        with open(summary_path, "w") as summary_file:
+            summary_file.write("Precision and Recall per Brick Color:\n")
+            for color, metrics in results.items():
+                summary_file.write(f"{color}: {metrics}\n")
+
+        import pandas as pd
+        df = pd.DataFrame.from_dict(results, orient="index")
+        df.to_csv(csv_path, index_label="Brick Color")
+        print(f"Saved summary at {summary_path}")
+        print(f"Saved results CSV at {csv_path}")
+
+        print("Test completed!")
+
+
+    def get_user_input(self, prompt):
+        """
+        Use console input instead of GUI input for simplicity.
+        """
+        while True:
+            try:
+                user_input = int(input(prompt))
+                return user_input
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+    def save_image(self, save_folder="captured_images"):
+        """
+        Captures and saves an image in a specified folder with an incremented filename.
+        """
+        # Ensure the save folder exists
+        if not os.path.exists(save_folder):
+            os.makedirs(save_folder)
+
+        # Retrieve the current frame
+        self.retrieve_aligned_frames()
+        image = self.get_color_image()
+
+        if image is None:
+            print("Failed to capture image from camera.")
+            return
+
+        # Find the next available file name
+        existing_files = [f for f in os.listdir(save_folder) if f.endswith(".jpg")]
+        next_index = len(existing_files) + 1
+        file_name = f"image_{next_index}.jpg"
+        file_path = os.path.join(save_folder, file_name)
+
+        # Save the image
+        cv2.imwrite(file_path, cv2.rotate(image, cv2.ROTATE_180))  # Rotate if needed
+        print(f"Image saved: {file_path}")
+
 
 def main(args=None):
     rclpy.init(args=args)
@@ -640,7 +815,10 @@ def main(args=None):
         print("6. Print Cartesian Coordinates")
         print("7. Spin the node")
         print("8. Calibrate Camera")
-        print("9. Exit\n")
+        print("9. Test Precision and Recall")
+        print("10. Take raw image")
+        print("11. Exit\n")
+       
 
         choice = input("Enter your choice: ")
 
@@ -711,6 +889,12 @@ def main(args=None):
             detector.realsense_camera.calibrate_camera()               
 
         elif choice == '9':
+            detector.test_precision_recall()
+
+        elif choice == '10':
+            detector.save_image()
+
+        elif choice == '11':
             break
 
         else:

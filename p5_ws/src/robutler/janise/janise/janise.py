@@ -172,7 +172,7 @@ class LLMNode(Node):
             - Step 1: Plan a trajectory to the object's position, which is the position that you first detected the object at with the find_object function.
             - Step 2: Execute the planned trajectory to get into pickup position of the object.
             - Step 3: Close the gripper to grasp the object.
-            - Step 6: Continue with the next task or provide a final response to the user.
+            - Step 4: Continue with the next task or provide a final response to the user.
 
             Mistakes you have made in the past and should avoid (you should not refer to these in your responses, but be aware of them):
             - You wrongfully assume that you have picked up an object and notify this to the operator, which is not great.
@@ -188,22 +188,7 @@ class LLMNode(Node):
             Your primary task is to execute movements and manipulations as requested, utilizing precise understanding of your left and right sides, grippers, and the overview provided by the RealSense camera.
         """}]
 
-        # - It is important that you remember to go down with -0.05m after the approach point when picking up an object.
-        # - If you are offsetting the z-direction by 0.05 metres, you should also remember to go back down 0.05 metres to pick up the object. Not any more or less.
-        # - When receiving instructions to move to predefined poses or locations, you may access these using your built-in functions.
-        """
-             flow for a pickup task:
-            - Step 1: Plan a trajectory to the approach point 0.05 metres above the located object in the z-direction.
-            - Step 2: Execute the planned trajectory to the approach point.
-            - Step 3: Plan a trajectory to the actual object's position.
-            - Step 4: Execute the planned trajectory to get into pick up position for the object.
-            - Step 5: Close the gripper to grasp the object.
-            - Step 6: Plan a trajectory to lift up the object by 0.05 metres in the z-direction.
-            - Step 7: Execute the planned trajectory to lift up the object.
-            - Step 8: Continue with the next task or provide a final response to the user.
-        """
-        #- When instructed to pick up an object, always ensure that the gripper is positioned correctly above the object with an approach point before attempting to grasp it. The approach point is only a point that helps get the gripper ready to approach and grasp the object. Therefore, always remember afterwards to also go down and pick up the object if that is the task.
-       
+
     ##############################################################################
     # -------------------------- SPEECH FUNCTIONALITY -------------------------- #
     ##############################################################################
