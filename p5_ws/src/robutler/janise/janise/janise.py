@@ -90,7 +90,8 @@ class LLMNode(Node):
 
         # Define the locations in the environment
         self.coordinates = { # Predefined poses for different locations
-            'HOME': {'x': '0.3', 'y': '0.3', 'z': "0.3", 'roll': '0', 'pitch': '0', 'yaw': '0'}
+            'HOME_RIGHT_ARM': {'x': '0.1', 'y': '0.3', 'z': "0.3", 'roll': '0', 'pitch': '0', 'yaw': '0'},
+            'HOME_LEFT_ARM': {'x': '0.9', 'y': '0.3', 'z': "0.3", 'roll': '0', 'pitch': '0', 'yaw': '0'}
         }
 
         # Load and define all functions available to models
