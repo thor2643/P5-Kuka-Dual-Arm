@@ -172,8 +172,6 @@ class LLMNode(Node):
             - Step 1: Plan a trajectory to the object's position, which is the position that you first detected the object at with the find_object function.
             - Step 2: Execute the planned trajectory to get into pickup position of the object.
             - Step 3: Close the gripper to grasp the object.
-            - Step 4: Plan a trajectory to lift up the object by 0.05 metres in the z-direction.
-            - Step 5: Execute the planned trajectory to lift up the object.
             - Step 6: Continue with the next task or provide a final response to the user.
 
             Mistakes you have made in the past and should avoid (you should not refer to these in your responses, but be aware of them):
@@ -472,9 +470,9 @@ class LLMNode(Node):
             
         if arm == 'left':
             # Calibrated transformation matrix from world to moveit coordinates based on left arm
-            T_world_moveit = np.array([ [ 0.99994978,  0.01001088, -0.00046925,  0.03011298],
-                                        [-0.01001359,  0.99993071, -0.00618906,  0.03906320],
-                                        [ 0.00040726,  0.00619345,  0.99998074, -0.81322784],
+            T_world_moveit = np.array([ [ 0.99994978,  -0.01001088, 0.00046925,  -0.03011298],
+                                        [0.01001359,  0.99993071, 0.00618906,  -0.03906320],
+                                        [ -0.00040726,  -0.00619345,  0.99998074, 0.81322784],
                                         [        0.0,         0.0,         0.0,         1.0]])
             
         
@@ -614,6 +612,13 @@ class LLMNode(Node):
     def gui_handle_service(self, request, response):
         prompt = request.prompt  # prompt is a string
         self.message_buffer.append({'role': 'user', 'content': prompt})
+
+        #If the user wants to clear the history, do so
+        if "clear history" in prompt:
+            os.system('clear')
+            self.message_buffer = [self.message_buffer[0]]
+            response.message = "History cleared."
+            return response
 
         loop_counter = 0
 
