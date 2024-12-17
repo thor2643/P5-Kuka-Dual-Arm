@@ -1,0 +1,538 @@
+{
+    "description": "",
+    "tags": [],
+    "size": {
+        "height": 720,
+        "width": 1280
+    },
+    "objects": [
+        {
+            "id": 1612211486,
+            "classId": 13498821,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:18:30.610Z",
+            "updatedAt": "2024-11-28T08:18:58.292Z",
+            "tags": [],
+            "classTitle": "pink_brick",
+            "points": {
+                "exterior": [
+                    [
+                        581,
+                        374
+                    ],
+                    [
+                        596,
+                        416
+                    ],
+                    [
+                        635,
+                        403
+                    ],
+                    [
+                        619,
+                        362
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211506,
+            "classId": 13498821,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:19:07.055Z",
+            "updatedAt": "2024-11-28T08:19:16.331Z",
+            "tags": [],
+            "classTitle": "pink_brick",
+            "points": {
+                "exterior": [
+                    [
+                        694,
+                        401
+                    ],
+                    [
+                        697,
+                        446
+                    ],
+                    [
+                        738,
+                        444
+                    ],
+                    [
+                        734,
+                        400
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211516,
+            "classId": 13498820,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:19:21.120Z",
+            "updatedAt": "2024-11-28T08:19:28.759Z",
+            "tags": [],
+            "classTitle": "light_green_brick",
+            "points": {
+                "exterior": [
+                    [
+                        674,
+                        340
+                    ],
+                    [
+                        686,
+                        381
+                    ],
+                    [
+                        725,
+                        376
+                    ],
+                    [
+                        714,
+                        335
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211528,
+            "classId": 13498820,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:19:36.037Z",
+            "updatedAt": "2024-11-28T08:19:41.740Z",
+            "tags": [],
+            "classTitle": "light_green_brick",
+            "points": {
+                "exterior": [
+                    [
+                        676,
+                        208
+                    ],
+                    [
+                        699,
+                        241
+                    ],
+                    [
+                        735,
+                        225
+                    ],
+                    [
+                        713,
+                        194
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211535,
+            "classId": 13498819,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:19:56.528Z",
+            "updatedAt": "2024-11-28T08:20:09.693Z",
+            "tags": [],
+            "classTitle": "green_brick",
+            "points": {
+                "exterior": [
+                    [
+                        447,
+                        444
+                    ],
+                    [
+                        462,
+                        400
+                    ],
+                    [
+                        505,
+                        407
+                    ],
+                    [
+                        490,
+                        451
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211544,
+            "classId": 13498819,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:20:19.613Z",
+            "updatedAt": "2024-11-28T08:20:35.970Z",
+            "tags": [],
+            "classTitle": "green_brick",
+            "points": {
+                "exterior": [
+                    [
+                        707,
+                        291
+                    ],
+                    [
+                        732,
+                        323
+                    ],
+                    [
+                        769,
+                        305
+                    ],
+                    [
+                        744,
+                        272
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211557,
+            "classId": 13498816,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:20:45.967Z",
+            "updatedAt": "2024-11-28T08:21:04.625Z",
+            "tags": [],
+            "classTitle": "light_blue_brick",
+            "points": {
+                "exterior": [
+                    [
+                        768,
+                        268
+                    ],
+                    [
+                        795,
+                        238
+                    ],
+                    [
+                        829,
+                        259
+                    ],
+                    [
+                        801,
+                        289
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211582,
+            "classId": 13498816,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:21:15.649Z",
+            "updatedAt": "2024-11-28T08:21:43.642Z",
+            "tags": [],
+            "classTitle": "light_blue_brick",
+            "points": {
+                "exterior": [
+                    [
+                        398,
+                        351
+                    ],
+                    [
+                        425,
+                        317
+                    ],
+                    [
+                        463,
+                        334
+                    ],
+                    [
+                        438,
+                        370
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211619,
+            "classId": 13498817,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:21:54.733Z",
+            "updatedAt": "2024-11-28T08:22:16.283Z",
+            "tags": [],
+            "classTitle": "yellow_brick",
+            "points": {
+                "exterior": [
+                    [
+                        447,
+                        265
+                    ],
+                    [
+                        465,
+                        227
+                    ],
+                    [
+                        505,
+                        236
+                    ],
+                    [
+                        488,
+                        273
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211643,
+            "classId": 13498817,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:22:22.109Z",
+            "updatedAt": "2024-11-28T08:22:37.570Z",
+            "tags": [],
+            "classTitle": "yellow_brick",
+            "points": {
+                "exterior": [
+                    [
+                        621,
+                        230
+                    ],
+                    [
+                        636,
+                        194
+                    ],
+                    [
+                        672,
+                        201
+                    ],
+                    [
+                        658,
+                        238
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211665,
+            "classId": 13498814,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:22:47.269Z",
+            "updatedAt": "2024-11-28T08:23:15.536Z",
+            "tags": [],
+            "classTitle": "red_brick",
+            "points": {
+                "exterior": [
+                    [
+                        542,
+                        463
+                    ],
+                    [
+                        570,
+                        500
+                    ],
+                    [
+                        606,
+                        476
+                    ],
+                    [
+                        579,
+                        440
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211684,
+            "classId": 13498814,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:23:22.484Z",
+            "updatedAt": "2024-11-28T08:23:34.406Z",
+            "tags": [],
+            "classTitle": "red_brick",
+            "points": {
+                "exterior": [
+                    [
+                        543,
+                        245
+                    ],
+                    [
+                        559,
+                        282
+                    ],
+                    [
+                        596,
+                        272
+                    ],
+                    [
+                        579,
+                        236
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211692,
+            "classId": 13498818,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:23:47.460Z",
+            "updatedAt": "2024-11-28T08:23:55.660Z",
+            "tags": [],
+            "classTitle": "orange_brick",
+            "points": {
+                "exterior": [
+                    [
+                        509,
+                        348
+                    ],
+                    [
+                        538,
+                        318
+                    ],
+                    [
+                        574,
+                        340
+                    ],
+                    [
+                        545,
+                        371
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211699,
+            "classId": 13498818,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:24:03.360Z",
+            "updatedAt": "2024-11-28T08:24:16.228Z",
+            "tags": [],
+            "classTitle": "orange_brick",
+            "points": {
+                "exterior": [
+                    [
+                        530,
+                        185
+                    ],
+                    [
+                        560,
+                        159
+                    ],
+                    [
+                        592,
+                        182
+                    ],
+                    [
+                        562,
+                        208
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211706,
+            "classId": 13498815,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:24:22.904Z",
+            "updatedAt": "2024-11-28T08:24:33.594Z",
+            "tags": [],
+            "classTitle": "blue_brick",
+            "points": {
+                "exterior": [
+                    [
+                        617,
+                        304
+                    ],
+                    [
+                        631,
+                        343
+                    ],
+                    [
+                        669,
+                        336
+                    ],
+                    [
+                        657,
+                        297
+                    ]
+                ],
+                "interior": []
+            }
+        },
+        {
+            "id": 1612211722,
+            "classId": 13498815,
+            "objectId": null,
+            "description": "",
+            "geometryType": "polygon",
+            "labelerLogin": "Mr_Mystic",
+            "createdAt": "2024-11-28T08:24:43.039Z",
+            "updatedAt": "2024-11-28T08:24:48.246Z",
+            "tags": [],
+            "classTitle": "blue_brick",
+            "points": {
+                "exterior": [
+                    [
+                        762,
+                        368
+                    ],
+                    [
+                        778,
+                        329
+                    ],
+                    [
+                        813,
+                        341
+                    ],
+                    [
+                        798,
+                        380
+                    ]
+                ],
+                "interior": []
+            }
+        }
+    ]
+}

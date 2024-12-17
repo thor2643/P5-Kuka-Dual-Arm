@@ -1,0 +1,9 @@
+Brick Color,True Positives,False Positives,False Negatives,Precision,Recall
+red_brick,8,0,2,1.0,0.8
+green_brick,10,2,0,0.8333333333333334,1.0
+yellow_brick,9,0,1,1.0,0.9
+orange_brick,10,1,0,0.9090909090909091,1.0
+blue_brick,10,0,0,1.0,1.0
+pink_brick,9,0,1,1.0,0.9
+light_blue_brick,8,0,2,1.0,0.8
+light_green_brick,9,0,1,1.0,0.9

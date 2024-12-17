@@ -1,0 +1,9 @@
+Precision and Recall per Brick Color:
+red_brick: {'True Positives': 8, 'False Positives': 0, 'False Negatives': 2, 'Precision': 1.0, 'Recall': 0.8}
+green_brick: {'True Positives': 10, 'False Positives': 2, 'False Negatives': 0, 'Precision': 0.8333333333333334, 'Recall': 1.0}
+yellow_brick: {'True Positives': 9, 'False Positives': 0, 'False Negatives': 1, 'Precision': 1.0, 'Recall': 0.9}
+orange_brick: {'True Positives': 10, 'False Positives': 1, 'False Negatives': 0, 'Precision': 0.9090909090909091, 'Recall': 1.0}
+blue_brick: {'True Positives': 10, 'False Positives': 0, 'False Negatives': 0, 'Precision': 1.0, 'Recall': 1.0}
+pink_brick: {'True Positives': 9, 'False Positives': 0, 'False Negatives': 1, 'Precision': 1.0, 'Recall': 0.9}
+light_blue_brick: {'True Positives': 8, 'False Positives': 0, 'False Negatives': 2, 'Precision': 1.0, 'Recall': 0.8}
+light_green_brick: {'True Positives': 9, 'False Positives': 0, 'False Negatives': 1, 'Precision': 1.0, 'Recall': 0.9}
