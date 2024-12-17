@@ -90,7 +90,8 @@ class LLMNode(Node):
 
         # Define the locations in the environment
         self.coordinates = { # Predefined poses for different locations
-            'HOME': {'x': '0.3', 'y': '0.3', 'z': "0.3", 'roll': '0', 'pitch': '0', 'yaw': '0'}
+            'HOME_RIGHT_ARM': {'x': '0.1', 'y': '0.3', 'z': "0.3", 'roll': '0', 'pitch': '0', 'yaw': '0'},
+            'HOME_LEFT_ARM': {'x': '0.9', 'y': '0.3', 'z': "0.3", 'roll': '0', 'pitch': '0', 'yaw': '0'}
         }
 
         # Load and define all functions available to models
@@ -172,7 +173,7 @@ class LLMNode(Node):
             - Step 1: Plan a trajectory to the object's position, which is the position that you first detected the object at with the find_object function.
             - Step 2: Execute the planned trajectory to get into pickup position of the object.
             - Step 3: Close the gripper to grasp the object.
-            - Step 6: Continue with the next task or provide a final response to the user.
+            - Step 4: Continue with the next task or provide a final response to the user.
 
             Mistakes you have made in the past and should avoid (you should not refer to these in your responses, but be aware of them):
             - You wrongfully assume that you have picked up an object and notify this to the operator, which is not great.
