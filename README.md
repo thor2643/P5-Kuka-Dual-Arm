@@ -56,15 +56,7 @@ Before starting the installation of this project, we recommend grabbing a snack 
     pip install -r requirements.txt
     ```
 
-5. Colcon build - Re-run if any packages timeout during compile
-
-    ```shell
-    cd ~/P5-Kuka-Dual-Arm/p5_ws
-    export MAKEFLAGS="-j3"
-    colcon build --mixin release
-    ```
-
-6. Adding an API key for Janise
+5. Adding an API key for Janise
 
    ```shell
     cd ~/P5-Kuka-Dual-Arm/p5_ws/src/robutler/janise
@@ -75,7 +67,15 @@ Before starting the installation of this project, we recommend grabbing a snack 
     # }
     # Remember to write the file, ctrl + s then ctrl + x
     ```
-   
+
+6. Colcon build - Re-run if any packages timeout during compile
+
+    ```shell
+    cd ~/P5-Kuka-Dual-Arm/p5_ws
+    export MAKEFLAGS="-j3"
+    colcon build --mixin release
+    ```
+ 
 8. NOTE: If you are running on our setup, remember to set your IP to 172.31.1.148 and Netmask to 255.255.255.0, also ensure that you are correctly connected to the setup (2 USB's 1 Ethernet). ([Static IP configuration](https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-22-04-jammy-jellyfish-desktop-server))
    
 9. Running the system
