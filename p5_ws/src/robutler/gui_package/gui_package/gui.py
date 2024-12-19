@@ -23,6 +23,7 @@ class MinimalClientAsync(Node):
             self.get_logger().info('service not available, waiting again...')
         self.req = PromptJanice.Request()
 
+
     def send_request(self, prompt):
         self.req.prompt = prompt
         return self.cli.call_async(self.req)
@@ -180,6 +181,8 @@ class Interface(ctk.CTkFrame):
             unique_filename = f"output_{os.getpid()}.mp3"
             tts = gTTS(text=text, lang='en')
             tts.save(unique_filename)
+            # Set the device to play sound from
+            os.system("pactl set-default-sink 0")  # Replace 0 with the index of your desired output device
             playsound(unique_filename)
             os.remove(unique_filename)
         except Exception as e:
@@ -188,11 +191,14 @@ class Interface(ctk.CTkFrame):
 
     def speech_to_text(self):
         recognizer = sr.Recognizer()
+        #To reduce the sensitivity to high pitch sounds from the environment, set the energy threshold
+        recognizer.energy_threshold = 2200
         try:
             with sr.Microphone(device_index=self.microphone_index) as source:
                 print("Listening for speech...")
                 #self.get_logger().info("Listening for speech...")
-                audio = recognizer.listen(source, timeout=self.microphone_timeout)
+                #recognizer.adjust_for_ambient_noise(source, duration=0.5)
+                audio = recognizer.listen(source, timeout=self.microphone_timeout, phrase_time_limit=8)
                 print("Done listening.")
             try:
                 text = recognizer.recognize_google(audio)
